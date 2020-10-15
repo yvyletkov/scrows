@@ -1,22 +1,22 @@
 import React from "react";
-import './LoginPage.css'
+import './RegistrationPage.css'
 
-const LoginPage = () => {
+const RegistrationPage = () => {
   return (
     <div>
       <div className="card auth-card" style={{width: '20rem'}}>
         <div className="card-header">
             <ul className="nav nav-tabs card-header-tabs">
                 <li className="nav-item">
-                    <a className="nav-link active" href="/login">Авторизация</a>
+                    <a className="nav-link" href="/login">Авторизация</a>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link" href="/auth">Регистрация</a>
+                    <a className="nav-link active" href="/auth">Регистрация</a>
                 </li>
             </ul>
         </div>
         <div className="card-body">
-          <h3 className="card-title text-center">Авторизация</h3>
+          <h3 className="card-title text-center">Регистрация</h3>
             <form className="popup__form" name="login">
                 <div className="form-group">
                     <label className="" htmlFor="email">Email</label>
@@ -42,4 +42,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegistrationPage;
