@@ -7,7 +7,7 @@ const instance = axios.create({
 });
 
 export const API = {
-    login (requestdata) {
+    login (requestData) {
         return instance.post(`/endpoint1`, {requestData})
             .then(response => {
                 return response.data
