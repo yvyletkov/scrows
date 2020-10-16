@@ -1,5 +1,7 @@
 import React from "react";
 import './LoginPage.css'
+import {connect} from "react-redux";
+import {login} from "../../redux/reducer";
 
 const LoginPage = () => {
   return (
@@ -42,4 +44,11 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+let mapStateToProps = (state) => {
+    return {
+        someData: state.someData
+        //те данные из глобального стейта, которые мы хотим передать в компоненту
+    }
+}
+
+export default connect(mapStateToProps, {login})(LoginPage); // первый арг - стейт, второй арг - экшены
