@@ -4,3 +4,13 @@
     left: 50%;
     transform: translateY(-50%) translateX(-50%); 
 }
+
+.custom-control-label {
+    font-size: 15px;
+}
+
+.btn-back {
+    position: absolute;
+    top:15px;
+    left:15px;
+}
