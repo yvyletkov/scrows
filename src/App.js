@@ -1,6 +1,7 @@
 import React from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
-import "shards-ui/dist/css/shards.min.css"
+import "shards-ui/dist/css/shards.min.css";
+import "./App.css";
 import LoginPage from "./components/LoginPage/LoginPage";
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import RegistrationPage from './components/RegistrationPage/RegistrationPage';
