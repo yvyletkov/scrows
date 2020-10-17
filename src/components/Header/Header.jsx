@@ -10,78 +10,70 @@ import {
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
-    InputGroup,
-    InputGroupAddon,
-    InputGroupText,
-    FormInput,
     Collapse
 } from "shards-react";
 
-export default class Header extends React.Component {
-    constructor(props) {
-        super(props);
+const Header = () => {
 
-        this.toggleDropdown = this.toggleDropdown.bind(this);
-        this.toggleNavbar = this.toggleNavbar.bind(this);
+    let [dropdownOpen1, setDropdownOpen1] = React.useState(false);
+    let [dropdownOpen2, setDropdownOpen2] = React.useState(false);
+    let [collapseOpen, setCollapseOpen] = React.useState(false);
 
-        this.state = {
-            dropdownOpen: false,
-            collapseOpen: false
-        };
-    }
+    const toggleDropdown1 = () => {
+        setDropdownOpen1(!dropdownOpen1)
+    };
 
-    toggleDropdown() {
-        this.setState({
-            ...this.state,
-            ...{
-                dropdownOpen: !this.state.dropdownOpen
-            }
-        });
-    }
+    const toggleDropdown2 = () => {
+        setDropdownOpen2(!dropdownOpen2)
+    };
+    const toggleNavbar = () => {
+        setCollapseOpen(!collapseOpen)
+    };
 
-    toggleNavbar() {
-        this.setState({
-            ...this.state,
-            ...{
-                collapseOpen: !this.state.collapseOpen
-            }
-        });
-    }
-
-    render() {
-        return (
-            <Navbar type="dark" theme="primary" expand="md">
-                <NavbarBrand href="#">Shards React</NavbarBrand>
-                <NavbarToggler onClick={this.toggleNavbar} />
-
-                <Collapse open={this.state.collapseOpen} navbar>
+    return (
+        <Navbar type="dark" theme="dark" expand="md">
+            <div className='container'>
+                <NavbarBrand href="#">SCROWS.RU</NavbarBrand>
+                <NavbarToggler onClick={toggleNavbar}/>
+                <Collapse open={collapseOpen} navbar>
                     <Nav navbar>
-                        <NavItem>
-                            <NavLink active href="#">
-                                Active
-                            </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink href="#" disabled>
-                                Disabled
-                            </NavLink>
-                        </NavItem>
                         <Dropdown
-                            open={this.state.dropdownOpen}
-                            toggle={this.toggleDropdown}
+                            open={dropdownOpen1}
+                            toggle={toggleDropdown1}
                         >
                             <DropdownToggle nav caret>
-                                Dropdown
+                                Для кого
                             </DropdownToggle>
                             <DropdownMenu>
-                                <DropdownItem>Action</DropdownItem>
-                                <DropdownItem>Another action</DropdownItem>
-                                <DropdownItem>Something else here</DropdownItem>
+                                <DropdownItem>1</DropdownItem>
+                                <DropdownItem>2</DropdownItem>
+                                <DropdownItem>3</DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
+                        <Dropdown
+                            open={dropdownOpen2}
+                            toggle={toggleDropdown2}
+                        >
+                            <DropdownToggle nav caret>
+                                О нас
+                            </DropdownToggle>
+                            <DropdownMenu>
+                                <DropdownItem>1</DropdownItem>
+                                <DropdownItem>2</DropdownItem>
+                                <DropdownItem>3</DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+                        <NavItem>
+                            <NavLink active href="#">
+                                Личный кабинет
+                            </NavLink>
+                        </NavItem>
                     </Nav>
                 </Collapse>
-            </Navbar>
-        );
-    }
+            </div>
+
+        </Navbar>
+    );
 }
+
+export default Header;
