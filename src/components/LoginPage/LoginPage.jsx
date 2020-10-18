@@ -22,7 +22,8 @@ class LoginPage extends Component {
     const name = e.target.name;
     const value = e.target.value;
     this.setState({ [name]: value }, () => {
-      this.validateField(name, value)
+      this.validateField(name, value);
+      this.focusInput(name);
     });
   }
 
@@ -60,17 +61,17 @@ class LoginPage extends Component {
     });
   }
 
-  focusForm(el) {
-    switch (el.target.name) {
+  focusInput(name) {
+    switch (name) {
       case "email":
-        this.setState({ 
+        this.setState({
           onFocusEmail: true,
-          onFocusPass: false });
+        });
         break;
       case "password":
-        this.setState({ 
+        this.setState({
           onFocusPass: true,
-          onFocusEmail: false});
+        });
         break;
       default:
         break;
@@ -103,6 +104,7 @@ class LoginPage extends Component {
                 <input
                   type="email"
                   name="email"
+                  id="email"
                   className={
                     this.state.onFocusEmail
                       ? this.state.emailValid
@@ -117,8 +119,18 @@ class LoginPage extends Component {
                   minLength="2"
                   maxLength="30"
                   onChange={this.handleUserInput.bind(this)}
-                  onFocus={this.focusForm.bind(this)}
+                  onFocus={this.handleUserInput.bind(this)}
                 />
+                {/* <label
+                  className={
+                    this.state.onFocusEmail
+                      ? "registration__label active"
+                      : "registration__label"
+                  }
+                  htmlFor="#email"
+                >
+                  Введите почту
+                </label> */}
                 <ErrorField message={this.state.formErrors.email} />
               </div>
               <div className="form-group">
@@ -135,9 +147,9 @@ class LoginPage extends Component {
                   placeholder="Введите пароль"
                   required
                   value={this.state.password}
-                  minLength="8"
+                  minLength="6"
                   onChange={this.handleUserInput.bind(this)}
-                  onFocus={this.focusForm.bind(this)}
+                  onFocus={this.handleUserInput.bind(this)}
                 />
                 <ErrorField message={this.state.formErrors.password} />
               </div>
