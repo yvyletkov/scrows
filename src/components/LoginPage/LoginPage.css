@@ -9,6 +9,45 @@
     font-size: 15px;
 }
 
+.form-group {
+    position: relative;
+}
+
+.form-control {
+    z-index: 100;
+}
+
+.registration__label.active {
+    transform: translateY(-20px) translateX(-15px) scale(0.8);
+    transform-origin: 0 0;
+}
+
+.registration__label {
+    display: inline-block;
+    width: 100%;
+    min-width: 245px;
+    position: absolute;
+    z-index: 1;
+    left: 15px;
+    top: 2px;
+    font-size: 15px;
+    height: 15px;
+    color: #999;
+    -webkit-transform: translate(0,5px);
+    -ms-transform: translate(0,5px);
+    -o-transform: translate(0,5px);
+    transform: translate(0,5px);
+    -webkit-transform-origin: 0 0;
+    -ms-transform-origin: 0 0;
+    -o-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transition: -webkit-transform .5s;
+    -o-transition: -o-transform .5s;
+    transition: transform .5s;
+    transition: transform .5s,-webkit-transform .5s,-o-transform .5s;
+    white-space: nowrap;
+}
+
 /* .btn-back {
     position: absolute;
     top:15px;

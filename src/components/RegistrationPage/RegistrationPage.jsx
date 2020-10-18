@@ -22,7 +22,8 @@ class RegistrationPage extends Component {
     const name = e.target.name;
     const value = e.target.value;
     this.setState({ [name]: value }, () => {
-      this.validateField(name, value);
+      this.validateField(name, value)
+      this.focusInput(name);
     });
   }
 
@@ -39,13 +40,15 @@ class RegistrationPage extends Component {
         fieldValidationErrors.email = emailValid ? "" : "email введен не верно";
         break;
       case "password":
+        passwordMatch = password === passwordRepeat && passwordRepeat.length !== 0;
+        fieldValidationErrors.passwordRepeat = password === passwordRepeat ? "" : "пароли не совпадают";
         passwordValid = value.length >= 6;
         fieldValidationErrors.password = passwordValid
           ? ""
           : "пароль слишком короткий";
         break;
       case "passwordRepeat":
-        passwordMatch = password === passwordRepeat;
+        passwordMatch = password === passwordRepeat && passwordRepeat.length !== 0;
         fieldValidationErrors.passwordRepeat = password === passwordRepeat ? "" : "пароли не совпадают";
         break;
       default:
@@ -68,26 +71,20 @@ class RegistrationPage extends Component {
     });
   }
 
-  focusForm(el) {
-    switch (el.target.name) {
+  focusInput(name) {
+    switch (name) {
       case "email":
         this.setState({
           onFocusEmail: true,
-          onFocusPass: false,
-          onFocusPassRepeat:false,
         });
         break;
       case "password":
         this.setState({
           onFocusPass: true,
-          onFocusEmail: false,
-          onFocusPassRepeat: false,
         });
         break;
       case "passwordRepeat":
         this.setState({
-          onFocusPass: false,
-          onFocusEmail: false,
           onFocusPassRepeat:true,
         });
         break;
@@ -136,7 +133,7 @@ class RegistrationPage extends Component {
                   minLength="2"
                   maxLength="30"
                   onChange={this.handleUserInput.bind(this)}
-                  onFocus={this.focusForm.bind(this)}
+                  onFocus={this.handleUserInput.bind(this)}
                 />
                 <ErrorField message={this.state.formErrors.email} />
               </div>
@@ -154,9 +151,9 @@ class RegistrationPage extends Component {
                   placeholder="Придумайте пароль"
                   required
                   value={this.state.password}
-                  minLength="8"
+                  minLength="6"
                   onChange={this.handleUserInput.bind(this)}
-                  onFocus={this.focusForm.bind(this)}
+                  onFocus={this.handleUserInput.bind(this)}
                 />
                 <ErrorField message={this.state.formErrors.password} />
               </div>
@@ -174,9 +171,9 @@ class RegistrationPage extends Component {
                   placeholder="Повторите пароль"
                   required
                   value={this.state.passwordRepeat}
-                  minLength="8"
+                  minLength="6"
                   onChange={this.handleUserInput.bind(this)}
-                  onFocus={this.focusForm.bind(this)}
+                  onFocus={this.handleUserInput.bind(this)}
                 />
                 <ErrorField message={this.state.formErrors.passwordRepeat} />
               </div>
