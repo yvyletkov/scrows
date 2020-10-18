@@ -41,7 +41,7 @@ const StatusTimeline = ({status = 4, withDelivery: delivery = true, problem = tr
 
     return (
         <div className={s.statusTimelineWrapper}>
-            <h3><span style={{textTransform: 'uppercase'}} className="badge badge-outline-light">CТАТУС: {descriptions[status]}</span></h3>
+            {/*<h4 style={{textTransform: 'uppercase'}} >CТАТУС: {descriptions[status]}</h4>*/}
             <div className={s.statusTimeline}>
                 {statusItems}
             </div>
@@ -164,7 +164,7 @@ const DealPage = () => {
                             <h4><span className="badge badge-pill badge-secondary">Продавец</span></h4>
                             <div>Путин</div>
                             <div>Владимир</div>
-                            <div>email: vvp@scrows.ru</div>
+                            <div><b>email:</b> vvp@scrows.ru</div>
                         </div>
                     </div>
                     <div className={`card ${s.sidebarCard}`}>
@@ -173,7 +173,7 @@ const DealPage = () => {
                             <h4><span className="badge badge-pill badge-secondary">Покупатель</span></h4>
                             <div>Медведев</div>
                             <div>Дмитрий</div>
-                            <div>email: dam@scrows.ru</div>
+                            <div><b>email:</b> dam@scrows.ru</div>
                         </div>
                     </div>
                 </div>
