@@ -35,7 +35,7 @@ const Header = () => {
             <div className='container'>
                 <NavbarBrand href="#">SCROWS.RU</NavbarBrand>
                 <NavbarToggler onClick={toggleNavbar}/>
-                <Collapse open={collapseOpen} navbar>
+                <Collapse className={'justify-content-end'} open={collapseOpen} navbar>
                     <Nav navbar>
                         <Dropdown
                             open={dropdownOpen1}
