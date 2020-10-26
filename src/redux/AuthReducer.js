@@ -34,10 +34,13 @@ export const setAuthUserData = (id, email, isAuth) => ({type: SET_USER_DATA,payl
 //   };
 
 export const login = (email, password, rememberMe) => (dispatch) => {
+
+  debugger
+
   API.login(email, password, rememberMe).then((response) => {
     if (response.data.resultCode === 0) {
-      let { id, email } = response.data.data;
-      dispatch(setAuthUserData(id, email, true));
+      let { userId } = response.data.data;
+      dispatch(setAuthUserData(userId, email, true));
     }
   });
 };
