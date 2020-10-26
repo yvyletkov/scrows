@@ -4,7 +4,7 @@ import {Field, reduxForm} from 'redux-form';
 import {validate, warn} from "../../utils/validators/validators";
 import {renderCheckBox, renderInput} from "../shared/FormContols/FormControls";
 import "./LoginPage.css";
-import setAuthUserData from '../../redux/AuthReducer';
+import {login} from '../../redux/AuthReducer';
 import { connect } from "react-redux";
 
 const LoginForm = props => {
@@ -30,9 +30,10 @@ const LoginForm = props => {
 const LoginReduxForm = reduxForm({form:'login', validate, warn})(LoginForm);
 
 const LoginPage = (props) => {
-  console.log(props)
+
   const handleSubmit = (data) => {
-    props.setAuthUserData(1, data.email, true)
+      debugger
+    props.login(data.email, data.password, data.rememberMe)
 }
   return (
     <div className="card auth-card" style={{ width: "20rem" }}>
@@ -58,4 +59,4 @@ const LoginPage = (props) => {
   );
 };
 
-export default connect(null, {setAuthUserData}) (LoginPage);
+export default connect(null, {login}) (LoginPage);
