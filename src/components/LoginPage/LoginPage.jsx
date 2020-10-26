@@ -4,6 +4,8 @@ import {Field, reduxForm} from 'redux-form';
 import {validate, warn} from "../../utils/validators/validators";
 import {renderCheckBox, renderInput} from "../shared/FormContols/FormControls";
 import "./LoginPage.css";
+import setAuthUserData from '../../redux/AuthReducer';
+import { connect } from "react-redux";
 
 const LoginForm = props => {
   const { handleSubmit, pristine, reset, submitting } = props;
@@ -16,7 +18,7 @@ const LoginForm = props => {
         <Field placeholder="Введите пароль" name="password" type="password" component={renderInput} label="Email" />
       </div>
       <div className="custom-control custom-checkbox mb-3">
-        <Field type="checkbox" name="onChecked" component={renderCheckBox} label={"Запомнить меня"} />
+        <Field type="checkbox" name="rememberMe" component={renderCheckBox} label={"Запомнить меня"} />
       </div>
       <div>
         <button type="submit" className="btn btn-primary btn-block btn-pill" disabled={submitting || pristine}>Войти</button>
@@ -28,8 +30,9 @@ const LoginForm = props => {
 const LoginReduxForm = reduxForm({form:'login', validate, warn})(LoginForm);
 
 const LoginPage = (props) => {
+  console.log(props)
   const handleSubmit = (data) => {
-    console.log(data)
+    props.setAuthUserData(1, data.email, true)
 }
   return (
     <div className="card auth-card" style={{ width: "20rem" }}>
@@ -55,4 +58,4 @@ const LoginPage = (props) => {
   );
 };
 
-export default LoginPage;
+export default connect(null, {setAuthUserData}) (LoginPage);

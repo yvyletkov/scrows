@@ -6,7 +6,7 @@ export let setAuthData = (userName, token, blablabla) => {return {type: 'SET-AUT
 
 
 const initialState = {
-    someData: null,
+    someData: null
 }
 
 const reducer = (state = initialState, action) => {
