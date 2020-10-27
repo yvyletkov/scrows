@@ -1,28 +1,31 @@
-import * as axios from "axios";
+export default class Api {
+  _mainApi = "http://api.scrows.ml/api";
+  _headers = { "Content-Type": "application/json;charset=utf-8" };
 
-const instance = axios.create({
-    withCredentials: true,
-    headers:  {
-        'API-KEY': 'd0ce4cd8-d0d2-4152-99ad-f6e1407cb23f'
-    },
-    baseURL: 'https://social-network.samuraijs.com/api/1.0'
-});
+  _getRes = async (url, params) => {
+    const res = await fetch(`${this._mainApi}${url}`, params);
+    if (!res.ok) {
+      throw new Error(`Запрос не удался на ${url}, ошибка ${res.status}`);
+    }
+    return await res.json();
+  };
 
-export const API = {
-    me() {
-        return instance.get(`auth/me`)
-    },
-    login (email, password, rememberMe = false) {
-        return instance.post(`auth/login`, {email, password, rememberMe});
-            // .then(response => {
-            //     return response.data
-            // })
-    },
-    register (requestData) {
-        return instance.post(`/endpoint2`, {...requestData})
-            .then(response => {
-                return response.data
-            })
-    },
-    // и т.д.
-};
+  login = async (email, password) => {
+    return await this._getRes(`/users/auth/`, {
+      method: "POST",
+      headers: this._headers,
+      body: JSON.stringify({
+        email: `${email}`,
+        password: `${password}`,
+      }),
+    });
+  };
+
+  getUserData = async() => {
+    this._headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`
+    return await this._getRes(`/users/test/`, {
+      method: "GET",
+      headers: this._headers
+    })
+  }
+}
