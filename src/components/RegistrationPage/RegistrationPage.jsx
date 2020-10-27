@@ -7,8 +7,18 @@ import {
   renderCheckBox,
   renderInput,
 } from "../shared/FormContols/FormControls";
+import Api from "../../api/Api"
+
+const API = new Api();
 
 const AuthForm = (props) => {
+  API.getUserData()
+  .then((res) => {
+    console.log(res)
+  })
+  .catch((err) => {
+    console.log(err)
+  })
   const { handleSubmit, pristine, reset, submitting } = props;
   return (
     <form className="popup__form" onSubmit={handleSubmit}>

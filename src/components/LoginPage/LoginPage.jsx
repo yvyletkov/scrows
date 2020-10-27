@@ -32,8 +32,7 @@ const LoginReduxForm = reduxForm({form:'login', validate, warn})(LoginForm);
 const LoginPage = (props) => {
 
   const handleSubmit = (data) => {
-      debugger
-    props.login(data.email, data.password, data.rememberMe)
+    props.login(data.email, data.password)
 }
   return (
     <div className="card auth-card" style={{ width: "20rem" }}>
