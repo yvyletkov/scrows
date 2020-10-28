@@ -1,9 +1,8 @@
-import Api from "../api/Api";
+import {api} from "../api/api";
 
-//создаем экшОны
 export let toggleIsFetching = (status) => {return {type: 'TOGGLE-IS-FETCHING', payload: status}}; //это чтобы крутилка крутилась пока что-то грузится
 export let setAuthData = (userName, token, blablabla) => {return {type: 'SET-AUTH-DATA', payload: {userName, token, blablabla}}}; //какие-то данные с серва после авторизации
-const API = new Api();
+// const API = new Api();
 
 const initialState = {
     someData: null
@@ -32,7 +31,7 @@ export const login = (email, password, rememberMe) => (dispatch) => { // это 
 
     dispatch(toggleIsFetching(true));
 
-    API.login(email, password, rememberMe)
+    api.login(email, password, rememberMe)
         .then(response => {
             if (true) // статус ок
                 dispatch(setAuthData({response}));

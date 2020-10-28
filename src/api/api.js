@@ -1,4 +1,4 @@
-export default class Api {
+export class Api {
   _mainApi = "http://api.scrows.ml/api";
   _headers = { "Content-Type": "application/json;charset=utf-8" };
 
@@ -29,3 +29,51 @@ export default class Api {
     })
   }
 }
+
+// = = = = = = == == = = = == == ==  = = == ==
+
+
+const baseApi = {
+
+    baseUrl: "http://api.scrows.ml/api",
+    headers: {"Content-Type": "application/json;charset=utf-8"},
+
+    async request (endpoint, params) {
+        const res = await fetch(`${this.baseUrl}${endpoint}`, params);
+        if (!res.ok) {
+            throw new Error(`Запрос не удался на ${endpoint}, ошибка ${res.status}`);
+        }
+        return await res.json();
+    }
+};
+
+const authApi = {
+
+    async login (email, password) {
+        return await this.request(`/users/auth/`, {
+            method: "POST",
+            headers: this.headers,
+            body: JSON.stringify({
+                email: `${email}`,
+                password: `${password}`,
+            }),
+        });
+    },
+
+    async getUserData () {
+        this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+        return await this.request(`/users/test/`, {
+            method: "GET",
+            headers: this.headers
+        })
+    }
+
+};
+
+export const api = {
+    ...baseApi,
+    ...authApi,
+};
+
+window.apiObj = api;
+
