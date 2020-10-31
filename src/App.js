@@ -8,6 +8,7 @@ import RegistrationPage from './components/RegistrationPage/RegistrationPage';
 import DealPage from "./components/DealPage/DealPage";
 import {Provider} from "react-redux";
 import Header from "./components/Header/Header";
+import PersonalArea from "./components/PersonalArea/PersonalArea";
 
 
 function App(props) {
@@ -18,6 +19,7 @@ function App(props) {
                 <Route path="/login" component={LoginPage}/>
                 <Route path="/auth" component={RegistrationPage}/>
                 <Route path="/deal" component={DealPage}/>
+                <Route path="/personal-info" component={PersonalArea}/>
             </Router>
         </Provider>
     );

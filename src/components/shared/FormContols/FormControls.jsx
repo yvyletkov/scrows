@@ -35,4 +35,29 @@ const renderCheckBox = ({ input, type, label }) => (
   </>
 );
 
-export { renderCheckBox, renderInput };
+const renderPersonalAreaInput = ({
+  input,
+  label,
+  type,
+  meta: { touched, error, warning },
+  placeholder,
+}) => (
+  <>
+    <input
+      className={
+        !touched ? "form-control" : "form-control is-invalid"
+       && (!error ? "form-control is-valid" : "form-control is-invalid")
+    }
+      {...input}
+      placeholder={placeholder}
+      type={type}
+      value={label}
+      onFocus={() => {}}
+    />
+    {touched &&
+      ((error && <ErrorField message={error} />) ||
+        (warning && <ErrorField message={warning} />))}
+  </>
+);
+
+export { renderCheckBox, renderInput, renderPersonalAreaInput };

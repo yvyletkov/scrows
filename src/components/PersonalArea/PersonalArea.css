@@ -1,0 +1,38 @@
+.card-info {
+  margin: 20px auto;
+  width: 55vw;
+}
+
+.card-title__user {
+  padding: 0 1rem;
+}
+
+.btn-group__user {
+    padding: 1rem;
+}
+
+.is-inActive {
+  border: none;
+}
+
+.group-user__info {
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.label-field {
+  width: 30%;
+  height: auto;
+  padding: 1rem 1rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  font-weight: 300;
+  margin: 0;
+}
+
+.badge {
+  border: none;
+}
