@@ -1,130 +1,148 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import {Field, reduxForm} from 'redux-form';
-import {validate, warn} from "../../utils/validators/validators";
-import {renderCheckBox, renderPersonalAreaInput} from "../shared/FormContols/FormControls";
-import {login} from '../../redux/AuthReducer';
+import { Field, reduxForm } from "redux-form";
+import { validate, warn } from "../../utils/validators/validators";
+import {renderPersonalAreaInput} from "../shared/FormContols/FormControls";
+import { login } from "../../redux/AuthReducer";
 import { connect } from "react-redux";
 import "./PersonalArea.css";
+import personalDataIcon from "../../img/icons/personal-data.svg";
+import secureIcon from "../../img/icons/secure.svg";
+import extraDataIcon from "../../img/icons/extra-data.svg";
+import entityIcon from "../../img/icons/entity.svg";
+import persIcon from "../../img/icons/pers.svg";
+import adminIcon from "../../img/icons/admin.svg";
 
-const InfoUserForm = props => {
-    const { handleSubmit, pristine, reset, submitting } = props;
-    return (
-      <form className="popup__form" onSubmit={handleSubmit}>
-        <div className="form-group group-user__info">
-          <label className="label-field" htmlFor="username">Имя</label>
-          <Field label="Владимир" name="username" type="text" component={renderPersonalAreaInput} />
-        </div>
-        <div className="form-group group-user__info">
-          <label className="label-field" htmlFor="username">Фамилия</label>
-          <Field label="Путин" name="username" type="text" component={renderPersonalAreaInput} />
-        </div>
-        <div className="form-group group-user__info">
-          <label className="label-field" htmlFor="username">Отчество</label>
-          <Field label="Владимирович" name="username" type="text" component={renderPersonalAreaInput} />
-        </div>
-        <div className="form-group group-user__info">
-          <label className="label-field" htmlFor="username">Email</label>
-          <Field label="rossiaVperde@vovka.ru" name="username" type="text" component={renderPersonalAreaInput} />
-        </div>
-        <div className="button-group btn-group__user">
-          <button type="submit" className="btn btn-success" disabled={submitting || pristine}>Сохранить</button>
-          <button className="btn btn-info ml-3">Доп.информация</button>
-          <button className="btn btn-danger ml-3">Изменить пароль</button>
-        </div>
-      </form>
-    )
-  }
-
-  const AdditionalPersonalArea = (props) => {
-    return (
-      <form className="popup__form">
-        <div className="form-group group-user__info">
-              <label className="label-field" htmlFor="username">Пол</label>
-              <Field label="rossiaVperde@vovka.ru" name="username" type="text" component={renderPersonalAreaInput} />
-            </div>
-            <div className="form-group group-user__info">
-              <label className="label-field" htmlFor="username">Дата рождения</label>
-              <Field label="rossiaVperde@vovka.ru" name="username" type="text" component={renderPersonalAreaInput} />
-            </div>
-            <div className="form-group group-user__info">
-              <label className="label-field" htmlFor="username">Телефон</label>
-              <Field label="rossiaVperde@vovka.ru" name="username" type="text" component={renderPersonalAreaInput} />
-            </div>
-            <div className="form-group group-user__info">
-              <label className="label-field" htmlFor="username">Почтовый адрес</label>
-              <Field label="rossiaVperde@vovka.ru" name="username" type="text" component={renderPersonalAreaInput} />
-            </div>
-            <div className="form-group group-user__info">
-              <label className="label-field" htmlFor="username">Страна</label>
-              <Field label="rossiaVperde@vovka.ru" name="username" type="text" component={renderPersonalAreaInput} />
-            </div>
-            <div className="form-group group-user__info">
-              <label className="label-field" htmlFor="username">Область/край</label>
-              <Field label="rossiaVperde@vovka.ru" name="username" type="text" component={renderPersonalAreaInput} />
-            </div>
-            <div className="form-group group-user__info">
-              <label className="label-field" htmlFor="username">Город</label>
-              <Field label="rossiaVperde@vovka.ru" name="username" type="text" component={renderPersonalAreaInput} />
-            </div>
-            <div className="form-group group-user__info">
-              <label className="label-field" htmlFor="username">Почтовый индекс</label>
-              <Field label="rossiaVperde@vovka.ru" name="username" type="text" component={renderPersonalAreaInput} />
-            </div>
-            <div className="form-group group-user__info">
-              <label className="label-field" htmlFor="username">Улица, дом</label>
-              <Field label="rossiaVperde@vovka.ru" name="username" type="text" component={renderPersonalAreaInput} />
-            </div>
-            <div className="btn-group__user">
-              <button className="btn btn-success">Сохранить</button>
-            </div>
-      </form>
-    )
-  }
-  
-  const InfoUserReduxForm = reduxForm({form:'infoUserForm', validate, warn})(InfoUserForm);
-  const InfoUserAdditionalReduxForm = reduxForm({form:'infoUserFormAdditional', validate, warn})(AdditionalPersonalArea);
-
-const PersonalArea = (props) => {
-    const handleSubmit = (data) => {
-        console.log(data)
-    }
+const InfoUserForm = (props) => {
+  const { handleSubmit, pristine, reset, submitting } = props;
   return (
-    <div>
-      <div className="card card-info">
-        <div className="card-header">
-          <ul className="nav nav-tabs card-header-tabs">
-            <li className="nav-item">
-              <a className="nav-link active">
-                Данные о пользователе
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link">
-                Данные юр.лица
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link">
-                Данные физ.лица
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link">
-                Панель администратора
-              </a>
-            </li>
-          </ul>
+    <form className="popup__form" onSubmit={handleSubmit}>
+      <div className="row">
+        <div className="col-6">
+          <div className="form-group">
+            <label htmlFor="username">Имя</label>
+            <Field
+              label="Владимир"
+              name="username"
+              type="text"
+              component={renderPersonalAreaInput}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="username">Пол</label>
+            <select className="form-control custom-select">
+              <option>Мужской</option>
+              <option>Женский</option>
+            </select>
+          </div>
         </div>
-        <div className="card-body">
-          <h4 className="card-title card-title__user">Личная информация</h4>
-          <InfoUserReduxForm onSubmit={handleSubmit}/>
+        <div className="col-6">
+          <div className="form-group">
+            <label htmlFor="username">Фамилия</label>
+            <Field
+              value="Путин"
+              name="username"
+              type="text"
+              component={renderPersonalAreaInput}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="username">Дата рождения</label>
+            <input type="date" value="1952-10-07" className="form-control"/>
+          </div>
         </div>
       </div>
-      <div className="card card-info">
-        <div className="card-body">
-          <h4 className="card-title card-title__user">Дополнительная информация</h4>
-          <InfoUserAdditionalReduxForm />
+
+      <div>
+        <button
+          type="submit"
+          className="btn btn-success"
+          disabled={submitting || pristine}
+        >
+          Сохранить
+        </button>
+      </div>
+    </form>
+  );
+};
+
+const InfoUserReduxForm = reduxForm({ form: "infoUserForm", validate, warn })(
+  InfoUserForm
+);
+
+const PersonalArea = (props) => {
+  const handleSubmit = (data) => {
+    console.log(data);
+  };
+  return (
+    <div className="container mt-5">
+      <div className="row">
+        <div className="col-4">
+          <div className="nav-profile">
+            <ul className="nav-tabs">
+              <li className="nav-item">
+                <a className="nav-link active nav-profile">
+                  <img
+                    className="nav-icon"
+                    src={personalDataIcon}
+                    alt="user-icon"
+                  />
+                  Данные о пользователе
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link nav-profile">
+                <img
+                    className="nav-icon"
+                    src={secureIcon}
+                    alt="secure-icon"
+                  />
+                  Безопасность</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link nav-profile">
+                <img
+                    className="nav-icon"
+                    src={extraDataIcon}
+                    alt="extra-icon"
+                  />
+                  Доп. данные</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link nav-profile">
+                <img
+                    className="nav-icon"
+                    src={entityIcon}
+                    alt="entity-icon"
+                  />
+                  Данные юр.лица</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link nav-profile">
+                <img
+                    className="nav-icon"
+                    src={persIcon}
+                    alt="pers-icon"
+                  />
+                  Данные физ.лица</a>
+              </li>
+              <li className="nav-item mb-2">
+                <a className="nav-link nav-profile">
+                <img
+                    className="nav-icon"
+                    src={adminIcon}
+                    alt="pers-icon"
+                  />
+                  Панель администратора</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className="card card-info col-8">
+          <div className="card-body">
+            <h4 className="card-title">Личная информация</h4>
+            <InfoUserReduxForm onSubmit={handleSubmit} />
+          </div>
         </div>
       </div>
     </div>

@@ -51,8 +51,7 @@ const renderPersonalAreaInput = ({
       {...input}
       placeholder={placeholder}
       type={type}
-      value={label}
-      onFocus={() => {}}
+      value={input.value}
     />
     {touched &&
       ((error && <ErrorField message={error} />) ||
