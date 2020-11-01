@@ -1,15 +1,7 @@
-.card-info {
+/* .card-info {
   margin: 20px auto;
   width: 55vw;
-}
-
-.card-title__user {
-  padding: 0 1rem;
-}
-
-.btn-group__user {
-    padding: 1rem;
-}
+} */
 
 .is-inActive {
   border: none;
@@ -35,4 +27,22 @@
 
 .badge {
   border: none;
+}
+
+.nav-profile {
+  display: flex;
+  color:#171717;
+  border-radius: .375rem;
+  font-size: 16px;
+  align-items: center;
+}
+
+.nav-icon {
+  width: 30px;
+  margin: 0 10px 0 0;
+}
+
+.nav-tabs {
+  list-style: none;
+  width: 100%;
 }
