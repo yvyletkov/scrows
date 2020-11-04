@@ -51,7 +51,7 @@ const renderPersonalAreaInput = ({
       {...input}
       placeholder={placeholder}
       type={type}
-      value={input.value}
+      defaultValue={input.value}
     />
     {touched &&
       ((error && <ErrorField message={error} />) ||

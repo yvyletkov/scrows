@@ -35,7 +35,8 @@ export class Api {
 
 const baseApi = {
 
-    baseUrl: "http://api.scrows.ml/api",
+    // baseUrl: "http://api.scrows.ml/api",
+    baseUrl: "https://virtserver.swaggerhub.com/C67615/Scrows/1.0.0",
     headers: {"Content-Type": "application/json;charset=utf-8"},
 
     async request (endpoint, params) {
@@ -61,8 +62,9 @@ const authApi = {
     },
 
     async getUserData () {
-        this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
-        return await this.request(`/users/test/`, {
+        // this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+        this.headers.Authorization = `Bearer token`;
+        return await this.request(`/profile/personal/`, {
             method: "GET",
             headers: this.headers
         })

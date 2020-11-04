@@ -8,8 +8,11 @@ import RegistrationPage from './components/RegistrationPage/RegistrationPage';
 import DealPage from "./components/DealPage/DealPage";
 import {Provider} from "react-redux";
 import Header from "./components/Header/Header";
-import PersonalArea from "./components/PersonalArea/PersonalArea";
-
+import PersonalUserArea from "./components/Forms/InfoUserForm/InfoUserForm";
+import SecureUserArea from './components/Forms/SecureUserForm/SecureUserForm';
+import IndividualUserArea from './components/Forms/IndividualUserForm/IndividualUserForm';
+import EntityUserArea from './components/Forms/EntityUserForm/EntityUserForm';
+import PaymentUserArea from './components/Forms/PaymentUserForm/PaymentUserForm';
 
 function App(props) {
     return (
@@ -19,7 +22,11 @@ function App(props) {
                 <Route path="/login" component={LoginPage}/>
                 <Route path="/auth" component={RegistrationPage}/>
                 <Route path="/deal" component={DealPage}/>
-                <Route path="/personal-info" component={PersonalArea}/>
+                <Route path="/personal-info" component={PersonalUserArea}/>
+                <Route path="/security" component={SecureUserArea}/>
+                <Route path="/payment-info" component={PaymentUserArea}/>
+                <Route path="/entity-info" component={EntityUserArea}/>
+                <Route path="/individual-info" component={IndividualUserArea}/>
             </Router>
         </Provider>
     );

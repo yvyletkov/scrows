@@ -15,7 +15,7 @@ const LoginForm = props => {
         <Field placeholder="Введите почту" name="email" type="email" component={renderInput} />
       </div>
       <div className="form-group">
-        <Field placeholder="Введите пароль" name="password" type="password" component={renderInput} label="Email" />
+        <Field placeholder="Введите пароль" name="password" type="password" component={renderInput} />
       </div>
       <div className="custom-control custom-checkbox mb-3">
         <Field type="checkbox" name="rememberMe" component={renderCheckBox} label={"Запомнить меня"} />
