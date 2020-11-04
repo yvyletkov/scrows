@@ -6,7 +6,7 @@ import {login} from "../../redux/reducer";
 import vvpImg from "../../img/vvp.jpg";
 import damImg from "../../img/dam.jpg";
 
-const StatusItem = ({item, status, descriptions}) => {
+const StatusItem = ({item, status, descriptions, last, first}) => {
 
     let [showDescr, setShowDescr] = React.useState(false);
 
@@ -17,7 +17,13 @@ const StatusItem = ({item, status, descriptions}) => {
             {item < status ? <i className="fas fa-check fa-2x"></i> : item === status ?
                 <i className="fas fa-spinner fa-3x"></i> : null}
         </div>
-        <div className={`${s.statusDescription} ${showDescr ? s.active : null}`}>
+        <div
+            className={`${s.statusDescription}
+                ${last ? s.last : ""}
+                ${first ? s.first : ""}
+                ${(showDescr && s.active) || (((item <= status) && window.matchMedia("(min-width: 1200px)").matches) && s.active)}
+                ${item === status ? s.current : ""}`}
+        >
             {descriptions[item]}
         </div>
     </div>
@@ -36,33 +42,28 @@ const StatusTimeline = ({status = 4, withDelivery: delivery = true, problem = tr
         8: 'Работы приняты, сделка закрыта',
     }
 
-    let array = [];
     let amount = !delivery && !problem ? 6 : (delivery && !problem) || (!delivery && problem) ? 7 : 8;
+    let array = [];
     for (let i = 1; i <= amount; i++) {
         array.push(i);
     }
 
-    let statusItems = array.map((item) => {
-        return <StatusItem item={item} descriptions={descriptions} status={status}/>
+    let statusItems = array.map((item, index) => {
+        return <StatusItem item={item} first={index === 0} last={index === array.length - 1} descriptions={descriptions}
+                           status={status}/>
     });
 
     return (
-        <div className={s.statusTimelineWrapper}>
-            <div className={'d-flex justify-content-between'}>
-                <h4 style={{textTransform: 'uppercase'}}>ТЕКУЩИЙ CТАТУС: {descriptions[status]}</h4>
-                <h4 style={{textTransform: 'uppercase'}}>СУММА: 15 000 ₽</h4>
-            </div>
-
-            <div className={s.statusTimeline}>
-                {statusItems}
-            </div>
+        <div className={s.statusTimeline}>
+            {statusItems}
         </div>
     )
 }
 
-const DealPage = () => {
+const DealPage = ({statusName = "Ожидаем подтверждения второго участника"}) => {
     return (
-        <div className='container mt-4'>
+        <div style={{marginTop: "4rem"}} className='container'>
+
             {/*<nav aria-label="breadcrumb">*/}
             {/*    <ol className="breadcrumb">*/}
             {/*        <li className="breadcrumb-item"><a href="#">Сервис для проведения безопасных сделок</a></li>*/}
@@ -70,62 +71,78 @@ const DealPage = () => {
             {/*        <li className="breadcrumb-item active" aria-current="page">Просмотр сделок</li>*/}
             {/*    </ol>*/}
             {/*</nav>*/}
+
+            <div className={'d-md-flex justify-content-between'}>
+                <h3><span className="badge badge-secondary">Cделка №2135</span></h3>
+                <h3><span className="badge badge-secondary">Сумма: 15 000 ₽</span></h3>
+            </div>
+
+            <h4 style={{textTransform: 'none'}}>{statusName}</h4>
+
+            <StatusTimeline/>
+
             <div className='row mt-4'>
-                <div className='col-md-9'>
-                    <div className='card-body'>
-                        <h3><span className="badge badge-light">Cделка №2135</span></h3>
-                    </div>
-                    <div className=''>
-                        <div className='card-body'>
+                <div className='col-md-8'>
 
-                            <StatusTimeline/>
+                    <div className={'card ' + s.main}>
 
-                        </div>
-                    </div>
-
-                    <div className='row'>
-                        <div style={{borderRight: "1px solid #c9c9c9"}} className='col-6'>
-                            <div className='card-body'>
-                                <h4 className='card-title'>Предмет сделки</h4>
-                                <p>Моющий пылесос с аква фильтром</p>
+                        <div className='row m-0'>
+                            <div className={'col-lg-6 mb-4 mb-lg-0 pr-lg-4 pl-lg-0 px-0'}>
+                                <div className={'p-4 ' + s.grayWrapper}>
+                                    <h4 className='card-title'>Предмет сделки</h4>
+                                    <p>Моющий пылесос с аква фильтром</p>
+                                </div>
+                            </div>
+                            <div className={'col-lg-6 pl-0 ' + s.grayWrapper}>
+                                <div className={'p-4 ' + s.grayWrapper}>
+                                    <h4 className='card-title'>Файлы сделки</h4>
+                                    <p>К этой сделке файлы не прикреплены</p>
+                                </div>
                             </div>
                         </div>
-                        <div className='col-6'>
-                            <div className='card-body text-right'>
-                                <h4 className='card-title'>Файлы сделки</h4>
-                                <p>К этой сделке файлы не прикреплены</p>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div className='mb-1'>
-                        <div className='card-body'>
+                        <div className='mb-4 mt-4 mx-md-2'>
+                            {/*<div className='card-body'>*/}
                             <h4 className='card-title'>История сделки</h4>
                             <p>
-                                <span style={{color: "#fff"}} className="badge badge-warning mr-2 mb-2">07.10.2020 23:24:31</span> создана
-                                сделка: Вадим Закиров<br/>
-                                <span style={{color: "#fff"}} className="badge badge-warning mr-2 mb-2">07.10.2020 23:24:31</span> отправлено
-                                приглашение Покупатель на
-                                email:vadimzakirov1992@gmail.com<br/>
-                                <span style={{color: "#fff"}} className="badge badge-warning mr-2 mb-2">07.10.2020 23:24:35</span> Сделка
-                                перешла в статус ПРИГЛАШЕНИЕ ВТОРОГО УЧАСТНИКА<br/>
-                                <span style={{color: "#fff"}} className="badge badge-warning mr-2 mb-2">07.10.2020 23:24:35</span> Ожидание
-                                принятия условий второго участника<br/>
-                                <span style={{color: "#fff"}} className="badge badge-warning mr-2 mb-2">07.10.2020 23:26:49</span> Условия
-                                сделки приняты, ожидание оплаты от заказчика<br/>
-                                <span style={{color: "#fff"}} className="badge badge-warning mr-2 mb-2">07.10.2020 23:27:35</span> Выбран
-                                тип
-                                оплаты. Физ.лицо. Проведение электронного платежа<br/>
-                                <span style={{color: "#fff"}} className="badge badge-warning mr-2 mb-2">07.10.2020 23:28:42</span> Оплата
-                                поступила, исполнитель приступил к выполнению работ<br/>
-                                <span style={{color: "#fff"}} className="badge badge-warning mr-2 mb-2">07.10.2020 23:28:40</span> Оплата
-                                проведена успешно через сервис paykeeper.ru<br/>
-                            </p>
-                        </div>
-                    </div>
+                                <div className='mb-2'>
+                                    <span style={{color: "#fff"}} className="badge badge-warning mr-2 align-bottom">07.10.2020 23:24:31</span><span>создана
+                                    сделка: Вадим Закиров</span>
+                                </div>
+                                <div className='mb-2'>
+                                    <span style={{color: "#fff"}} className="badge badge-warning mr-2 align-bottom">07.10.2020 23:24:31</span><span>отправлено
+                                    приглашение Покупатель на email:vadimzakirov1992@gmail.com</span>
+                                </div>
+                                <div className='mb-2'>
+                                    <span style={{color: "#fff"}} className="badge badge-warning mr-2 align-bottom">07.10.2020 23:24:35</span><span> Сделка
+                                перешла в статус ПРИГЛАШЕНИЕ ВТОРОГО УЧАСТНИКА</span>
+                                </div>
+                                <div className='mb-2'>
+                                    <span style={{color: "#fff"}} className="badge badge-warning mr-2 align-bottom">07.10.2020 23:24:31</span><span>Ожидание
+                                принятия условий второго участника</span>
+                                </div>
+                                <div className='mb-2'>
+                                    <span style={{color: "#fff"}} className="badge badge-warning mr-2 align-bottom">07.10.2020 23:26:49</span><span>Условия
+                                сделки приняты, ожидание оплаты от заказчика</span>
+                                </div>
+                                <div className='mb-2'>
+                                    <span style={{color: "#fff"}} className="badge badge-warning mr-2 align-bottom">07.10.2020 23:24:31</span><span>Выбран
+                                тип оплаты. Физ.лицо. Проведение электронного платежа</span>
+                                </div>
+                                <div className='mb-2'>
+                                    <span style={{color: "#fff"}} className="badge badge-warning mr-2 align-bottom">07.10.2020 23:24:31</span><span>Оплата
+                                поступила, исполнитель приступил к выполнению работ</span>
+                                </div>
+                                <div className='mb-2'>
+                                    <span style={{color: "#fff"}} className="badge badge-warning mr-2 align-bottom">07.10.2020 23:28:40</span><span>оОплата
+                                проведена успешно через сервис paykeeper.ru</span>
+                                </div>
 
-                    <div className='mb-4'>
-                        <div className='card-body'>
+                            </p>
+                            {/*</div>*/}
+                        </div>
+
+                        <div className={'card-body p-4 ' + s.grayWrapper}>
                             <h4 className='card-title mb-3'>Чат</h4>
 
                             <div className='row mb-3'>
@@ -149,7 +166,7 @@ const DealPage = () => {
                             </div>
 
 
-                            <div className="form-group">
+                            <div className="form-group mb-0">
                                 {/*<label htmlFor="exampleFormControlTextarea1">Сообщение</label>*/}
                                 <textarea style={{resize: "none"}} className="form-control mb-3"
                                           placeholder='Сообщение' id="exampleFormControlTextarea1" rows="3"/>
@@ -157,21 +174,25 @@ const DealPage = () => {
                                 <div className="float-right custom-control custom-toggle my-2">
                                     <input type="checkbox" id="customToggle" name="customToggle"
                                            className="custom-control-input"/>
-                                    <h6><label className="custom-control-label" htmlFor="customToggle">Получать ответы на
-                                        почту</label></h6>
+                                    <label className="custom-control-label" htmlFor="customToggle">Получать ответы на
+                                        почту</label>
                                 </div>
 
                                 <button type="button" className="btn btn-outline-warning btn-pill">Отправить</button>
 
                             </div>
                         </div>
+
                     </div>
                 </div>
-                <div className='col-md-3'>
+
+                {/* SIDEBAR*/}
+                <div className='col-md-4'>
                     <div className={`card ${s.sidebarCard}`}>
                         <div className='card-body'>
                             <img className={s.cardImg} src={vvpImg} alt="Путин"/>
-                            <h6 className={'text-md-center text-lg-left'}><span className="badge badge-secondary">Продавец</span></h6>
+                            <h5 className={'text-md-left'}><span
+                                className="badge badge-secondary">Продавец</span></h5>
                             <div>Путин</div>
                             <div>Владимир</div>
                             <div><b>email:</b> vvp@scrows.ru</div>
@@ -180,7 +201,8 @@ const DealPage = () => {
                     <div className={`card ${s.sidebarCard}`}>
                         <div className='card-body'>
                             <img className={s.cardImg} src={damImg} alt="Медведев"/>
-                            <h6 className={'text-md-center text-lg-left'}><span className="badge badge-secondary">Покупатель</span></h6>
+                            <h5 className={'text-md-left'}><span
+                                className="badge badge-secondary">Покупатель</span></h5>
                             <div>Медведев</div>
                             <div>Дмитрий</div>
                             <div><b>email:</b> dam@scrows.ru</div>
