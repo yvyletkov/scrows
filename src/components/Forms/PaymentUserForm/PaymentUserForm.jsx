@@ -1,71 +1,75 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Field, reduxForm } from "redux-form";
 import { validate, warn } from "../../../utils/validators/validators";
-import { renderPersonalAreaInput } from "../../shared/FormContols/FormControls";
+import { renderCardNumberInput } from "../../shared/FormContols/FormControls";
 import { login } from "../../../redux/AuthReducer";
 import { connect } from "react-redux";
 import PersonalAreaCard from "../../shared/PersonalAreaCard/PersonalAreaCard";
+import { Button, Modal, ModalBody, ModalHeader } from "shards-react";
+import s from "./PaymentUserForm.module.css";
+import iconAdd from "../../../img/icons/plus.svg";
 
 const PaymentUserForm = (props) => {
+  const [open, openModal] = useState(false);
   const { handleSubmit, pristine, reset, submitting } = props;
   return (
-    <form className="popup__form" onSubmit={handleSubmit}>
-      <div className="row">
-        <div className="col-lg-6 col-12">
-          <div className="form-group">
-            <label htmlFor="username">Имя</label>
-            <Field
-              label="Владимир"
-              name="username"
-              type="text"
-              component={renderPersonalAreaInput}
-            />
+    <div className="row">
+      <div className={`card col-5 ${s.creditCard}`}>
+        <div className="card-body">
+          <div onClick={() => openModal(true)}>
+            <img className={s.btnAdd} src={iconAdd} alt="Добавить карту" />
           </div>
-          <div className="form-group">
-            <label htmlFor="username">Пол</label>
-            <select className="form-control custom-select">
-              <option>Мужской</option>
-              <option>Женский</option>
-            </select>
-          </div>
-        </div>
-        <div className="col-lg-6 col-12">
-          <div className="form-group">
-            <label htmlFor="username">Фамилия</label>
-            <Field
-              value="Путин"
-              name="username"
-              type="text"
-              component={renderPersonalAreaInput}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="username">Дата рождения</label>
-            <input type="date" value="1952-10-07" className="form-control" />
-          </div>
+          <Modal
+            className={s.modalWindow}
+            open={open}
+            toggle={() => {openModal(false)} }
+          >
+            <ModalHeader className="justify-content-center">
+              Добавить карту
+            </ModalHeader>
+            <ModalBody>
+              <form>
+                <Field
+                  placeholder="Введите номер карты"
+                  name="card_number"
+                  type="number"
+                  component={renderCardNumberInput}
+                  required
+                />
+                <button
+                  type="submit"
+                  className="btn btn-success mt-3"
+                  disabled={submitting || pristine}
+                >
+                  Добавить карту
+                </button>
+              </form>
+            </ModalBody>
+          </Modal>
         </div>
       </div>
-
-      <div>
-        <button
-          type="submit"
-          className="btn btn-success"
-          disabled={submitting || pristine}
-        >
-          Сохранить
-        </button>
+      <div className={`card col-5 ${s.creditCard}`}>
+        <div className="card-body"></div>
       </div>
-    </form>
+      <div className={`card col-5 ${s.creditCard}`}>
+        <div className="card-body"></div>
+      </div>
+    </div>
   );
 };
 
-const InfoUserReduxForm = reduxForm({ form: "PaymentUserForm", validate, warn })(
-  PaymentUserForm
-);
+const PaymentUserReduxForm = reduxForm({
+  form: "PaymentUserForm",
+  validate,
+  warn,
+})(PaymentUserForm);
 
 const PaymentUserArea = () => (
-  <PersonalAreaCard InfoCard={<InfoUserReduxForm />} titleCard={'Дополнительные данные'}/>
+  <PersonalAreaCard
+    InfoCard={<PaymentUserReduxForm />}
+    titleCard={"Платежные данные"}
+  />
 );
 
 export default PaymentUserArea;

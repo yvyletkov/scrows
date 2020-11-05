@@ -1,0 +1,28 @@
+.btnAdd {
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translateX(-50%) translateY(-50%);
+    display: inline-block;
+    width: 44px;
+    height: 44px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.creditCard {
+    position: relative;
+    height: 150px;
+    background-color: #eeeeee;
+    margin:10px auto;
+}
+
+.modalWindow {
+    position: absolute;
+    top:40%;
+    left:50%;
+    transform: translateX(-50%) translateY(-50%) !important;
+    width: 350px;
+    height:200px;
+}
