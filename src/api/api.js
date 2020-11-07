@@ -68,7 +68,32 @@ const authApi = {
             method: "GET",
             headers: this.headers
         })
-    }
+    },
+
+    async changeUserData (middle_name, last_name, name, date_of_birth, entity_type, gender) {
+      console.log(JSON.stringify({
+        middle_name: `${middle_name}`,
+        last_name: `${last_name}`,
+        name: `${name}`,
+        date_of_birth: `${date_of_birth}`,
+        entity_type: `${entity_type}`,
+        gender: `${gender}`,
+    }))
+      // this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+      this.headers.Authorization = `Bearer token`;
+      return await this.request(`/profile/personal/`, {
+          method: "PATCH",
+          headers: this.headers,
+          body: JSON.stringify({
+            middle_name: `${middle_name}`,
+            last_name: `${last_name}`,
+            name: `${name}`,
+            date_of_birth: `${date_of_birth}`,
+            entity_type: `${entity_type}`,
+            gender: `${gender}`,
+        })
+      })
+    }    
 
 };
 
