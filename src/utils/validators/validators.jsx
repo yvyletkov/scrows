@@ -1,23 +1,33 @@
 const validate = (values) => {
-  const errors = {};
-  if (!values.email) {
-    errors.email = "Это поле обязательное";
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+  let errors = {};
+  const require = "Это поле обязательное";
+  const fields = [
+    "name",
+    "last_name",
+    "middle_name",
+    "email",
+    "password",
+    "passwordFirst",
+    "passwordSecond",
+    "date_of_birth",
+    "entity_type",
+    "gender",
+  ];
+  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
     errors.email = "Неверный email";
   }
-  if (!values.password) {
-    errors.password = "Это поле обязательное";
+  if (!/[^]{6,}/i.test(values.passwordFirst)) {
+    errors.passwordFirst = "Пароль слишком короткий";
   }
-  if (!values.passwordFirst) {
-    errors.passwordFirst = "Это поле обязательное";
-  } else if(values.passwordFirst.length < 6) {
-    errors.passwordFirst = "Пароль слишком короткий"
+  if (values.passwordFirst !== values.passwordSecond) {
+    errors.passwordSecond = "Пароли не совпадают";
   }
-  if(!values.passwordSecond) {
-    errors.passwordSecond = "Это поле обязательное";
-  } else if (values.passwordFirst !== values.passwordSecond) {
-    errors.passwordSecond = "Пароли не совпадают"
-  }
+  fields.forEach((field) => {
+    if (!values.hasOwnProperty(field)) {
+      errors[field] = require;
+    }
+  });
+
   return errors;
 };
 
@@ -30,4 +40,3 @@ const warn = (values) => {
 };
 
 export { validate, warn };
-

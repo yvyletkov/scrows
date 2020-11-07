@@ -52,7 +52,6 @@ const renderPersonalAreaInput = ({
       {...input}
       placeholder={placeholder}
       type={type}
-      defaultValue={input.value}
     />
     {touched &&
       ((error && <ErrorField message={error} />) ||
@@ -83,4 +82,28 @@ const renderCardNumberInput = ({
   </>
 );
 
-export { renderCheckBox, renderInput, renderPersonalAreaInput, renderCardNumberInput };
+const renderSelect = ({
+  input,
+  label,
+  type,
+  meta: { touched, error, warning },
+  placeholder,
+  children
+}) => (
+  <>
+    <select
+      className={
+        !touched ? "form-control custom-select" : "form-control is-invalid custom-select"
+       && (!error ? "form-control is-valid custom-select" : "form-control is-invalid custom-select")
+    }
+      {...input}
+      placeholder={placeholder}
+      type={type}
+    >{children}</select>
+    {touched &&
+      ((error && <ErrorField message={error} />) ||
+        (warning && <ErrorField message={warning} />))}
+  </>
+);
+
+export { renderCheckBox, renderInput, renderPersonalAreaInput, renderCardNumberInput, renderSelect };

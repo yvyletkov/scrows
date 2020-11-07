@@ -9,9 +9,32 @@ import persIcon from "../../../img/icons/pers.svg";
 import adminIcon from "../../../img/icons/admin.svg";
 
 const PersonalAreaCard = (props) => {
-  const handleSubmit = (data) => {
-    console.log(data);
-  };
+
+  const userType = props.entity_type === "entity" ? 
+  (<li className="nav-item">
+    <NavLink
+      to="/entity-info"
+      className={`nav-link ${s.navProfile}`}
+    >
+      <img
+        className={s.navIcon}
+        src={entityIcon}
+        alt="entity-icon"
+      />
+      Данные юр.лица
+    </NavLink>
+  </li> )
+  :
+  (<li className="nav-item mb-3">
+    <NavLink
+      to="/individual-info"
+      className={`nav-link ${s.navProfile}`}
+    >
+      <img className={s.navIcon} src={persIcon} alt="pers-icon" />
+      Данные физ.лица
+    </NavLink>
+  </li>);
+  
   return (
     <div className="container mt-5">
       <div className="row">
@@ -54,28 +77,7 @@ const PersonalAreaCard = (props) => {
                   Платежные данные
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink
-                  to="/entity-info"
-                  className={`nav-link ${s.navProfile}`}
-                >
-                  <img
-                    className={s.navIcon}
-                    src={entityIcon}
-                    alt="entity-icon"
-                  />
-                  Данные юр.лица
-                </NavLink>
-              </li>
-              <li className="nav-item mb-3">
-                <NavLink
-                  to="/individual-info"
-                  className={`nav-link ${s.navProfile}`}
-                >
-                  <img className={s.navIcon} src={persIcon} alt="pers-icon" />
-                  Данные физ.лица
-                </NavLink>
-              </li>
+              {userType}
             </ul>
           </div>
         </div>
