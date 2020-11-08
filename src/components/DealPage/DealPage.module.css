@@ -10,6 +10,7 @@
     margin-top: 2rem;
     margin-bottom: 7.5rem;
     padding: 0 25px;
+    transition: all 200ms;
 }
 
 .statusTimeline:before {
@@ -31,9 +32,9 @@
     text-align: center;
     align-items: center;
     justify-content: center;
-    color: #fff;
-    background-color: #c9c9c9;
-    font-size: 10px;
+    color: #000;
+    background-color: #ffffff;
+    font-size: 11px;
     position: absolute;
     padding: 0 3px;
     height: 3.3rem;
@@ -42,11 +43,13 @@
     bottom: -55px;
     transition: all 300ms ease;
     opacity: 0;
+    box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02);
 }
 
-.statusDescription.current {
-    background-color: #28c933;
 
+.statusDescription.current {
+    background-color: #6ade5f;
+    color: #fff
 }
 
 .statusDescription.active {
@@ -57,8 +60,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    max-width: 105px;
-    max-height: 105px;
+    width: 105px;
+    height: 105px;
     cursor: default;
 }
 
@@ -101,12 +104,6 @@
     border: 6px solid #68dc5f;
 }
 
-
-.sidebarCard:first-child {
-    margin-top: 0rem;
-    margin-bottom: 4rem;
-}
-
 .sidebarCard {
     position: relative;
 }
@@ -117,18 +114,23 @@
     box-shadow: 0 0 0 0.125rem #fff, 0 0.1875rem 0.4375rem rgba(90,97,105,.5);
     border-radius: 50%;
     position: absolute;
-    top: 15px;
-    left: 70%;
-    transform: translateX(-50%) translateY(-50%);
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
 }
 
 .grayWrapper {
-    background: #f2f2f2;
-    border-radius: 10px;
+    /*background: #f5f5f5;*/
+    background: rgb(254,254,254);
+    background: radial-gradient(circle, rgba(250,250,250,1) 0%, rgba(245,245,245,1) 100%);
+    border-radius: 8px;
 }
 
 @media screen and (max-width: 1200px) {
     .statusTimeline {
+        margin-bottom: 2rem;
+    }
+    .statusTimeline.opened {
         margin-bottom: 6rem;
     }
 }
@@ -136,14 +138,15 @@
 @media screen and (max-width: 992px) {
 
     .sidebarCard .cardImg {
+        display: block;
+        position: relative;
         width: 70px;
         height: 70px;
-        top: 10px;
-        right: 5%;
-    }
-
-    .sidebarCard:first-child {
-        margin-bottom: 3rem;
+        top: unset;
+        right: unset;
+        margin: 0 auto;
+        margin-bottom: 5px;
+        transform: none;
     }
 
     .statusItem {
@@ -162,15 +165,33 @@
     }
 }
 
-@media screen and (max-width: 800px) {
-    .statusDescription.first {
-        transform: translateX(25%);
-    }
 
-    .statusDescription.last {
-        transform: translateX(-25%);
-    }
+/* чат */
+
+.message .messageText {
+    padding: 5px 10px;
+    background: #ffffff;
+    color: #2f3237;
+    border-radius: 20px 20px 20px 0;
+    /*border: 1px solid #eeeeee;*/
+    width: fit-content;
+    box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02);
 }
+
+.message.dark .messageText {
+    /*background: #4e4e4e;*/
+
+}
+
+.message .messageText + div {
+    margin-left: 10px;
+    font-size: 10px;
+    margin-top: 4px;
+}
+
+/* end чат*/
+
+
 
 @media screen and (max-width: 767px) {
     .statusTimeline {
@@ -180,6 +201,37 @@
 
     .statusTimeline:before {
         width: calc(100% - 30px);
+    }
+
+}
+
+@media screen and (max-width: 580px) {
+
+    .statusDescription {
+        width: 100%;
+        left: 0;
+        bottom: -73px;
+        font-size: 14px;
+    }
+
+    .statusItemWrapper, .statusItem.archieved {
+        width: calc(100vw * 0.12);
+        height: calc(100vw * 0.12);
+    }
+
+    .statusTimeline {
+        margin-left: 0;
+        margin-right: 0;
+        padding: 0;
+    }
+
+    .statusItem, .statusItem.archieved.past {
+        width: calc(100vw * 0.1);
+        height: calc(100vw * 0.1);
+    }
+
+    .statusItem {
+        font-size: 1.8vw;
     }
 }
 

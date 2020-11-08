@@ -12,7 +12,7 @@ import PersonalArea from "./components/PersonalArea/PersonalArea";
 
 
 function App(props) {
-    return (
+    return (<>
         <Provider store={props.store}>
             <Router>
                 <Header/>
@@ -22,7 +22,7 @@ function App(props) {
                 <Route path="/personal-info" component={PersonalArea}/>
             </Router>
         </Provider>
-    );
+    </>)
 }
 
 export default App;
