@@ -6,35 +6,33 @@ import secureIcon from "../../../img/icons/secure.svg";
 import extraDataIcon from "../../../img/icons/extra-data.svg";
 import entityIcon from "../../../img/icons/entity.svg";
 import persIcon from "../../../img/icons/pers.svg";
-import adminIcon from "../../../img/icons/admin.svg";
 
 const PersonalAreaCard = (props) => {
+  // const userType = props.entity_type === "entity" ?
+  // (<li className="nav-item">
+  //   <NavLink
+  //     to="/entity-info"
+  //     className={`nav-link ${s.navProfile}`}
+  //   >
+  //     <img
+  //       className={s.navIcon}
+  //       src={entityIcon}
+  //       alt="entity-icon"
+  //     />
+  //     Данные юр.лица
+  //   </NavLink>
+  // </li> )
+  // :
+  // (<li className="nav-item mb-3">
+  //   <NavLink
+  //     to="/individual-info"
+  //     className={`nav-link ${s.navProfile}`}
+  //   >
+  //     <img className={s.navIcon} src={persIcon} alt="pers-icon" />
+  //     Данные физ.лица
+  //   </NavLink>
+  // </li>);
 
-  const userType = props.entity_type === "entity" ? 
-  (<li className="nav-item">
-    <NavLink
-      to="/entity-info"
-      className={`nav-link ${s.navProfile}`}
-    >
-      <img
-        className={s.navIcon}
-        src={entityIcon}
-        alt="entity-icon"
-      />
-      Данные юр.лица
-    </NavLink>
-  </li> )
-  :
-  (<li className="nav-item mb-3">
-    <NavLink
-      to="/individual-info"
-      className={`nav-link ${s.navProfile}`}
-    >
-      <img className={s.navIcon} src={persIcon} alt="pers-icon" />
-      Данные физ.лица
-    </NavLink>
-  </li>);
-  
   return (
     <div className="container mt-5">
       <div className="row">
@@ -77,7 +75,29 @@ const PersonalAreaCard = (props) => {
                   Платежные данные
                 </NavLink>
               </li>
-              {userType}
+              {/* {userType} */}
+              <li className="nav-item">
+                <NavLink
+                  to="/entity-info"
+                  className={`nav-link ${s.navProfile}`}
+                >
+                  <img
+                    className={s.navIcon}
+                    src={entityIcon}
+                    alt="entity-icon"
+                  />
+                  Данные юр.лица
+                </NavLink>
+              </li>
+              <li className="nav-item mb-3">
+                <NavLink
+                  to="/individual-info"
+                  className={`nav-link ${s.navProfile}`}
+                >
+                  <img className={s.navIcon} src={persIcon} alt="pers-icon" />
+                  Данные физ.лица
+                </NavLink>
+              </li>
             </ul>
           </div>
         </div>
@@ -85,7 +105,10 @@ const PersonalAreaCard = (props) => {
           <div className={`card-header ${s.cardHeaderMob}`}>
             <ul className="nav nav-tabs card-header-tabs">
               <li className={`nav-item ${s.navLinkMob}`}>
-                <NavLink to="/personal-info" className={`nav-link ${s.navProfile}`}>
+                <NavLink
+                  to="/personal-info"
+                  className={`nav-link ${s.navProfile}`}
+                >
                   Данные о пользователе
                 </NavLink>
               </li>
@@ -95,17 +118,26 @@ const PersonalAreaCard = (props) => {
                 </NavLink>
               </li>
               <li className={`nav-item ${s.navLinkMob}`}>
-                <NavLink to="/payment-info" className={`nav-link ${s.navProfile}`}>
+                <NavLink
+                  to="/payment-info"
+                  className={`nav-link ${s.navProfile}`}
+                >
                   Платежные данные
                 </NavLink>
               </li>
               <li className={`nav-item ${s.navLinkMob}`}>
-                <NavLink to="/entity-info" className={`nav-link ${s.navProfile}`}>
+                <NavLink
+                  to="/entity-info"
+                  className={`nav-link ${s.navProfile}`}
+                >
                   Данные юр.лица
                 </NavLink>
               </li>
               <li className={`nav-item ${s.navLinkMob}`}>
-                <NavLink to="/individual-info" className={`nav-link mb-2 ${s.navProfile}`}>
+                <NavLink
+                  to="/individual-info"
+                  className={`nav-link mb-2 ${s.navProfile}`}
+                >
                   Данные физ.лица
                 </NavLink>
               </li>
