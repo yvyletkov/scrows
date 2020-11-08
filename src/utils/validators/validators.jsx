@@ -12,6 +12,15 @@ const validate = (values) => {
     "date_of_birth",
     "entity_type",
     "gender",
+    "phone_number",
+    "entity_id",
+    "entity_tin",
+    "document_type",
+    "entity_bank_account_data",
+    "judical_type",
+    "passport_data_created",
+    "passport_data_number",
+    "passport_data_code",
   ];
   if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
     errors.email = "Неверный email";
@@ -24,6 +33,9 @@ const validate = (values) => {
   }
   fields.forEach((field) => {
     if (!values.hasOwnProperty(field)) {
+      errors[field] = require;
+    }
+    if (values.length === 0) {
       errors[field] = require;
     }
   });

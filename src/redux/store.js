@@ -9,7 +9,7 @@ const reducers = combineReducers({
   form: formReducer,
   // main: reducer,
   auth: authReducer,
-  infoUser: personalAreaReducer
+  infoUser: personalAreaReducer,
 });
 
 const store = createStore(reducers, applyMiddleware(thunkMiddleware));

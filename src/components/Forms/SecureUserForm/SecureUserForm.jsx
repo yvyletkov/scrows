@@ -1,16 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Field, reduxForm } from "redux-form";
 import { validate, warn } from "../../../utils/validators/validators";
 import {
   renderInput,
   renderPersonalAreaInput,
 } from "../../shared/FormContols/FormControls";
+import {
+  changeSecureData,
+  getSecureData,
+} from "../../../redux/PersonalAreaReducer";
+import { connect } from "react-redux";
 import PersonalAreaCard from "../../shared/PersonalAreaCard/PersonalAreaCard";
 import s from "./SecureUserForm.module.css";
+import Preloader from "../../shared/Preloader/Preloader";
 
-const InfoUserForm = (props) => {
-  const { handleSubmit, pristine, reset, submitting } = props;
+const SecureUserForm = (props) => {
+  const { handleSubmit, pristine, reset, submitting, getSecureData, isFetching } = props;
+  useEffect(() => {
+    getSecureData();
+    return () => reset();
+  }, []);
   return (
+    isFetching ? 
+    <Preloader/> :
     <form className="popup__form" onSubmit={handleSubmit}>
       <div className="row">
         <div className="col-12">
@@ -33,19 +45,12 @@ const InfoUserForm = (props) => {
               name="phone_number"
               type="tel"
               component={renderPersonalAreaInput}
+              placeholder="Введите номер телефона"
             />
-            {/* <label htmlFor="phone_number">Номер телефона</label>
-            <Field
-              name="phone_number"
-              type="tel"
-              component={renderPersonalAreaInput}
-            /> */}
           </div>
           <div className={`form-group mb-3 ${s.userInfo}`}>
             <span className={s.passField}>Пароль</span>
-            <button className="btn btn-danger">
-              Сбросить пароль
-            </button>
+            <button className="btn btn-danger">Сбросить пароль</button>
           </div>
         </div>
       </div>
@@ -63,15 +68,33 @@ const InfoUserForm = (props) => {
   );
 };
 
-const InfoUserReduxForm = reduxForm({ form: "infoUserForm", validate, warn })(
-  InfoUserForm
-);
+const SecureUserReduxForm = reduxForm({
+  form: "secureUserForm",
+  validate,
+  enableReinitialize:true,
+  warn,
+})(SecureUserForm);
 
-const SecureUserArea = () => (
-  <PersonalAreaCard
-    InfoCard={<InfoUserReduxForm />}
-    titleCard={"Безопасность"}
-  />
-);
+const SecureUserArea = (props) => {
+  
+  const { getSecureData, phone_number, email, isFetching } = props;
+  return (
+    <PersonalAreaCard
+      InfoCard={<SecureUserReduxForm 
+        getSecureData={getSecureData}
+        initialValues = {{phone_number, email }}
+        isFetching = {isFetching} />}
+      titleCard={"Безопасность"}
+    />
+  );
+};
 
-export default SecureUserArea;
+const mapStateToProps = (state) => {
+  return {
+    phone_number: state.infoUser.phone_number,
+    email: state.infoUser.email,
+    isFetching: state.infoUser.isFetching,
+  };
+};
+
+export default connect(mapStateToProps, { getSecureData })(SecureUserArea);

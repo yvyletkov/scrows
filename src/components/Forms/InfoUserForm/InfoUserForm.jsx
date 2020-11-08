@@ -1,6 +1,5 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import { Field, initialize, reduxForm } from "redux-form";
+import React, {useEffect} from "react";
+import { Field, reduxForm } from "redux-form";
 import { validate, warn } from "../../../utils/validators/validators";
 import {
   renderPersonalAreaInput,
@@ -9,6 +8,8 @@ import {
 import { changeUserData, getUserData } from "../../../redux/PersonalAreaReducer";
 import { connect } from "react-redux";
 import PersonalAreaCard from "../../shared/PersonalAreaCard/PersonalAreaCard";
+import s from "./InfoUserForm.module.css"
+import Preloader from "../../shared/Preloader/Preloader";
 
 const InfoUserForm = (props) => {
   const {
@@ -16,9 +17,26 @@ const InfoUserForm = (props) => {
     pristine,
     reset,
     submitting,
+    getUserData,
+    avatar,
+    initialValues,
+    isFetching
   } = props;
 
+  const {name, last_name} = initialValues
+
+  useEffect(() => {
+    getUserData();
+    return () => reset()
+  }, []);
+
   return (
+    isFetching ? <Preloader /> :
+    <>
+    <div className="d-flex my-3">
+      <div className={s.avatarImg} style={{backgroundImage:`url(${avatar})`}}></div>
+      <p className={s.nameUser}>{name} {last_name}</p>
+    </div>
     <form className="popup__form" onSubmit={handleSubmit}>
       <div className="row">
         <div className="col-lg-6 col-12">
@@ -97,6 +115,7 @@ const InfoUserForm = (props) => {
         </button>
       </div>
     </form>
+    </>
   );
 };
 
@@ -119,11 +138,12 @@ const PersonalUserArea = (props) => {
     avatar,
     entity_type,
     gender,
+    isFetching,
   } = props;
   
-  React.useEffect(() => {
-    getUserData();
-  }, []);
+  // useEffect(() => {
+  //   getUserData();
+  // }, []);
 
   return (
     <PersonalAreaCard
@@ -138,6 +158,9 @@ const PersonalUserArea = (props) => {
             gender,
           }}
           onSubmit={onSubmit}
+          getUserData={getUserData}
+          avatar={avatar}
+          isFetching={isFetching}
         />
       }
       titleCard={"Личная информация"}
@@ -155,7 +178,8 @@ const mapStateToProps = (state) => {
       date_of_birth: state.infoUser.date_of_birth,
       gender: state.infoUser.gender,
       avatar: state.infoUser.avatar,
-      entity_type: state.infoUser.entity_type
+      entity_type: state.infoUser.entity_type,
+      isFetching: state.infoUser.isFetching,
   };
 };
 
