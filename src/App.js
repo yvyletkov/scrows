@@ -15,7 +15,7 @@ import EntityUserArea from './components/Forms/EntityUserForm/EntityUserForm';
 import PaymentUserArea from './components/Forms/PaymentUserForm/PaymentUserForm';
 
 function App(props) {
-    return (
+    return (<>
         <Provider store={props.store}>
             <Router>
                 <Header/>
@@ -29,7 +29,7 @@ function App(props) {
                 <Route path="/individual-info" component={IndividualUserArea}/>
             </Router>
         </Provider>
-    );
+    </>)
 }
 
 export default App;

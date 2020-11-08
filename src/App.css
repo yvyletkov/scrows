@@ -6,3 +6,9 @@ body {
 p {
     margin: 0;
 }
+
+@media screen and (max-width: 580px) {
+    body {
+        font-size: 12px !important;
+    }
+}
