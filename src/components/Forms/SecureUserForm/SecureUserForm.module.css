@@ -1,21 +1,56 @@
 .userInfo {
-  display: flex;
-  align-items: center;
-  margin: 0;
+    display: flex;
+    align-items: center;
+    margin: 0;
 }
 
 .labelField {
-  width: 30%;
-  height: auto;
-  padding: 1rem 0;
-  font-size: 0.95rem;
-  line-height: 1.5;
-  color: #495057;
-  background-color: #fff;
-  font-weight: 300;
-  margin: 0;
+    width: 30%;
+    height: auto;
+    padding: 1rem 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    font-weight: 300;
+    margin: 0;
 }
 
 .passField {
-    width:23%;
+    width: 23%;
+}
+
+.cardHeaderMob {
+    display: none;
+}
+
+.navProfile {
+    display: flex;
+    color: #171717;
+    border-radius: 0.375rem;
+    font-size: 16px;
+    align-items: center;
+}
+
+.cardMob {
+    padding: 0;
+}
+
+.navProfile.active {
+    background-color: #ddd;
+}
+
+@media screen and (max-width: 992px) {
+    .navProfile {
+        justify-content: center;
+    }
+
+    .navLinkMob {
+        width: 100%;
+        margin: 0 0 15px;
+    }
+
+    .cardHeaderMob {
+        display: flex;
+    }
 }

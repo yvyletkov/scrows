@@ -1,50 +1,56 @@
-.navProfile {
-  display: flex;
-  color: #171717;
-  border-radius: 0.375rem;
-  font-size: 16px;
-  align-items: center;
-}
-
-.navProfile.active {
-  background-color: #ddd;
-}
-
 .navIcon {
   width: 30px;
   margin: 0 10px 0 0;
 }
 
+.avatarImg {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin:0 auto;
+  box-shadow: 0 0 0 0.125rem #fff, 0 0.1875rem 0.4375rem rgba(90,97,105,.5);
+}
+
+.nameAbout {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin:0 auto 20px;
+}
+
+.userBlock {
+  display: block;
+  padding: 0 0 0 40px;
+}
+
+.nameUser {
+  display: flex;
+  font-size: 22px;
+  line-height: 20px;
+  font-weight: 500;
+  color:#171717;
+  margin:20px auto 10px;
+  text-align: center;
+  justify-content: center;
+}
+
 .navTabs {
   list-style: none;
   width: 100%;
-}
-
-.cardHeaderMob {
-  display: none;
+  margin: 0;
 }
 
 @media screen and (max-width: 992px) {
   .navProfile {
     justify-content: center;
   }
-  .navLinkMob {
-    width:100%;
-    margin: 0 0 15px;
-  }
   .navTabs {
     padding: 0;
   }
-
   .tabDesk {
     display: none;
   }
 
-  .cardMob {
-    padding: 0;
-  }
-
-  .cardHeaderMob {
-    display: flex;
-  }
 }

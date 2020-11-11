@@ -1,9 +1,5 @@
 .btnAdd {
-    position: absolute;
-    top:50%;
-    left:50%;
-    transform: translateX(-50%) translateY(-50%);
-    display: inline-block;
+    transition: all 500ms;
     width: 44px;
     height: 44px;
     background-repeat: no-repeat;
@@ -11,24 +7,77 @@
     background-size: contain;
 }
 
+.btnAdd:hover {
+    transform: scale(1.2);
+}
+
 .creditCard {
     position: relative;
     height: 150px;
     background-color: #eeeeee;
-    margin:10px auto;
+    margin: 10px auto;
+}
+
+.cardBodyCustom {
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+}
+
+.checkBoxLabel {
+    line-height: 1.5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .cardNumber {
     display: flex;
     align-items: center;
-    margin:0 auto;
+    margin: 0 auto;
+    justify-content: center;
 }
 
 .modalWindow {
     position: absolute;
-    top:40%;
-    left:50%;
+    top: 40%;
+    left: 50%;
     transform: translateX(-50%) translateY(-50%) !important;
     width: 350px;
-    height:200px;
+    height: 200px;
+}
+
+.cardHeaderMob {
+    display: none;
+}
+
+.navProfile {
+    display: flex;
+    color: #171717;
+    border-radius: 0.375rem;
+    font-size: 16px;
+    align-items: center;
+}
+
+.cardMob {
+    padding: 0;
+}
+
+.navProfile.active {
+    background-color: #ddd;
+}
+
+@media screen and (max-width: 992px) {
+    .navProfile {
+        justify-content: center;
+    }
+
+    .navLinkMob {
+        width: 100%;
+        margin: 0 0 15px;
+    }
+
+    .cardHeaderMob {
+        display: flex;
+    }
 }

@@ -33,8 +33,8 @@ export class Api {
 // = = = = = = == == = = = == == ==  = = == ==
 
 const baseApi = {
-  // baseUrl: "http://api.scrows.ml/api",
-  baseUrl: "https://virtserver.swaggerhub.com/C67615/Scrows/1.0.0",
+  baseUrl: "http://api.scrows.ml/api/v1",
+  // baseUrl: "https://virtserver.swaggerhub.com/C67615/Scrows/1.0.2/api/v1",
   headers: { "Content-Type": "application/json;charset=utf-8" },
 
   async request(endpoint, params) {
@@ -59,9 +59,9 @@ const authApi = {
   },
 
   async getUserData() {
-    // this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
-    this.headers.Authorization = `Bearer token`;
-    return await this.request(`/profile/personal/`, {
+    this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+    // this.headers.Authorization = `Bearer token`;
+    return await this.request(`/users/profile/personal/`, {
       method: "GET",
       headers: this.headers,
     });
@@ -85,8 +85,8 @@ const authApi = {
         gender: `${gender}`,
       })
     );
-    // this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
-    this.headers.Authorization = `Bearer token`;
+    this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+    // this.headers.Authorization = `Bearer token`;
     return await this.request(`/profile/personal/`, {
       method: "PATCH",
       headers: this.headers,
@@ -102,35 +102,35 @@ const authApi = {
   },
 
   async getSecureData() {
-    // this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
-    this.headers.Authorization = `Bearer token`;
-    return await this.request(`/profile/security/`, {
+    this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+    // this.headers.Authorization = `Bearer token`;
+    return await this.request(`/users/profile/security/`, {
       method: "GET",
       headers: this.headers,
     });
   },
 
   async getIndividualData() {
-    // this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
-    this.headers.Authorization = `Bearer token`;
-    return await this.request(`/profile/judical/single/`, {
+    this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+    // this.headers.Authorization = `Bearer token`;
+    return await this.request(`/users/profile/judical/single`, {
       method: "GET",
       headers: this.headers,
     });
   },
 
   async getEntityData() {
-    // this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
-    this.headers.Authorization = `Bearer token`;
-    return await this.request(`/profile/judical/entity/`, {
+    this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+    // this.headers.Authorization = `Bearer token`;
+    return await this.request(`/users/profile/judical/entity`, {
       method: "GET",
       headers: this.headers,
     });
   },
   async getPaymentData() {
-    // this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
-    this.headers.Authorization = `Bearer token`;
-    return await this.request(`/profile/payment/`, {
+    this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+    // this.headers.Authorization = `Bearer token`;
+    return await this.request(`/users/profile/payment/`, {
       method: "GET",
       headers: this.headers,
     });

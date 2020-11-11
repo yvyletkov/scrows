@@ -19,7 +19,7 @@ let initialState = {
   entity_id: null,
   entity_tin: null,
   entity_bank_account_data: null,
-  payment_data: null,
+  payment_data: [],
 };
 
 const personalAreaReducer = (state = initialState, action) => {
@@ -138,12 +138,12 @@ export const getEntityData = () => (dispatch) => {
 };
 
 export const getPaymentData = () => (dispatch) => {
-  // dispatch(toggleIsFetching(true));
+  dispatch(toggleIsFetching(true));
   api
     .getPaymentData()
     .then((response) => {
       dispatch(setPaymentData(response));
-      // dispatch(toggleIsFetching(false));
+      dispatch(toggleIsFetching(false));
     })
     .catch((err) => {
       console.log(err);
