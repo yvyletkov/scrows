@@ -1,11 +1,11 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import {NavLink, Redirect} from "react-router-dom";
 import {Field, reduxForm} from 'redux-form';
 import {validate, warn} from "../../utils/validators/validators";
 import {renderCheckBox, renderInput} from "../shared/FormContols/FormControls";
 import "./LoginPage.css";
 import {login} from '../../redux/AuthReducer';
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 
 const LoginForm = props => {
   const { handleSubmit, pristine, reset, submitting } = props;
@@ -31,31 +31,43 @@ const LoginReduxForm = reduxForm({form:'login', validate, warn})(LoginForm);
 
 const LoginPage = (props) => {
 
-  const handleSubmit = (data) => {
-    props.login(data.email, data.password)
-}
-  return (
-    <div className="card auth-card" style={{ width: "20rem" }}>
-      <div className="card-header">
-        <ul className="nav nav-tabs card-header-tabs">
-          <li className="nav-item">
-            <NavLink className="nav-link active" to="/login">
-              Авторизация
-            </NavLink>
-          </li>
-          <li className="nav-item">
+    console.log(props)
+
+    const handleSubmit = (data) => {
+        props.login(data.email, data.password)
+    }
+
+    if (props.isAuth) return <Redirect to={'/personal-info'}/>
+
+    return (
+        <div className="card auth-card" style={{width: "20rem"}}>
+            <div className="card-header">
+                <ul className="nav nav-tabs card-header-tabs">
+                    <li className="nav-item">
+                        <NavLink className="nav-link active" to="/login">
+                            Авторизация
+                        </NavLink>
+                    </li>
+                    <li className="nav-item">
             <NavLink className="nav-link" to="/auth">
               Регистрация
             </NavLink>
           </li>
-        </ul>
-      </div>
-      <div className="card-body">
-        <h4 className="card-title text-center">Авторизация</h4>
-        <LoginReduxForm onSubmit={handleSubmit}/>
-      </div>
-    </div>
-  );
+                </ul>
+            </div>
+            <div className="card-body">
+                <h4 className="card-title text-center">Авторизация</h4>
+                <LoginReduxForm onSubmit={handleSubmit}/>
+            </div>
+        </div>
+    );
 };
 
-export default connect(null, {login}) (LoginPage);
+const mapStateToProps = (state) => {
+    return {
+        isAuth: state.auth.isAuth,
+        isFetching: state.auth.isFetching,
+    };
+};
+
+export default connect(mapStateToProps, {login})(LoginPage);

@@ -1,13 +1,16 @@
-import React from "react";
-import s from "./PersonalAreaCard.module.css";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
+import entityIcon from "../../../img/icons/entity.svg";
+import extraDataIcon from "../../../img/icons/extra-data.svg";
+import persIcon from "../../../img/icons/pers.svg";
 import personalDataIcon from "../../../img/icons/personal-data.svg";
 import secureIcon from "../../../img/icons/secure.svg";
-import extraDataIcon from "../../../img/icons/extra-data.svg";
-import entityIcon from "../../../img/icons/entity.svg";
-import persIcon from "../../../img/icons/pers.svg";
+import { getUserData } from "../../../redux/PersonalAreaReducer";
+import s from "./PersonalAreaCard.module.css";
 
 const PersonalAreaCard = (props) => {
+  const { avatar, name, last_name, getUserData } = props;
   // const userType = props.entity_type === "entity" ?
   // (<li className="nav-item">
   //   <NavLink
@@ -33,10 +36,22 @@ const PersonalAreaCard = (props) => {
   //   </NavLink>
   // </li>);
 
+  useEffect(() => {
+    getUserData();
+  }, [last_name, avatar, name]);
+
   return (
-    <div className="container mt-5">
-      <div className="row">
         <div className={`col-lg-4 col-12 ${s.tabDesk}`}>
+          <div className={s.userBlock}>
+            <div
+              className={s.avatarImg}
+              style={{ backgroundImage: `url(${avatar})` }}
+            ></div>
+            <p className={s.nameUser}>
+              {name} {last_name}
+            </p>
+            <p className={s.nameAbout}>Физическое лицо</p>
+          </div>
           <div className={s.navProfile}>
             <ul className={`nav-tabs ${s.navTabs}`}>
               <li className="nav-item">
@@ -49,7 +64,7 @@ const PersonalAreaCard = (props) => {
                     src={personalDataIcon}
                     alt="user-icon"
                   />
-                  Данные о пользователе
+                  Личная информация
                 </NavLink>
               </li>
               <li className="nav-item">
@@ -101,57 +116,15 @@ const PersonalAreaCard = (props) => {
             </ul>
           </div>
         </div>
-        <div className={`card col-lg-8 col-12 ${s.cardMob}`}>
-          <div className={`card-header ${s.cardHeaderMob}`}>
-            <ul className="nav nav-tabs card-header-tabs">
-              <li className={`nav-item ${s.navLinkMob}`}>
-                <NavLink
-                  to="/personal-info"
-                  className={`nav-link ${s.navProfile}`}
-                >
-                  Данные о пользователе
-                </NavLink>
-              </li>
-              <li className={`nav-item ${s.navLinkMob}`}>
-                <NavLink to="/security" className={`nav-link ${s.navProfile}`}>
-                  Безопасность
-                </NavLink>
-              </li>
-              <li className={`nav-item ${s.navLinkMob}`}>
-                <NavLink
-                  to="/payment-info"
-                  className={`nav-link ${s.navProfile}`}
-                >
-                  Платежные данные
-                </NavLink>
-              </li>
-              <li className={`nav-item ${s.navLinkMob}`}>
-                <NavLink
-                  to="/entity-info"
-                  className={`nav-link ${s.navProfile}`}
-                >
-                  Данные юр.лица
-                </NavLink>
-              </li>
-              <li className={`nav-item ${s.navLinkMob}`}>
-                <NavLink
-                  to="/individual-info"
-                  className={`nav-link mb-2 ${s.navProfile}`}
-                >
-                  Данные физ.лица
-                </NavLink>
-              </li>
-            </ul>
-          </div>
-          <div className="card-body">
-            <h4 className="card-title">{props.titleCard}</h4>
-            {props.InfoCard}
-            {/* <InfoUserReduxForm onSubmit={handleSubmit} /> */}
-          </div>
-        </div>
-      </div>
-    </div>
   );
 };
 
-export default PersonalAreaCard;
+const mapStateToProps = (state) => {
+  return {
+    name: state.infoUser.name,
+    last_name: state.infoUser.last_name,
+    avatar: state.infoUser.avatar,
+  };
+};
+
+export default connect(mapStateToProps, { getUserData })(PersonalAreaCard);

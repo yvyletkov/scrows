@@ -1,8 +1,6 @@
 import {api} from "../api/api";
 
 let initialState = {
-    userId: null,
-    email: null,
     isAuth: false,
 };
 
@@ -11,7 +9,7 @@ const authReducer = (state = initialState, action) => {
         case "SET_AUTH_USER_DATA":
             return {
                 ...state,
-                ...action.payload,
+                isAuth:action.status,
             };
         default:
             return state;
@@ -22,6 +20,7 @@ export const login = (email, password, rememberMe) => dispatch => {
     api.login(email, password, rememberMe)
         .then((response) => {
             console.log('login response: ', response)
+            dispatch(setAuthUserData(true));
             localStorage.setItem('jwt', response.token);
             // if (response.data.resultCode === 0) {
             //   let { userId } = response.data.data;
@@ -45,6 +44,6 @@ export const getUserData = () => dispatch => {
 
 }
 
-export const setAuthUserData = (data) => ({type: "SET_AUTH_USER_DATA", payload: data});
+export const setAuthUserData = (status) => ({type: "SET_AUTH_USER_DATA", status: status});
 
 export default authReducer;
