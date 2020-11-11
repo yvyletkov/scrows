@@ -7,7 +7,6 @@ import personalAreaReducer from "./PersonalAreaReducer";
 
 const reducers = combineReducers({
   form: formReducer,
-  // main: reducer,
   auth: authReducer,
   infoUser: personalAreaReducer,
 });
