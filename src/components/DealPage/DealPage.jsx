@@ -2,20 +2,27 @@ import React from "react";
 import s from "./DealPage.module.css";
 import './DealPage.module.css'
 import {connect} from "react-redux";
-import {setNewMessage} from "../../redux/DealPageReducer";
+import {getDealInfo} from "../../redux/DealPageReducer";
 import Sidebar from "./parts/Sidebar";
 import StatusTimeline from "./parts/StatusTimeline";
 import Chat from "./parts/Chat";
 import DealHistory from "./parts/DealHistory";
 import DealFiles from "./parts/DealFiles";
+import Preloader from "../shared/Preloader/Preloader";
 
-const DealPage = ({statusName = "Передано в доставку, ожидание приемки", chatMessages}) => {
+const DealPage = ({chatMessages, getDealInfo, id = 1, ...props}) => {
 
-    console.log(chatMessages)
+    React.useEffect( () => {
+        getDealInfo(id);
+    },[getDealInfo, id]);
 
     const onChatFormSubmit = values => {
         console.log(values);
     }
+
+    console.log(props);
+
+    if (props.isFetching) return <div className='mt-5'><Preloader/></div>;
 
     return (
         <div style={{marginTop: "4rem"}} className='container mb-4'>
@@ -23,16 +30,16 @@ const DealPage = ({statusName = "Передано в доставку, ожид�
             <div className='card'>
                 <div className="card-header">
                     <div className={'d-md-flex justify-content-between'}>
-                        <h3 className='mb-0'><span className="badge badge-secondary">Cделка №2135</span></h3>
-                        <h3 className='mb-0'><span className="badge badge-secondary">Сумма: 15 000 ₽</span></h3>
+                        <h3 className='mb-0'><span className="badge badge-secondary">Сделка №{props.dealId}</span></h3>
+                        <h3 className='mb-0'><span className="badge badge-secondary">Сумма: {props.amount}₽</span></h3>
                     </div>
                 </div>
                 <div className="card-body">
-                    <div>{statusName}</div>
+                    <div>{props.status.title}</div>
                 </div>
             </div>
 
-            <StatusTimeline/>
+            <StatusTimeline statusId={+props.status.id}/>
 
             <div className='row mt-4'>
                 <div className='col-md-8 px-0 px-md-3'>
@@ -47,7 +54,7 @@ const DealPage = ({statusName = "Передано в доставку, ожид�
                                         <div className={'font-weight-bold'}>Предмет сделки</div>
                                     </div>
                                     <div className='card-body'>
-                                        <p>Жидкая сварка</p>
+                                        <p>{props.subject}</p>
                                     </div>
                                 </div>
                             </div>
@@ -67,7 +74,7 @@ const DealPage = ({statusName = "Передано в доставку, ожид�
 
                 <div className='col-md-4 pl-md-0 px-0 px-md-3'>
 
-                    <Sidebar/>
+                    <Sidebar {...props}/>
 
                 </div>
             </div>
@@ -77,8 +84,15 @@ const DealPage = ({statusName = "Передано в доставку, ожид�
 
 let mapStateToProps = (state) => {
     return {
-        chatMessages: state.deal.chatMessages
+        chatMessages: state.deal.chatMessages,
+        dealId: state.deal.dealId,
+        subject: state.deal.subject,
+        status: state.deal.status,
+        dealType: state.deal.dealType,
+        users: state.deal.users,
+        amount: state.deal.amount,
+        isFetching: state.deal.isFetching,
     }
 }
 
-export default connect(mapStateToProps, {setNewMessage})(DealPage);
+export default connect(mapStateToProps, {getDealInfo})(DealPage);

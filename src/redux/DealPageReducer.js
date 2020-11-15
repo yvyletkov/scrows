@@ -1,6 +1,12 @@
-import { api } from "../api/api";
+import {api} from "../api/api";
 
 let initialState = {
+    dealId: null,
+    subject: '',
+    status: {},
+    dealType: {},
+    users: [],
+    amount: null,
     chatMessages: [
         {userName: 'Владимир', time: '(07.10.2020 23:27:35)', text: 'че с деньгами?'},
         {userName: 'Дмитрий', time: '(07.10.2020 23:27:55)', text: 'Ты кому звонишь?'},
@@ -13,18 +19,23 @@ let initialState = {
 
 const dealPageReducer = (state = initialState, action) => {
     switch (action.type) {
-        case "SET-MESSAGES":
+        case "DEAL:SET-DEAL-INFO":
             return {
                 ...state,
-                chatMessages: [ ...action.payload ]
+                dealId: action.payload.id,
+                subject: action.payload.subject,
+                status: {...action.payload.status},
+                dealType: {...action.payload.type},
+                users: [...action.payload.users],
+                amount: action.payload.amount,
             };
-        case "SET-NEW-MESSAGE":
+        case "DEAL:SET-MESSAGES":
             return {
                 ...state,
-                chatMessages: [ ...state.chatMessages, action.payload]
+                chatMessages: [...action.payload]
             };
-        case "TOGGLE-IS-FETCHING": {
-            return { ...state, isFetching: action.status };
+        case "DEAL:TOGGLE-IS-FETCHING": {
+            return {...state, isFetching: action.status};
         }
 
         default:
@@ -32,23 +43,37 @@ const dealPageReducer = (state = initialState, action) => {
     }
 };
 
-export const getMessages = () => (dispatch) => {
+// export const getMessages = () => (dispatch) => {
+//     dispatch(toggleIsFetching(true));
+//     api
+//         .getMessages()
+//         .then((response) => {
+//             dispatch(setMessages(response));
+//             dispatch(toggleIsFetching(false));
+//         })
+//         .catch((err) => {
+//             console.log(err);
+//         });
+// };
+
+export const getDealInfo = (id) => (dispatch) => {
     dispatch(toggleIsFetching(true));
     api
-        .getMessages()
+        .getDealInfo(id)
         .then((response) => {
-            dispatch(setMessages(response));
+            console.log(response);
+            dispatch(setDealInfo(response));
             dispatch(toggleIsFetching(false));
         })
         .catch((err) => {
             console.log(err);
+            dispatch(toggleIsFetching(false));
         });
 };
 
-export const toggleIsFetching = status => ({type: "TOGGLE-IS-FETCHING", status: status });
-export const setMessages = data => ({ type: "SET-NEW-MESSAGE", payload: data });
-
-export const setNewMessage = data => ({ type: "SET-NEW-MESSAGE", payload: data }); // временно
+export const toggleIsFetching = status => ({type: "DEAL:TOGGLE-IS-FETCHING", status: status});
+// export const setMessages = data => ({ type: "DEAL:SET-MESSAGES", payload: data });
+export const setDealInfo = data => ({type: "DEAL:SET-DEAL-INFO", payload: data});
 
 
 export default dealPageReducer;
