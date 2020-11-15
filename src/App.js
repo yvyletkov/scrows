@@ -13,12 +13,14 @@ import IndividualUserArea from './components/Forms/IndividualUserForm/Individual
 import EntityUserArea from './components/Forms/EntityUserForm/EntityUserForm';
 import PaymentUserArea from './components/Forms/PaymentUserForm/PaymentUserForm';
 import HeaderContainer from "./components/Header/HeaderContainer";
+import AddDealPage from "./components/AddDealPage/AddDealPage";
 
 function App(props) {
     return (<>
         <Provider store={props.store}>
             <Router>
                 <HeaderContainer/>
+                <Route path="/add-deal" component={AddDealPage} exact/>
                 <Route path="/login" component={LoginPage}/>
                 <Route path="/auth" component={RegistrationPage}/>
                 <Route path="/deal" component={DealPage}/>

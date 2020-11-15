@@ -3,7 +3,7 @@ import s from "../DealPage.module.css";
 import vvpImg from "../../../img/vvp.jpg";
 import damImg from "../../../img/dam.jpg";
 
-const Sidebar = () => {
+const Sidebar = ({dealType}) => {
     return (<>
         <div className={`card mt-3 mt-md-0 ${s.sidebarCard}`}>
             <div className='card-header'>
@@ -37,7 +37,7 @@ const Sidebar = () => {
                     <tbody>
                     <tr>
                         <td>Тип сделки</td>
-                        <td style={{width: '32%'}}>Товар</td>
+                        <td style={{width: '32%'}}>{dealType.title}</td>
 
                     </tr>
                     <tr>
