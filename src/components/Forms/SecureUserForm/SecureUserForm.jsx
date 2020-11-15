@@ -1,19 +1,12 @@
 import React, {useEffect} from "react";
 import {Field, reduxForm} from "redux-form";
 import {validate, warn} from "../../../utils/validators/validators";
-import {
-    renderInput,
-    renderPersonalAreaInput,
-} from "../../shared/FormContols/FormControls";
-import {
-    changeSecureData,
-    getSecureData,
-} from "../../../redux/PersonalAreaReducer";
+import {renderInput, renderPersonalAreaInput,} from "../../shared/FormContols/FormControls";
+import {getSecureData,} from "../../../redux/PersonalAreaReducer";
 import {connect} from "react-redux";
 import PersonalAreaCard from "../../shared/PersonalAreaCard/PersonalAreaCard";
 import s from "./SecureUserForm.module.css";
 import Preloader from "../../shared/Preloader/Preloader";
-import {NavLink} from "react-router-dom";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 import MobilePersonalAreaTabs from "../../shared/MobilePersonalAreaTabs/MobilePersonalAreaTabs";
@@ -94,7 +87,7 @@ const SecureUserArea = (props) => {
             <div className="row">
                 <PersonalAreaCard/>
                 <div className={`card col-lg-8 col-12 ${s.cardMob}`}>
-                    <MobilePersonalAreaTabs />
+                    <MobilePersonalAreaTabs/>
                     <div className="card-header">
                         <h4 className="m-0">Безопасность</h4>
                     </div>
@@ -104,6 +97,7 @@ const SecureUserArea = (props) => {
                                 phone_number,
                                 email
                             }}
+                            isFetching={isFetching}
                         />
                     </div>
                 </div>

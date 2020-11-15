@@ -34,7 +34,7 @@ export class Api {
 
 const baseApi = {
   baseUrl: "https://api.scrows.ml/api/v1",
-  // baseUrl: "https://virtserver.swaggerhub.com/C67615/Scrows/1.0.2/api/v1",
+  // baseUrl: "https://virtserver.swaggerhub.com/C67615/Scrows/1.0.5/api/v1",
   headers: { "Content-Type": "application/json;charset=utf-8" },
 
   async request(endpoint, params) {
@@ -56,13 +56,14 @@ const authApi = {
         password: `${password}`,
       }),
     })
-        .then((response) => {
-          localStorage.setItem('jwt', response.token);
-          return response
-        })
-        .catch((err) => {
-          console.log(err)
-        });
+        // .then((response) => {
+        //   localStorage.setItem('jwt', response.token);
+        //   return response
+        // })
+        // .catch((err) => {
+        //   // console.log(err)
+        //   return new Promise(err)
+        // });
   },
 
   async logout() {

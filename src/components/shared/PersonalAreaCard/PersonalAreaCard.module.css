@@ -46,6 +46,7 @@
 
 .avatarImg:hover .icon {
   opacity: 1 ;
+  cursor: pointer;
 }
 
 .nameAbout {

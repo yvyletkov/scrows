@@ -1,4 +1,5 @@
 import {api} from "../api/api";
+import {stopAsyncValidation, stopSubmit} from "redux-form";
 
 let initialState = {
     isAuth: !!localStorage.getItem('jwt'),
@@ -9,7 +10,7 @@ const authReducer = (state = initialState, action) => {
         case "SET_AUTH_USER_DATA":
             return {
                 ...state,
-                isAuth:action.status,
+                isAuth: action.status,
             };
         default:
             return state;
@@ -19,9 +20,12 @@ const authReducer = (state = initialState, action) => {
 export const login = (email, password, rememberMe) => dispatch => {
     api.login(email, password, rememberMe)
         .then((response) => {
+            localStorage.setItem('jwt', response.token);
             dispatch(setAuthUserData(true));
         })
         .catch((err) => {
+            dispatch(stopSubmit('login', {_error: 'Ошибка авторизации'}))
+            dispatch(stopAsyncValidation('login', {_error: ''}))
             console.log(err)
         });
 };
