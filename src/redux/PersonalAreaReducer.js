@@ -1,4 +1,4 @@
-import { api } from "../api/api";
+import {api} from "../api/api";
 
 let initialState = {
   last_name: null,
@@ -18,6 +18,7 @@ let initialState = {
   judical_type: null,
   entity_id: null,
   entity_tin: null,
+  entity_name:null,
   entity_bank_account_data: null,
   payment_data: [],
 };
@@ -55,6 +56,7 @@ const personalAreaReducer = (state = initialState, action) => {
         ...action.payload,
       };
     }
+
     default:
       return state;
   }
@@ -114,38 +116,76 @@ export const getSecureData = () => (dispatch) => {
 export const getIndividualData = () => (dispatch) => {
   dispatch(toggleIsFetching(true));
   api
-    .getIndividualData()
-    .then((response) => {
-      dispatch(setIndividualData(response));
-      dispatch(toggleIsFetching(false));
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .getIndividualData()
+      .then((response) => {
+        dispatch(setIndividualData(response));
+        dispatch(toggleIsFetching(false));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+};
+
+export const changeIndividualData = (
+    document_type,
+    passport_data_number,
+    passport_data_created,
+    passport_data_code) => (dispatch) => {
+  api
+      .changeIndividualData(
+          document_type,
+          passport_data_number,
+          passport_data_created,
+          passport_data_code,
+      )
+      .then((response) => {
+        dispatch(setUserData(response));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 };
 
 export const getEntityData = () => (dispatch) => {
   dispatch(toggleIsFetching(true));
   api
-    .getEntityData()
-    .then((response) => {
-      dispatch(setEntityData(response));
-      dispatch(toggleIsFetching(false));
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .getEntityData()
+      .then((response) => {
+        dispatch(setEntityData(response));
+        dispatch(toggleIsFetching(false));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+};
+
+export const changeEntityData =
+    (judical_type, entity_id, entity_tin, entity_bank_account_data,entity_name) => (dispatch) => {
+  api
+      .changeEntityData(
+          judical_type,
+          entity_id,
+          entity_tin,
+          entity_bank_account_data,
+          entity_name
+      )
+      .then((response) => {
+        dispatch(setUserData(response));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 };
 
 export const getPaymentData = () => (dispatch) => {
   dispatch(toggleIsFetching(true));
   api
-    .getPaymentData()
-    .then((response) => {
-      dispatch(setPaymentData(response));
-      dispatch(toggleIsFetching(false));
-    })
-    .catch((err) => {
+      .getPaymentData()
+      .then((response) => {
+        dispatch(setPaymentData(response));
+        dispatch(toggleIsFetching(false));
+      })
+      .catch((err) => {
       console.log(err);
     });
 };
@@ -171,5 +211,6 @@ export const setPaymentData = (data) => ({
   type: "SET_PAYMENT_DATA",
   payload: data,
 });
+
 
 export default personalAreaReducer;

@@ -4,12 +4,13 @@ import {validate, warn} from "../../../utils/validators/validators";
 import {renderPersonalAreaInput, renderSelect,} from "../../shared/FormContols/FormControls";
 import {connect} from "react-redux";
 import PersonalAreaCard from "../../shared/PersonalAreaCard/PersonalAreaCard";
-import {getIndividualData} from "../../../redux/PersonalAreaReducer";
+import {getIndividualData, changeIndividualData} from "../../../redux/PersonalAreaReducer";
 import Preloader from "../../shared/Preloader/Preloader";
 import s from "../PaymentUserForm/PaymentUserForm.module.css";
 import {NavLink} from "react-router-dom";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
+import MobilePersonalAreaTabs from "../../shared/MobilePersonalAreaTabs/MobilePersonalAreaTabs";
 
 const IndividualUserForm = (props) => {
   const {
@@ -17,7 +18,6 @@ const IndividualUserForm = (props) => {
     pristine,
     reset,
     submitting,
-    getIndividualData,
     isFetching,
   } = props;
 
@@ -100,58 +100,27 @@ const IndividualUserArea = (props) => {
     passport_data_number,
     passport_data_code,
     isFetching,
+    changeIndividualData,
   } = props;
 
   useEffect(() => {
     getIndividualData();
   }, []);
 
+  const handleSubmit = (data) => {
+    changeIndividualData(
+        data.document_type,
+        data.passport_data_number,
+        data.passport_data_created,
+        data.passport_data_code)
+  }
+
   return (
       <div className="container my-5">
         <div className="row">
           <PersonalAreaCard/>
           <div className={`card col-lg-8 col-12 ${s.cardMob}`}>
-            <div className={`card-header ${s.cardHeaderMob}`}>
-              <ul className="nav nav-tabs card-header-tabs">
-                <li className={`nav-item ${s.navLinkMob}`}>
-                  <NavLink
-                      to="/personal-info"
-                      className={`nav-link ${s.navProfile}`}
-                  >
-                    Данные о пользователе
-                  </NavLink>
-                </li>
-                <li className={`nav-item ${s.navLinkMob}`}>
-                  <NavLink to="/security" className={`nav-link ${s.navProfile}`}>
-                    Безопасность
-                  </NavLink>
-                </li>
-                <li className={`nav-item ${s.navLinkMob}`}>
-                  <NavLink
-                      to="/payment-info"
-                      className={`nav-link ${s.navProfile}`}
-                  >
-                    Платежные данные
-                  </NavLink>
-                </li>
-                <li className={`nav-item ${s.navLinkMob}`}>
-                  <NavLink
-                      to="/entity-info"
-                      className={`nav-link ${s.navProfile}`}
-                  >
-                    Данные юр.лица
-                  </NavLink>
-                </li>
-                <li className={`nav-item ${s.navLinkMob}`}>
-                  <NavLink
-                      to="/individual-info"
-                      className={`nav-link mb-2 ${s.navProfile}`}
-                  >
-                    Данные физ.лица
-                  </NavLink>
-                </li>
-              </ul>
-            </div>
+            <MobilePersonalAreaTabs />
             <div className="card-header">
               <h4 className="m-0">Платежные данные</h4>
             </div>
@@ -163,6 +132,7 @@ const IndividualUserArea = (props) => {
                     passport_data_number,
                     passport_data_code
                   }}
+                  onSubmit={handleSubmit}
               />
             </div>
           </div>
@@ -181,6 +151,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default compose(connect(mapStateToProps, { getIndividualData }),withAuthRedirect)(
+export default compose(connect(mapStateToProps, { getIndividualData, changeIndividualData }),withAuthRedirect)(
   IndividualUserArea
 );

@@ -1,21 +1,18 @@
 import React, {useEffect} from "react";
 import {Field, reduxForm} from "redux-form";
 import {validate, warn} from "../../../utils/validators/validators";
-import {
-    renderPersonalAreaInput,
-    renderSelect,
-} from "../../shared/FormContols/FormControls";
+import {renderPersonalAreaInput, renderSelect,} from "../../shared/FormContols/FormControls";
 import {changeUserData, getUserData} from "../../../redux/PersonalAreaReducer";
 import {connect} from "react-redux";
 import PersonalAreaCard from "../../shared/PersonalAreaCard/PersonalAreaCard";
-import Preloader from "../../shared/Preloader/Preloader";
 import {NavLink} from "react-router-dom";
 import s from "./InfoUserForm.module.css";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
+import MobilePersonalAreaTabs from "../../shared/MobilePersonalAreaTabs/MobilePersonalAreaTabs";
 
 const InfoUserForm = (props) => {
-    const {handleSubmit, isFetching, submitting, pristine} = props;
+    const {handleSubmit, isFetching, submitting, pristine,} = props;
     return (
         <form className="popup__form" onSubmit={handleSubmit}>
             <div className="row">
@@ -103,10 +100,6 @@ const InfoUserReduxForm = reduxForm({form: "infoUserForm", validate, enableReini
 
 const PersonalUserArea = (props) => {
     const single_type = '';
-    const onSubmit = (data) => {
-        console.log(data)
-        props.changeUserData(data.middle_name, data.last_name, data.name, data.date_of_birth, data.entity_type, data.gender)
-    }
     const {
         getUserData,
         middle_name,
@@ -116,58 +109,29 @@ const PersonalUserArea = (props) => {
         entity_type,
         gender,
         isFetching,
+        changeUserData
     } = props;
 
     useEffect(() => {
-      getUserData();
+        getUserData();
     }, []);
+
+    const handleSubmit = (data) => {
+        changeUserData(
+            data.middle_name,
+            data.last_name,
+            data.name,
+            data.date_of_birth,
+            data.entity_type,
+            data.gender)
+    }
 
     return (
         <div className="container my-5">
             <div className="row">
                 <PersonalAreaCard/>
                 <div className={`card col-lg-8 col-12 ${s.cardMob}`}>
-                    <div className={`card-header ${s.cardHeaderMob}`}>
-                        <ul className="nav nav-tabs card-header-tabs">
-                            <li className={`nav-item ${s.navLinkMob}`}>
-                                <NavLink
-                                    to="/personal-info"
-                                    className={`nav-link ${s.navProfile}`}
-                                >
-                                    Данные о пользователе
-                                </NavLink>
-                            </li>
-                            <li className={`nav-item ${s.navLinkMob}`}>
-                                <NavLink to="/security" className={`nav-link ${s.navProfile}`}>
-                                    Безопасность
-                                </NavLink>
-                            </li>
-                            <li className={`nav-item ${s.navLinkMob}`}>
-                                <NavLink
-                                    to="/payment-info"
-                                    className={`nav-link ${s.navProfile}`}
-                                >
-                                    Платежные данные
-                                </NavLink>
-                            </li>
-                            <li className={`nav-item ${s.navLinkMob}`}>
-                                <NavLink
-                                    to="/entity-info"
-                                    className={`nav-link ${s.navProfile}`}
-                                >
-                                    Данные юр.лица
-                                </NavLink>
-                            </li>
-                            <li className={`nav-item ${s.navLinkMob}`}>
-                                <NavLink
-                                    to="/individual-info"
-                                    className={`nav-link mb-2 ${s.navProfile}`}
-                                >
-                                    Данные физ.лица
-                                </NavLink>
-                            </li>
-                        </ul>
-                    </div>
+                    <MobilePersonalAreaTabs />
                     <div className="card-header">
                         <h4 className="m-0">Личная информация</h4>
                     </div>
@@ -181,6 +145,7 @@ const PersonalUserArea = (props) => {
                                 entity_type,
                                 gender,
                             }}
+                            onSubmit={handleSubmit}
                         />
                     </div>
                 </div>

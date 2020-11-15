@@ -33,7 +33,7 @@ export class Api {
 // = = = = = = == == = = = == == ==  = = == ==
 
 const baseApi = {
-  baseUrl: "http://api.scrows.ml/api/v1",
+  baseUrl: "https://api.scrows.ml/api/v1",
   // baseUrl: "https://virtserver.swaggerhub.com/C67615/Scrows/1.0.2/api/v1",
   headers: { "Content-Type": "application/json;charset=utf-8" },
 
@@ -48,14 +48,36 @@ const baseApi = {
 
 const authApi = {
   async login(email, password) {
-    return await this.request(`/users/auth/`, {
+    return this.request(`/users/auth/`, {
       method: "POST",
       headers: this.headers,
       body: JSON.stringify({
         email: `${email}`,
         password: `${password}`,
       }),
-    });
+    })
+        .then((response) => {
+          localStorage.setItem('jwt', response.token);
+          return response
+        })
+        .catch((err) => {
+          console.log(err)
+        });
+  },
+
+  async logout() {
+    return await new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve("result");
+      }, 300);
+    })
+        .then((response) => {
+          localStorage.removeItem('jwt');
+          return response
+        })
+        .catch((err) => {
+          console.log(err)
+        });
   },
 
   async getUserData() {
@@ -75,19 +97,8 @@ const authApi = {
     entity_type,
     gender
   ) {
-    console.log(
-      JSON.stringify({
-        middle_name: `${middle_name}`,
-        last_name: `${last_name}`,
-        name: `${name}`,
-        date_of_birth: `${date_of_birth}`,
-        entity_type: `${entity_type}`,
-        gender: `${gender}`,
-      })
-    );
     this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
-    // this.headers.Authorization = `Bearer token`;
-    return await this.request(`/profile/personal/`, {
+    return await this.request(`/users/profile/personal/`, {
       method: "PATCH",
       headers: this.headers,
       body: JSON.stringify({
@@ -112,10 +123,31 @@ const authApi = {
 
   async getIndividualData() {
     this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
-    // this.headers.Authorization = `Bearer token`;
     return await this.request(`/users/profile/judical/single`, {
       method: "GET",
       headers: this.headers,
+    });
+  },
+
+  async changeIndividualData(document_type, passport_data_number, passport_data_created, passport_data_code) {
+    console.log(
+        JSON.stringify({
+          document_type: `${document_type}`,
+          passport_data_number: `${passport_data_number}`,
+          passport_data_created: `${passport_data_created}`,
+          passport_data_code: `${passport_data_code}`,
+        }));
+    this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+    // this.headers.Authorization = `Bearer token`;
+    return await this.request(`/users/profile/judical/single`, {
+      method: "PATCH",
+      headers: this.headers,
+      body: JSON.stringify({
+        document_type: `${document_type}`,
+        passport_data_number: `${passport_data_number}`,
+        passport_data_created: `${passport_data_created}`,
+        passport_data_code: `${passport_data_code}`,
+      }),
     });
   },
 
@@ -127,6 +159,31 @@ const authApi = {
       headers: this.headers,
     });
   },
+
+  async changeEntityData(judical_type, entity_id, entity_tin, entity_bank_account_data,entity_name) {
+    console.log(
+        JSON.stringify({
+          judical_type: `${judical_type}`,
+          entity_id: `${entity_id}`,
+          entity_tin: `${entity_tin}`,
+          entity_bank_account_data: `${entity_bank_account_data}`,
+          entity_name: `${entity_name}`,
+        }));
+    this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+    // this.headers.Authorization = `Bearer token`;
+    return await this.request(`/users/profile/judical/entity`, {
+      method: "PATCH",
+      headers: this.headers,
+      body: JSON.stringify({
+        judical_type: `${judical_type}`,
+        entity_id: `${entity_id}`,
+        entity_tin: `${entity_tin}`,
+        entity_bank_account_data: `${entity_bank_account_data}`,
+        entity_name: `${entity_name}`,
+      }),
+    });
+  },
+
   async getPaymentData() {
     this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
     // this.headers.Authorization = `Bearer token`;

@@ -31,8 +31,6 @@ const LoginReduxForm = reduxForm({form:'login', validate, warn})(LoginForm);
 
 const LoginPage = (props) => {
 
-    console.log(props)
-
     const handleSubmit = (data) => {
         props.login(data.email, data.password)
     }

@@ -16,6 +16,7 @@ import Preloader from "../../shared/Preloader/Preloader";
 import {NavLink} from "react-router-dom";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
+import MobilePersonalAreaTabs from "../../shared/MobilePersonalAreaTabs/MobilePersonalAreaTabs";
 
 const SecureUserForm = (props) => {
     const {
@@ -54,9 +55,9 @@ const SecureUserForm = (props) => {
                             placeholder="Введите номер телефона"
                         />
                     </div>
-                    <div className={`form-group mb-3 ${s.userInfo}`}>
+                    <div className={`form-group mb-5 mb-lg-3 ${s.userInfo}`}>
                         <span className={s.passField}>Пароль</span>
-                        <button className="btn btn-danger">Сбросить пароль</button>
+                        <button className={`btn btn-danger ${s.passResetBtn}`}>Сбросить пароль</button>
                     </div>
                 </div>
             </div>
@@ -93,47 +94,7 @@ const SecureUserArea = (props) => {
             <div className="row">
                 <PersonalAreaCard/>
                 <div className={`card col-lg-8 col-12 ${s.cardMob}`}>
-                    <div className={`card-header ${s.cardHeaderMob}`}>
-                        <ul className="nav nav-tabs card-header-tabs">
-                            <li className={`nav-item ${s.navLinkMob}`}>
-                                <NavLink
-                                    to="/personal-info"
-                                    className={`nav-link ${s.navProfile}`}
-                                >
-                                    Данные о пользователе
-                                </NavLink>
-                            </li>
-                            <li className={`nav-item ${s.navLinkMob}`}>
-                                <NavLink to="/security" className={`nav-link ${s.navProfile}`}>
-                                    Безопасность
-                                </NavLink>
-                            </li>
-                            <li className={`nav-item ${s.navLinkMob}`}>
-                                <NavLink
-                                    to="/payment-info"
-                                    className={`nav-link ${s.navProfile}`}
-                                >
-                                    Платежные данные
-                                </NavLink>
-                            </li>
-                            <li className={`nav-item ${s.navLinkMob}`}>
-                                <NavLink
-                                    to="/entity-info"
-                                    className={`nav-link ${s.navProfile}`}
-                                >
-                                    Данные юр.лица
-                                </NavLink>
-                            </li>
-                            <li className={`nav-item ${s.navLinkMob}`}>
-                                <NavLink
-                                    to="/individual-info"
-                                    className={`nav-link mb-2 ${s.navProfile}`}
-                                >
-                                    Данные физ.лица
-                                </NavLink>
-                            </li>
-                        </ul>
-                    </div>
+                    <MobilePersonalAreaTabs />
                     <div className="card-header">
                         <h4 className="m-0">Безопасность</h4>
                     </div>

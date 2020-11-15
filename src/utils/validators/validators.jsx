@@ -21,6 +21,7 @@ const validate = (values) => {
     "passport_data_created",
     "passport_data_number",
     "passport_data_code",
+    "entity_name",
   ];
   if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
     errors.email = "Неверный email";
