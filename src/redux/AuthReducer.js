@@ -1,7 +1,7 @@
 import {api} from "../api/api";
 
 let initialState = {
-    isAuth: false,
+    isAuth: !!localStorage.getItem('jwt'),
 };
 
 const authReducer = (state = initialState, action) => {
@@ -19,18 +19,23 @@ const authReducer = (state = initialState, action) => {
 export const login = (email, password, rememberMe) => dispatch => {
     api.login(email, password, rememberMe)
         .then((response) => {
-            console.log('login response: ', response)
             dispatch(setAuthUserData(true));
-            localStorage.setItem('jwt', response.token);
-            // if (response.data.resultCode === 0) {
-            //   let { userId } = response.data.data;
-            //   dispatch(setAuthUserData(userId, email, true));
-            // }
         })
         .catch((err) => {
             console.log(err)
         });
 };
+
+export const logout = () => dispatch => {
+    api.logout()
+        .then((response) => {
+            dispatch(setAuthUserData(false))
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
 
 export const getUserData = () => dispatch => {
     api.getUserData()

@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {Field, reduxForm} from "redux-form";
-import {getEntityData} from "../../../redux/PersonalAreaReducer";
+import {getEntityData, changeEntityData} from "../../../redux/PersonalAreaReducer";
 import {validate, warn} from "../../../utils/validators/validators";
 import {renderPersonalAreaInput} from "../../shared/FormContols/FormControls";
 import PersonalAreaCard from "../../shared/PersonalAreaCard/PersonalAreaCard";
@@ -10,6 +10,7 @@ import {NavLink} from "react-router-dom";
 import s from './EntityUserForm.module.css';
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 import {compose} from "redux";
+import MobilePersonalAreaTabs from "../../shared/MobilePersonalAreaTabs/MobilePersonalAreaTabs";
 
 const EntityUserForm = (props) => {
     const {
@@ -70,6 +71,18 @@ const EntityUserForm = (props) => {
                         />
                     </div>
                 </div>
+                <div className="col-lg-6 col-12">
+                    <div className="form-group">
+                        <label htmlFor="entity_bank_account_data">Название организации</label>
+                        <Field
+                            placeholder="Введите название организации"
+                            name="entity_name"
+                            type="text"
+                            component={renderPersonalAreaInput}
+                            required
+                        />
+                    </div>
+                </div>
             </div>
 
             <div>
@@ -93,65 +106,35 @@ const EntityUserReduxForm = reduxForm({
 })(EntityUserForm);
 
 const EntityUserArea = (props) => {
-    console.log(props)
     const {
         getEntityData,
         judical_type,
         entity_id,
         entity_tin,
         entity_bank_account_data,
+        changeEntityData,
+        entity_name,
     } = props;
 
     useEffect(() => {
         getEntityData();
     }, []);
 
+    const handleSubmit = (data) => {
+        changeEntityData(
+            data.judical_type,
+            data.entity_id,
+            data.entity_tin,
+            data.entity_bank_account_data,
+            data.entity_name)
+    }
+
     return (
         <div className="container my-5">
             <div className="row">
                 <PersonalAreaCard/>
                 <div className={`card col-lg-8 col-12 ${s.cardMob}`}>
-                    <div className={`card-header ${s.cardHeaderMob}`}>
-                        <ul className="nav nav-tabs card-header-tabs">
-                            <li className={`nav-item ${s.navLinkMob}`}>
-                                <NavLink
-                                    to="/personal-info"
-                                    className={`nav-link ${s.navProfile}`}
-                                >
-                                    Данные о пользователе
-                                </NavLink>
-                            </li>
-                            <li className={`nav-item ${s.navLinkMob}`}>
-                                <NavLink to="/security" className={`nav-link ${s.navProfile}`}>
-                                    Безопасность
-                                </NavLink>
-                            </li>
-                            <li className={`nav-item ${s.navLinkMob}`}>
-                                <NavLink
-                                    to="/payment-info"
-                                    className={`nav-link ${s.navProfile}`}
-                                >
-                                    Платежные данные
-                                </NavLink>
-                            </li>
-                            <li className={`nav-item ${s.navLinkMob}`}>
-                                <NavLink
-                                    to="/entity-info"
-                                    className={`nav-link ${s.navProfile}`}
-                                >
-                                    Данные юр.лица
-                                </NavLink>
-                            </li>
-                            <li className={`nav-item ${s.navLinkMob}`}>
-                                <NavLink
-                                    to="/individual-info"
-                                    className={`nav-link mb-2 ${s.navProfile}`}
-                                >
-                                    Данные физ.лица
-                                </NavLink>
-                            </li>
-                        </ul>
-                    </div>
+                    <MobilePersonalAreaTabs />
                     <div className="card-header">
                         <h4 className="m-0">Личный кабинет</h4>
                     </div>
@@ -162,7 +145,9 @@ const EntityUserArea = (props) => {
                                 entity_id,
                                 entity_tin,
                                 entity_bank_account_data,
+                                entity_name
                             }}
+                            onSubmit={handleSubmit}
                         />
                     </div>
                 </div>
@@ -178,8 +163,9 @@ const mapStateToProps = (state) => {
         entity_id: state.infoUser.entity_id,
         entity_tin: state.infoUser.entity_tin,
         entity_bank_account_data: state.infoUser.entity_bank_account_data,
+        entity_name:state.infoUser.entity_name,
         isFetching: state.infoUser.isFetching,
     };
 };
 
-export default compose(connect(mapStateToProps, {getEntityData}),withAuthRedirect)(EntityUserArea);
+export default compose(connect(mapStateToProps, {getEntityData, changeEntityData}),withAuthRedirect)(EntityUserArea);

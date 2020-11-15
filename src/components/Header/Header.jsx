@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {
     Navbar,
     NavbarToggler,
@@ -10,10 +10,15 @@ import {
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
-    Collapse
+    Collapse,
+    Button,
+    ButtonGroup,
+    ButtonToolbar,
 } from "shards-react";
 
-const Header = () => {
+const Header = (props) => {
+
+    const {logout, isAuth} = props;
 
     let [dropdownOpen1, setDropdownOpen1] = React.useState(false);
     let [dropdownOpen2, setDropdownOpen2] = React.useState(false);
@@ -64,9 +69,22 @@ const Header = () => {
                             </DropdownMenu>
                         </Dropdown>
                         <NavItem>
-                            <NavLink active href="#">
+                            <NavLink href="/personal-info">
                                 Личный кабинет
                             </NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <ButtonToolbar>
+                                <ButtonGroup>
+                                    {isAuth ?
+                                        <Button theme="dark" onClick={logout}>
+                                            Выйти
+                                        </Button> :
+                                    <NavLink active href="/login">
+                                        Войти
+                                    </NavLink>}
+                                </ButtonGroup>
+                            </ButtonToolbar>
                         </NavItem>
                     </Nav>
                 </Collapse>

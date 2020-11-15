@@ -15,6 +15,7 @@ import s from "./PaymentUserForm.module.css";
 import {NavLink} from "react-router-dom";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
+import MobilePersonalAreaTabs from "../../shared/MobilePersonalAreaTabs/MobilePersonalAreaTabs";
 
 const PaymentUserForm = (props) => {
     const [open, openModal] = useState(false);
@@ -107,7 +108,7 @@ const PaymentUserForm = (props) => {
                 </div>
             </div>
             {cards}
-            <div className="col-12 mt-3">
+            <div className="col-12 mt-3 p-0 p-lg-3">
                 <button
                     type="submit"
                     className="btn btn-success"
@@ -139,47 +140,7 @@ const PaymentUserArea = (props) => {
             <div className="row">
                 <PersonalAreaCard/>
                 <div className={`card col-lg-8 col-12 ${s.cardMob}`}>
-                    <div className={`card-header ${s.cardHeaderMob}`}>
-                        <ul className="nav nav-tabs card-header-tabs">
-                            <li className={`nav-item ${s.navLinkMob}`}>
-                                <NavLink
-                                    to="/personal-info"
-                                    className={`nav-link ${s.navProfile}`}
-                                >
-                                    Данные о пользователе
-                                </NavLink>
-                            </li>
-                            <li className={`nav-item ${s.navLinkMob}`}>
-                                <NavLink to="/security" className={`nav-link ${s.navProfile}`}>
-                                    Безопасность
-                                </NavLink>
-                            </li>
-                            <li className={`nav-item ${s.navLinkMob}`}>
-                                <NavLink
-                                    to="/payment-info"
-                                    className={`nav-link ${s.navProfile}`}
-                                >
-                                    Платежные данные
-                                </NavLink>
-                            </li>
-                            <li className={`nav-item ${s.navLinkMob}`}>
-                                <NavLink
-                                    to="/entity-info"
-                                    className={`nav-link ${s.navProfile}`}
-                                >
-                                    Данные юр.лица
-                                </NavLink>
-                            </li>
-                            <li className={`nav-item ${s.navLinkMob}`}>
-                                <NavLink
-                                    to="/individual-info"
-                                    className={`nav-link mb-2 ${s.navProfile}`}
-                                >
-                                    Данные физ.лица
-                                </NavLink>
-                            </li>
-                        </ul>
-                    </div>
+                    <MobilePersonalAreaTabs />
                     <div className="card-header">
                         <h4 className="m-0">Платежные данные</h4>
                     </div>
