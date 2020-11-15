@@ -1,20 +1,23 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {Field, reduxForm} from "redux-form";
 import {validate, warn} from "../../../utils/validators/validators";
 import {renderPersonalAreaInput, renderSelect,} from "../../shared/FormContols/FormControls";
 import {changeUserData, getUserData} from "../../../redux/PersonalAreaReducer";
 import {connect} from "react-redux";
 import PersonalAreaCard from "../../shared/PersonalAreaCard/PersonalAreaCard";
-import {NavLink} from "react-router-dom";
 import s from "./InfoUserForm.module.css";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 import MobilePersonalAreaTabs from "../../shared/MobilePersonalAreaTabs/MobilePersonalAreaTabs";
+import {AlertSuccess} from "../../shared/CustomAlerts/CustomAlerts";
+import Preloader from "../../shared/Preloader/Preloader";
 
 const InfoUserForm = (props) => {
-    const {handleSubmit, isFetching, submitting, pristine,} = props;
-    return (
-        <form className="popup__form" onSubmit={handleSubmit}>
+    const {handleSubmit, isFetching, submitting, pristine, openAlert} = props;
+    return isFetching ? (
+        <Preloader/>
+        ) : (
+            <form className="popup__form" onSubmit={handleSubmit}>
             <div className="row">
                 <div className="col-lg-6 col-12">
                     <div className="form-group">
@@ -80,15 +83,12 @@ const InfoUserForm = (props) => {
                     </div>
                 </div>
             </div>
-
             <div>
                 <button
                     type="submit"
                     className="btn btn-success"
                     disabled={submitting || pristine}
-                >
-                    Сохранить
-                </button>
+                    onClick={() => openAlert(true)}>Сохранить</button>
             </div>
         </form>
     );
@@ -99,7 +99,6 @@ const InfoUserReduxForm = reduxForm({form: "infoUserForm", validate, enableReini
 );
 
 const PersonalUserArea = (props) => {
-    const single_type = '';
     const {
         getUserData,
         middle_name,
@@ -126,15 +125,24 @@ const PersonalUserArea = (props) => {
             data.gender)
     }
 
+    const [alert, openAlert] = useState(false);
+    useEffect(()=>{
+        const timer = setTimeout(() => {
+            openAlert(false)
+        }, 1000);
+        return clearTimeout(timer);
+    }, [alert])
+
     return (
         <div className="container my-5">
             <div className="row">
                 <PersonalAreaCard/>
                 <div className={`card col-lg-8 col-12 ${s.cardMob}`}>
-                    <MobilePersonalAreaTabs />
+                    <MobilePersonalAreaTabs/>
                     <div className="card-header">
                         <h4 className="m-0">Личная информация</h4>
                     </div>
+                    <AlertSuccess show={alert} text={"Информация сохранена"}/>
                     <div className="card-body">
                         <InfoUserReduxForm
                             initialValues={{
@@ -146,6 +154,8 @@ const PersonalUserArea = (props) => {
                                 gender,
                             }}
                             onSubmit={handleSubmit}
+                            openAlert={openAlert}
+                            isFetching={isFetching}
                         />
                     </div>
                 </div>

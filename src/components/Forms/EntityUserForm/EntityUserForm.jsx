@@ -1,12 +1,11 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {Field, reduxForm} from "redux-form";
-import {getEntityData, changeEntityData} from "../../../redux/PersonalAreaReducer";
+import {changeEntityData, getEntityData} from "../../../redux/PersonalAreaReducer";
 import {validate, warn} from "../../../utils/validators/validators";
 import {renderPersonalAreaInput} from "../../shared/FormContols/FormControls";
 import PersonalAreaCard from "../../shared/PersonalAreaCard/PersonalAreaCard";
 import Preloader from "../../shared/Preloader/Preloader";
-import {NavLink} from "react-router-dom";
 import s from './EntityUserForm.module.css';
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 import {compose} from "redux";
@@ -114,6 +113,7 @@ const EntityUserArea = (props) => {
         entity_bank_account_data,
         changeEntityData,
         entity_name,
+        isFetching,
     } = props;
 
     useEffect(() => {
@@ -134,7 +134,7 @@ const EntityUserArea = (props) => {
             <div className="row">
                 <PersonalAreaCard/>
                 <div className={`card col-lg-8 col-12 ${s.cardMob}`}>
-                    <MobilePersonalAreaTabs />
+                    <MobilePersonalAreaTabs/>
                     <div className="card-header">
                         <h4 className="m-0">Личный кабинет</h4>
                     </div>
@@ -148,6 +148,7 @@ const EntityUserArea = (props) => {
                                 entity_name
                             }}
                             onSubmit={handleSubmit}
+                            isFetching={isFetching}
                         />
                     </div>
                 </div>

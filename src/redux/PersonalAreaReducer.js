@@ -21,6 +21,8 @@ let initialState = {
   entity_name:null,
   entity_bank_account_data: null,
   payment_data: [],
+  alertSuccesShow:false,
+  alertErrorShow:false,
 };
 
 const personalAreaReducer = (state = initialState, action) => {
@@ -96,6 +98,7 @@ export const changeUserData = (
       dispatch(setUserData(response));
     })
     .catch((err) => {
+
       console.log(err);
     });
 };

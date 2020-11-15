@@ -56,13 +56,14 @@ const authApi = {
         password: `${password}`,
       }),
     })
-        .then((response) => {
-          localStorage.setItem('jwt', response.token);
-          return response
-        })
-        .catch((err) => {
-          console.log(err)
-        });
+        // .then((response) => {
+        //   localStorage.setItem('jwt', response.token);
+        //   return response
+        // })
+        // .catch((err) => {
+        //   // console.log(err)
+        //   return new Promise(err)
+        // });
   },
 
   async logout() {

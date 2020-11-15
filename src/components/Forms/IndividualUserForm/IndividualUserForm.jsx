@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {Field, reduxForm} from "redux-form";
 import {validate, warn} from "../../../utils/validators/validators";
 import {renderPersonalAreaInput, renderSelect,} from "../../shared/FormContols/FormControls";
@@ -7,10 +7,10 @@ import PersonalAreaCard from "../../shared/PersonalAreaCard/PersonalAreaCard";
 import {getIndividualData, changeIndividualData} from "../../../redux/PersonalAreaReducer";
 import Preloader from "../../shared/Preloader/Preloader";
 import s from "../PaymentUserForm/PaymentUserForm.module.css";
-import {NavLink} from "react-router-dom";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 import MobilePersonalAreaTabs from "../../shared/MobilePersonalAreaTabs/MobilePersonalAreaTabs";
+import AlertSucces from "../../shared/CustomAlerts/CustomAlerts";
 
 const IndividualUserForm = (props) => {
   const {
@@ -133,6 +133,7 @@ const IndividualUserArea = (props) => {
                     passport_data_code
                   }}
                   onSubmit={handleSubmit}
+                  isFetching={isFetching}
               />
             </div>
           </div>

@@ -146,9 +146,8 @@ const PaymentUserArea = (props) => {
                     </div>
                     <div className="card-body">
                         <PaymentUserReduxForm
-                            payment_data={
-                                payment_data
-                            }
+                            payment_data={payment_data}
+                            isFetching={isFetching}
                         />
                     </div>
                 </div>
