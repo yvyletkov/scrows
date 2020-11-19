@@ -1,0 +1,30 @@
+.navIcon {
+    width: 30px;
+    margin: 0 10px 0 0;
+}
+
+.navProfile {
+    color:#171717;
+    border-bottom-left-radius: .375rem;
+    border-bottom-right-radius: .375rem;
+    margin-bottom: 7px;
+}
+
+.navTabs {
+    list-style: none;
+    width: 100%;
+    margin: 0;
+}
+
+@media screen and (max-width: 992px) {
+    .navProfile {
+        justify-content: center;
+    }
+    .navTabs {
+        padding: 0;
+    }
+    .tabDesk {
+        display: none;
+    }
+
+}
