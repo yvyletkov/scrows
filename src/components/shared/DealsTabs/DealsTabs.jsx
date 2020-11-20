@@ -5,11 +5,13 @@ import dealIconWarning from "../../../img/icons/handshake-warning.svg";
 import dealIconSucces from "../../../img/icons/handshake-succes.svg";
 import dealIconDanger from "../../../img/icons/handshake-danger.svg";
 import dealIconActive from "../../../img/icons/handshake-active.svg";
+import checkedIcon from "../../../img/icons/checked.svg";
+import crossIcon from "../../../img/icons/close.svg";
 
 
 const DealsTabs = () => {
     return (
-        <div className={`col-lg-4 col-12 mt-5 ${s.tabDesk}`}>
+        <div className={`col-lg-4 col-12 ${s.tabDesk}`}>
             <div className={s.navProfile}>
                 <ul className={`nav-tabs ${s.navTabs}`}>
                     <li className="nav-item">
@@ -27,7 +29,7 @@ const DealsTabs = () => {
                         <NavLink className={`nav-link ${s.navProfile}`} to="#">
                             <img
                                 className={s.navIcon}
-                                src={dealIconSucces}
+                                src={checkedIcon}
                                 alt="secure-icon"/>
                             Завершенные
                         </NavLink>
@@ -38,7 +40,7 @@ const DealsTabs = () => {
                             to="#">
                             <img
                                 className={s.navIcon}
-                                src={dealIconDanger}
+                                src={crossIcon}
                                 alt="extra-icon"/>Претензии
                         </NavLink>
                     </li>

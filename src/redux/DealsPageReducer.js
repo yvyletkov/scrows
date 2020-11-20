@@ -1,11 +1,7 @@
 import {api} from "../api/api";
 
 let initialState = {
-    dealId: null,
-    createdAt: null,
-    subject: null,
-    price: null,
-    status: {},
+    deals: []
 };
 
 const dealsDataReducer = (state = initialState, action) => {
@@ -13,10 +9,7 @@ const dealsDataReducer = (state = initialState, action) => {
         case "SET_DEALS_DATA":
             return {
                 ...state,
-                dealId: action.payload.id,
-                subject: action.payload.subject,
-                status: {...action.payload.status},
-                amount: action.payload.amount,
+                deals: action.payload,
             };
         default:
             return state;
