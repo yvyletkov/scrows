@@ -8,10 +8,27 @@ const DealsPage = (props) => {
 
     console.log(props)
 
-    const {getDealsData} = props;
+    const {getDealsData, deals} = props;
     useEffect(() => {
         getDealsData()
-    }, [])
+    }, []);
+
+    const dealsArray = deals.map((deal) => {
+        let month = new Date(deal.created_at).getUTCMonth() + 1;
+        let day = new Date(deal.created_at).getUTCDate();
+        let year = new Date(deal.created_at).getUTCFullYear();
+
+        let newDate = `${day}.${month}.${year}`;
+        return (
+            <tr className={s.itemDeals} key={deal.id}>
+                <th className={s.table4}>{deal.id}</th>
+                <td className={s.table24}>{newDate}</td>
+                <td className={s.table24}>{deal.subject}</td>
+                <td className={s.table24}>{deal.price} &#8381;</td>
+                <td className={s.table24}>{deal.status.title}</td>
+            </tr>
+        )
+    })
 
     return (
         <div className="container mt-5">
@@ -23,31 +40,15 @@ const DealsPage = (props) => {
                         <table className="table table-hover table-borderless">
                             <thead>
                             <tr>
-                                <th className={s.table10}>№</th>
-                                <th className={s.table30}>Дата создания</th>
-                                <th className={s.table30}>Стоимость</th>
-                                <th className={s.table30}>Статус</th>
+                                <th className={s.table4}>№</th>
+                                <th className={s.table24}>Дата создания</th>
+                                <th className={s.table24}>Предмет</th>
+                                <th className={s.table24}>СТоимость</th>
+                                <th className={s.table24}>Статус</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <th className={s.table10}>1</th>
-                                <td className={s.table30}>15.12.2020</td>
-                                <td className={s.table30}>1000р</td>
-                                <td className={s.table30}></td>
-                            </tr>
-                            <tr>
-                                <th className={s.table10}>2</th>
-                                <td className={s.table30}>15.12.2020</td>
-                                <td className={s.table30}>1000р</td>
-                                <td className={s.table30}></td>
-                            </tr>
-                            <tr>
-                                <th className={s.table10}>3</th>
-                                <td className={s.table30}>15.12.2020</td>
-                                <td className={s.table30}>1000р</td>
-                                <td className={s.table30}></td>
-                            </tr>
+                            {dealsArray}
                             </tbody>
                         </table>
                     </div>
@@ -59,11 +60,7 @@ const DealsPage = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        dealId: state.deals.dealId,
-        created_at: state.deals.created_at,
-        subject: state.deals.subject,
-        price: state.deals.price,
-        status: state.deals.status,
+        deals: state.deals.deals,
     };
 };
 
