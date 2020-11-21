@@ -3,6 +3,7 @@ import {api} from "../api/api";
 let initialState = {
     deals: [],
     isFetching: false,
+    completedDeals:{},
 };
 
 const dealsDataReducer = (state = initialState, action) => {

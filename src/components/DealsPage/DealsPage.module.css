@@ -17,6 +17,13 @@
     color:#5a6169;
 }
 
+.navTab {
+    padding: 0;
+    text-align: center;
+    font-size: 1rem;
+    color:#171717;
+}
+
 .navLink:hover {
     color:#5a6169;
 }
