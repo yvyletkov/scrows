@@ -1,6 +1,7 @@
 import {api} from "../api/api";
 
 let initialState = {
+    notFound: false,
     dealId: null,
     createdAt: '',
     subject: '',
@@ -36,6 +37,8 @@ let initialState = {
 
 const dealPageReducer = (state = initialState, action) => {
     switch (action.type) {
+        case "DEAL:SET-NOT-FOUND":
+            return {...state, notFound: action.status};
         case "DEAL:SET-DEAL-INFO":
             return {
                 ...state,
@@ -82,13 +85,18 @@ const dealPageReducer = (state = initialState, action) => {
 // };
 
 export const getDealInfo = (id) => (dispatch) => {
+
     dispatch(toggleIsFetching(true));
     api
         .getDealInfo(id)
         .then((response) => {
-            console.log("response", response);
-            dispatch(setDealInfo(response));
-            dispatch(toggleIsFetching(false));
+            console.log('response', response);
+            if (response.detail === 'Not found.') dispatch(setNotFound(true));
+            else {
+                dispatch(setNotFound(false));
+                dispatch(setDealInfo(response));
+                dispatch(toggleIsFetching(false));
+            }
         })
         .catch((err) => {
             console.log(err);
@@ -101,7 +109,6 @@ export const getPossibleStatuses = () => (dispatch) => {
     api
         .getPossibleStatuses()
         .then((response) => {
-            console.log("response statuses", response);
             dispatch(setPossibleStatuses(response));
             dispatch(toggleIsFetching(false));
         })
@@ -112,6 +119,7 @@ export const getPossibleStatuses = () => (dispatch) => {
 };
 
 export const toggleIsFetching = status => ({type: "DEAL:TOGGLE-IS-FETCHING", status: status});
+export const setNotFound = status => ({type: "DEAL:SET-NOT-FOUND", status: status});
 // export const setMessages = data => ({ type: "DEAL:SET-MESSAGES", payload: data });
 export const setDealInfo = data => ({type: "DEAL:SET-DEAL-INFO", payload: data});
 export const setPossibleStatuses = data => ({type: "DEAL:SET-POSSIBLE-STATUSES", payload: data});

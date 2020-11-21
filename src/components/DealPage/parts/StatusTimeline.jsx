@@ -5,7 +5,7 @@ const StatusTimelineItem = ({title, index, currentStatusPriority, last, first}) 
 
     let [showDescr, setShowDescr] = React.useState(false);
 
-    return <div key={index} onMouseEnter={() => setShowDescr(true)} onMouseLeave={() => setShowDescr(false)}
+    return <div onMouseEnter={() => setShowDescr(true)} onMouseLeave={() => setShowDescr(false)}
                 className={s.statusItemWrapper}>
         <div
             className={index < currentStatusPriority ? `${s.statusItem} ${s.archieved} ${s.past}` : index === currentStatusPriority ? `${s.statusItem} ${s.archieved}` : `${s.statusItem}`}>
@@ -24,15 +24,18 @@ const StatusTimelineItem = ({title, index, currentStatusPriority, last, first}) 
             {title}
         </div>
     </div>
-}
+};
 
 const StatusTimeline = ({possibleStatuses, currentStatusPriority, problem = false, ...props}) => {
 
     let [descrShown, setDescrShown] = React.useState(false);
 
+    if (currentStatusPriority !== 7) {
+        possibleStatuses.splice(7, 1)
+    }
 
     let statusItems = possibleStatuses.map((item, index) => {
-        return <StatusTimelineItem title={item.title} index={index} first={index === 0} last={index === possibleStatuses.length - 1}
+        return <StatusTimelineItem key={index} title={item.title} index={index} first={index === 0} last={index === possibleStatuses.length - 1}
                                    currentStatusPriority={currentStatusPriority}/>
     });
 

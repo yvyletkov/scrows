@@ -24,13 +24,13 @@ function App(props) {
                 <Route path="/add-deal" component={AddDealPage} exact/>
                 <Route path="/login" component={LoginPage}/>
                 <Route path="/auth" component={RegistrationPage}/>
-                <Route path="/deal/:id" component={DealPage}/>
+                <Route exact path="/deals/:id" component={DealPage}/>
                 <Route path="/personal-info" component={PersonalUserArea}/>
                 <Route path="/security" component={SecureUserArea}/>
                 <Route path="/payment-info" component={PaymentUserArea}/>
                 <Route path="/entity-info" component={EntityUserArea}/>
                 <Route path="/individual-info" component={IndividualUserArea}/>
-                <Route path="/deals" component={DealsPage}/>
+                <Route exact path="/deals" component={DealsPage}/>
             </Router>
         </Provider>
     </>)

@@ -9,7 +9,7 @@ const Chat = ({onChatFormSubmit, chatMessages}) => {
             <div className={'font-weight-bold mb-4'}>Чат</div>
             <div>
 
-                {chatMessages.map(item => <div className={'mb-3 ' + s.message + ' ' + s.dark}>
+                {chatMessages.map((item, index) => <div key={index} className={'mb-3 ' + s.message + ' ' + s.dark}>
                     <div className={s.messageText}>{item.text}</div>
                     <div>{item.userName} {item.time}</div>
                 </div>)}
