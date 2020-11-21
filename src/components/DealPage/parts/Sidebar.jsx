@@ -3,6 +3,20 @@ import s from "../DealPage.module.css";
 import vvpImg from "../../../img/vvp.jpg";
 import damImg from "../../../img/dam.jpg";
 
+const ParticipantCard = ({id, participants}) => {
+    return <div className={`card mt-3 mb-3 mt-md-0 ${s.sidebarCard}`}>
+        <div className='card-header'>
+            <span className={'text-lg-left text-center font-weight-bold'}>{participants[id].role.title}</span>
+        </div>
+        <div className='card-body'>
+            <img className={s.cardImg} src={vvpImg} alt="Путин"/>
+            <p className='mb-2'><b>Имя: </b>{participants[id].user.name} {participants[id].user.last_name}</p>
+            <p className='mb-2'><b>email: </b>нет</p>
+            <span className='badge badge-outline-dark mt-2'>{participants[id].invite.type}</span>
+        </div>
+    </div>
+}
+
 const Sidebar = ({ userId = 0, ...props}) => {
 
     const createdAt = new Date(props.createdAt).toLocaleString('ru', {
@@ -13,33 +27,14 @@ const Sidebar = ({ userId = 0, ...props}) => {
         minute: 'numeric',
     });
 
+
     const priceWithCommission = props.participants[userId].user_commission_amount + props.price;
 
     return (<>
-        <div className={`card mt-3 mt-md-0 ${s.sidebarCard}`}>
-            <div className='card-header'>
-                <div className={'text-lg-left text-center font-weight-bold'}>{props.participants[0].role.title}</div>
-            </div>
-            <div className='card-body'>
-                <img className={s.cardImg} src={vvpImg} alt="Путин"/>
-                <div>{props.participants[0].user.name}</div>
-                <div>{props.participants[0].user.last_name}</div>
-                <div><b>email:</b> vvp@scrows.ru</div>
-                <span className='badge badge-outline-dark mt-2'>{props.participants[0].invite.type}</span>
-            </div>
-        </div>
-        <div className={`card mt-3 ${s.sidebarCard}`}>
-            <div className='card-header'>
-                <div className={'text-lg-left text-center font-weight-bold'}>{props.participants[1].role.title}</div>
-            </div>
-            <div className='card-body'>
-                <img className={s.cardImg} src={damImg} alt="Медведев"/>
-                <div>{props.participants[1].user.name}</div>
-                <div>{props.participants[1].user.last_name}</div>
-                <div><b>email:</b> dam@scrows.ru</div>
-                <span className='badge badge-outline-dark mt-2'>{props.participants[1].invite.type}</span>
-            </div>
-        </div>
+
+        <ParticipantCard id={0} participants={props.participants}/>
+        <ParticipantCard id={1} participants={props.participants}/>
+
         <div className={`card mt-3 ${s.sidebarCard}`}>
             <div className='card-header'>
                 <div className={'text-lg-left text-center font-weight-bold'}>Описание сделки</div>
@@ -50,11 +45,11 @@ const Sidebar = ({ userId = 0, ...props}) => {
                     <tbody>
                     <tr>
                         <td>Тип сделки</td>
-                        <td style={{width: '32%'}}>{props.dealType.title}</td>
+                        <td style={{width: '35%'}}>{props.dealType.title}</td>
                     </tr>
                     <tr>
                         <td>Дата создания</td>
-                        <td style={{width: '32%'}}>{createdAt}</td>
+                        <td style={{width: '35%'}}>{createdAt}</td>
                     </tr>
                     <tr>
                         <td>

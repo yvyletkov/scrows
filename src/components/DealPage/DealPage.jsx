@@ -9,12 +9,15 @@ import Chat from "./parts/Chat";
 import DealHistory from "./parts/DealHistory";
 import DealFiles from "./parts/DealFiles";
 import Preloader from "../shared/Preloader/Preloader";
+import {NavLink} from "react-router-dom";
 
-const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, ...props}) => {
+const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, notFound, ...props}) => {
 
     const idForRequest = props.match.params.id;
 
-    console.log('dealPage props', props);
+    console.log('idForRequest', idForRequest);
+
+    // console.log('dealPage props', props);
 
     React.useEffect( () => {
         getDealInfo(idForRequest);
@@ -33,18 +36,21 @@ const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, ...props}) =>
             <div className='card'>
                 <div className="card-header">
                     <div className={'d-md-flex justify-content-between'}>
-                        <h4 className='mb-0'><span className="badge badge-outline-secondary">Сделка №{props.dealId}</span></h4>
-                        <h4 className='mb-0'><span className="badge badge-secondary">Сумма: {props.price}₽</span></h4>
+                        {!notFound ? <h4 className='mb-0'><span className="mb-2 mb-md-0 badge badge-outline-secondary">Сделка №{props.dealId}</span></h4>
+                            : <p><b>К сожалению, сделки с таким ID ({idForRequest}) не существует</b></p> }
+                        {!notFound && <h4 className='mb-0'><span className="badge badge-secondary">Сумма: {props.price}₽</span></h4>}
                     </div>
                 </div>
                 <div className="card-body">
-                    <div>{props.status.title}</div>
+                    {!notFound ? <div>{props.status.title}</div>
+                        : <NavLink className='btn btn-light' to={'/deals'}>Вернуться к списку сделок</NavLink>}
                 </div>
             </div>
 
-            <StatusTimeline currentStatusPriority={props.status.priority} possibleStatuses={props.possibleStatuses}/>
 
-            <div className='row mt-4'>
+            {!notFound && <StatusTimeline currentStatusPriority={props.status.priority} possibleStatuses={props.possibleStatuses}/>}
+
+            {!notFound && <div className='row mt-4'>
                 <div className='col-md-8 px-0 px-md-3'>
 
                     <div className={'card ' + s.main}>
@@ -80,13 +86,14 @@ const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, ...props}) =>
                     <Sidebar {...props}/>
 
                 </div>
-            </div>
+            </div> }
         </div>
     )
 };
 
 let mapStateToProps = (state) => {
     return {
+        notFound: state.deal.notFound,
         dealId: state.deal.dealId,
         participants: state.deal.participants,
         createdAt: state.deal.createdAt,

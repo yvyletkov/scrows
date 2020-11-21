@@ -233,5 +233,9 @@
     .statusItem {
         font-size: 1.8vw;
     }
+
+    .statusItem, .statusItem.archieved, .statusItem.archieved.past {
+        border-width: 3px;
+    }
 }
 

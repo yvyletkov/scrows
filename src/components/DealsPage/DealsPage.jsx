@@ -20,7 +20,7 @@ const DealsPage = (props) => {
 
         let newDate = `${day}.${month}.${year}`;
         return (
-            <NavLink className={s.navLink} to={`/deal/${deal.id}`}>
+            <NavLink className={s.navLink} to={`/deals/${deal.id}`}>
                 <div className={`card mt-3 ${s.card}`} key={deal.id}>
                     <div className="card-header d-flex flex-lg-row flex-column p-0">
                         <p className={s.nameDeal}>{deal.subject}</p>

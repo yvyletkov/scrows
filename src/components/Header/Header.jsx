@@ -79,6 +79,11 @@ const Header = (props) => {
                             </NavLink>
                         </NavItem>}
                         <NavItem>
+                            <NavLink href="/deals">
+                                Список сделок
+                            </NavLink>
+                        </NavItem>
+                        <NavItem>
                             <ButtonToolbar>
                                 <ButtonGroup>
                                     {isAuth ?
