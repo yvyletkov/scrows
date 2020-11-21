@@ -4,12 +4,12 @@ import DealsTabs from "../shared/DealsTabs/DealsTabs";
 import {connect} from "react-redux";
 import {getDealsData} from "../../redux/DealsPageReducer";
 import {NavLink} from "react-router-dom";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
+import Preloader from "../shared/Preloader/Preloader";
 
 const DealsPage = (props) => {
-
-    console.log(props);
-
-    const {getDealsData, deals} = props;
+    const {getDealsData, deals, isFetching} = props;
     useEffect(() => {
         getDealsData()
     }, []);
@@ -54,7 +54,7 @@ const DealsPage = (props) => {
                 <div className="card col-lg-8 p-0 col-12">
                     <h4 className="card-header">Сделки</h4>
                     <div className="card-body pt-0">
-                        {dealsList}
+                        {isFetching ? <Preloader/> : dealsList}
                     </div>
                 </div>
             </div>
@@ -65,7 +65,8 @@ const DealsPage = (props) => {
 const mapStateToProps = (state) => {
     return {
         deals: state.deals.deals,
+        isFetching: state.deals.isFetching
     };
 };
 
-export default connect(mapStateToProps, {getDealsData})(DealsPage);
+export default compose(connect(mapStateToProps, {getDealsData}), withAuthRedirect)(DealsPage);
