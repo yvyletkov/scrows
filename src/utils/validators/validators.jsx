@@ -23,6 +23,11 @@ const validate = (values) => {
     "passport_data_code",
     "entity_name",
   ];
+
+  fields.forEach((field) => {
+    if (!values[field]) return errors[field] = require
+  })
+
   if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
     errors.email = "Неверный email";
   }
@@ -32,14 +37,6 @@ const validate = (values) => {
   if (values.passwordFirst !== values.passwordSecond) {
     errors.passwordSecond = "Пароли не совпадают";
   }
-  fields.forEach((field) => {
-    if (!values.hasOwnProperty(field)) {
-      errors[field] = require;
-    }
-    if (values.length === 0) {
-      errors[field] = require;
-    }
-  });
 
   return errors;
 };

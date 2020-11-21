@@ -73,6 +73,11 @@ const Header = (props) => {
                                 Личный кабинет
                             </NavLink>
                         </NavItem>
+                        {isAuth && <NavItem>
+                            <NavLink href="/deals">
+                                Сделки
+                            </NavLink>
+                        </NavItem>}
                         <NavItem>
                             <NavLink href="/deals">
                                 Список сделок
