@@ -23,7 +23,7 @@ function App(props) {
                 <Route path="/add-deal" component={AddDealPage} exact/>
                 <Route path="/login" component={LoginPage}/>
                 <Route path="/auth" component={RegistrationPage}/>
-                <Route path="/deal" component={DealPage}/>
+                <Route path="/deal/:id" component={DealPage}/>
                 <Route path="/personal-info" component={PersonalUserArea}/>
                 <Route path="/security" component={SecureUserArea}/>
                 <Route path="/payment-info" component={PaymentUserArea}/>
