@@ -82,7 +82,7 @@ const authApi = {
   async getSecureData() {
     this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
     // this.headers.Authorization = `Bearer token`;
-    return await this.request(`/users/profile/security/`, {
+    return await this.request(`/profile/security/`, {
       method: "GET",
       headers: this.headers,
     });
@@ -154,14 +154,14 @@ const authApi = {
   async getPaymentData() {
     this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
     // this.headers.Authorization = `Bearer token`;
-    return await this.request(`/users/profile/payment/`, {
+    return await this.request(`/profile/payment/`, {
       method: "GET",
       headers: this.headers,
     });
   },
 };
 
-const dealApi = {
+  const dealApi = {
   async getDealInfo(id) {
     this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
     return await this.request(`/deals/${id}`, {
@@ -176,8 +176,19 @@ const dealApi = {
       method: "GET",
       headers: this.headers,
     });
-  }
+  },
+
+  async getDealsData() {
+    this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+    // this.headers.Authorization = `Bearer token`;
+    return await this.request(`/deals/`, {
+      method: "GET",
+      headers: this.headers,
+    });
+  },
+
 };
+
 
 export const api = {
   ...baseApi,
