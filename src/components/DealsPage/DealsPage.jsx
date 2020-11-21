@@ -3,6 +3,7 @@ import s from './DealsPage.module.css';
 import DealsTabs from "../shared/DealsTabs/DealsTabs";
 import {connect} from "react-redux";
 import {getDealsData} from "../../redux/DealsPageReducer";
+import {NavLink} from "react-router-dom";
 
 const DealsPage = (props) => {
 
@@ -20,27 +21,29 @@ const DealsPage = (props) => {
 
         let newDate = `${day}.${month}.${year}`;
         return (
-            <div className={`card mt-3 ${s.card}`} key={deal.id}>
-                <div className="card-header d-flex flex-lg-row flex-column p-0">
-                    <p className={s.nameDeal}>{deal.subject}</p>
-                </div>
-                <div className={`card-body ${s.cardBody}`}>
-                    <div className="d-lg-flex d-block">
-                        <div className={`col-lg-4 col-12 ${s.block}`}>
-                            <p className={s.titleBlock}>Дата создания</p>
-                            <p className={s.contentBlock}>{newDate}</p>
-                        </div>
-                        <div className={`col-lg-4 col-12 ${s.block}`}>
-                            <p className={s.titleBlock}>Сумма сделки</p>
-                            <p className={s.contentBlock}>{deal.price} &#8381;</p>
-                        </div>
-                        <div className={`col-lg-4 col-12 ${s.block}`}>
-                            <p className={s.titleBlock}>Статус</p>
-                            <span className={`badge badge-info ${s.contentBlock}`}>{deal.status.title}</span>
+            <NavLink className={s.navLink} to={`/deal/${deal.id}`}>
+                <div className={`card mt-3 ${s.card}`} key={deal.id}>
+                    <div className="card-header d-flex flex-lg-row flex-column p-0">
+                        <p className={s.nameDeal}>{deal.subject}</p>
+                    </div>
+                    <div className={`card-body ${s.cardBody}`}>
+                        <div className="d-lg-flex d-block">
+                            <div className={`col-lg-4 col-12 ${s.block}`}>
+                                <p className={s.titleBlock}>Дата создания</p>
+                                <p className={s.contentBlock}>{newDate}</p>
+                            </div>
+                            <div className={`col-lg-4 col-12 ${s.block}`}>
+                                <p className={s.titleBlock}>Сумма сделки</p>
+                                <p className={s.contentBlock}>{deal.price} &#8381;</p>
+                            </div>
+                            <div className={`col-lg-4 col-12 ${s.block}`}>
+                                <p className={s.titleBlock}>Статус</p>
+                                <span className={`badge badge-info ${s.contentBlock}`}>{deal.status.title}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </NavLink>
         )
     })
 

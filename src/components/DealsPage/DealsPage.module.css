@@ -13,6 +13,14 @@
     padding: 1rem;
 }
 
+.navLink {
+    color:#5a6169;
+}
+
+.navLink:hover {
+    color:#5a6169;
+}
+
 .nameDeal {
     font-weight: 800;
     font-size: 1rem;
