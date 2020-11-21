@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import s from './DealsPage.module.css';
-import DealsTabs from "../shared/DealsTabs/DealsTabs";
 import {connect} from "react-redux";
 import {getDealsData} from "../../redux/DealsPageReducer";
 import {NavLink} from "react-router-dom";
@@ -28,7 +27,7 @@ const DealsPage = (props) => {
                     </div>
                     <div className={`card-body ${s.cardBody}`}>
                         <div className="d-lg-flex d-block">
-                            <div className={`col-lg-4 col-12 ${s.block}`}>
+                            <div className={`col-lg-3 col-12 ${s.block}`}>
                                 <p className={s.titleBlock}>Дата создания</p>
                                 <p className={s.contentBlock}>{newDate}</p>
                             </div>
@@ -36,7 +35,7 @@ const DealsPage = (props) => {
                                 <p className={s.titleBlock}>Сумма сделки</p>
                                 <p className={s.contentBlock}>{deal.price} &#8381;</p>
                             </div>
-                            <div className={`col-lg-4 col-12 ${s.block}`}>
+                            <div className={`col-lg-5 col-12 ${s.block}`}>
                                 <p className={s.titleBlock}>Статус</p>
                                 <span className={`badge badge-info ${s.contentBlock}`}>{deal.status.title}</span>
                             </div>
@@ -48,17 +47,41 @@ const DealsPage = (props) => {
     })
 
     return (
-        <div className="container mt-5">
-            <div className="row">
-                <DealsTabs/>
-                <div className="card col-lg-8 p-0 col-12">
-                    <h4 className="card-header">Сделки</h4>
+        <>
+
+            <div className="container mt-5">
+                <div className="card col-lg-12 p-0 col-12">
+                    <div className="card-header">
+                        <h4>Сделки</h4>
+                        <ul className="nav nav-tabs card-header-tabs">
+                            <li className={`nav-item col-3 ${s.navTab}`}>
+                                <NavLink to="/deals" className={`nav-link ${s.navLink}`}>
+                                    Активные
+                                </NavLink>
+                            </li>
+                            <li className={`nav-item col-3 ${s.navTab}`}>
+                                <NavLink to="/security" className={`nav-link ${s.navLink}`}>
+                                    Завершенные
+                                </NavLink>
+                            </li>
+                            <li className={`nav-item col-3 ${s.navTab}`}>
+                                <NavLink to="/payment-info" className={`nav-link ${s.navLink}`}>
+                                    Претензии
+                                </NavLink>
+                            </li>
+                            <li className={`nav-item col-3 ${s.navTab}`}>
+                                <NavLink to="/payment-info" className={`nav-link ${s.navLink}`}>
+                                    Требуют действия
+                                </NavLink>
+                            </li>
+                        </ul>
+                    </div>
                     <div className="card-body pt-0">
                         {isFetching ? <Preloader/> : dealsList}
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 
