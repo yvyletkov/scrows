@@ -49,8 +49,6 @@ export const getUserData = () => dispatch => {
         .catch((err) => {
             console.log(err)
         })
-    // dispatch(setAuthUserData(data))
-
 }
 
 export const setAuthUserData = (status) => ({type: "SET_AUTH_USER_DATA", status: status});

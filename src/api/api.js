@@ -22,14 +22,6 @@ const authApi = {
         password: `${password}`,
       }),
     })
-        // .then((response) => {
-        //   localStorage.setItem('jwt', response.token);
-        //   return response
-        // })
-        // .catch((err) => {
-        //   // console.log(err)
-        //   return new Promise(err)
-        // });
   },
 
   async logout() {
@@ -82,7 +74,7 @@ const authApi = {
   async getSecureData() {
     this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
     // this.headers.Authorization = `Bearer token`;
-    return await this.request(`/profile/security/`, {
+    return await this.request(`/users/profile/security/`, {
       method: "GET",
       headers: this.headers,
     });
@@ -154,7 +146,7 @@ const authApi = {
   async getPaymentData() {
     this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
     // this.headers.Authorization = `Bearer token`;
-    return await this.request(`/profile/payment/`, {
+    return await this.request(`/users/profile/payment/`, {
       method: "GET",
       headers: this.headers,
     });
