@@ -164,7 +164,15 @@ const authApi = {
   const dealApi = {
   async getDealInfo(id) {
     this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
-    return await this.request(`/deal/${id}`, {
+    return await this.request(`/deals/${id}`, {
+      method: "GET",
+      headers: this.headers,
+    });
+  },
+
+  async getPossibleStatuses() {
+    this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+    return await this.request(`/common/statuses`, {
       method: "GET",
       headers: this.headers,
     });
@@ -178,6 +186,7 @@ const authApi = {
       headers: this.headers,
     });
   },
+
 };
 
 

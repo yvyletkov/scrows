@@ -2,11 +2,28 @@ import {api} from "../api/api";
 
 let initialState = {
     dealId: null,
+    createdAt: '',
     subject: '',
     status: {},
+    commissionType: {},
+    commissionAmount: null,
     dealType: {},
-    users: [],
-    amount: null,
+    participants: [
+        {
+            invite: {id: null, type: ""},
+            role: {id: null, title: "", assigned: null},
+            user: {name: "", last_name: "", middle_name: "", gender: "", entity_type: "", date_of_birth: ""},
+            user_commission_amount: null
+        },
+        {
+            invite: {id: null, type: ""},
+            role: {id: null, title: "", assigned: null},
+            user: {name: "", last_name: "", middle_name: "", gender: "", entity_type: "", date_of_birth: ""},
+            user_commission_amount: null
+        }
+    ],
+    price: null,
+    possibleStatuses: [],
     chatMessages: [
         {userName: 'Владимир', time: '(07.10.2020 23:27:35)', text: 'че с деньгами?'},
         {userName: 'Дмитрий', time: '(07.10.2020 23:27:55)', text: 'Ты кому звонишь?'},
@@ -23,11 +40,19 @@ const dealPageReducer = (state = initialState, action) => {
             return {
                 ...state,
                 dealId: action.payload.id,
+                createdAt: action.payload.created_at,
                 subject: action.payload.subject,
+                commissionType: action.payload.commission_type,
+                commissionAmount: action.payload.commission_amount,
                 status: {...action.payload.status},
                 dealType: {...action.payload.type},
-                users: [...action.payload.users],
-                amount: action.payload.amount,
+                participants: [...action.payload.participants],
+                price: action.payload.price,
+            };
+        case "DEAL:SET-POSSIBLE-STATUSES":
+            return {
+                ...state,
+                possibleStatuses: [...action.payload]
             };
         case "DEAL:SET-MESSAGES":
             return {
@@ -61,8 +86,23 @@ export const getDealInfo = (id) => (dispatch) => {
     api
         .getDealInfo(id)
         .then((response) => {
-            console.log(response);
+            console.log("response", response);
             dispatch(setDealInfo(response));
+            dispatch(toggleIsFetching(false));
+        })
+        .catch((err) => {
+            console.log(err);
+            dispatch(toggleIsFetching(false));
+        });
+};
+
+export const getPossibleStatuses = () => (dispatch) => {
+    dispatch(toggleIsFetching(true));
+    api
+        .getPossibleStatuses()
+        .then((response) => {
+            console.log("response statuses", response);
+            dispatch(setPossibleStatuses(response));
             dispatch(toggleIsFetching(false));
         })
         .catch((err) => {
@@ -74,6 +114,7 @@ export const getDealInfo = (id) => (dispatch) => {
 export const toggleIsFetching = status => ({type: "DEAL:TOGGLE-IS-FETCHING", status: status});
 // export const setMessages = data => ({ type: "DEAL:SET-MESSAGES", payload: data });
 export const setDealInfo = data => ({type: "DEAL:SET-DEAL-INFO", payload: data});
+export const setPossibleStatuses = data => ({type: "DEAL:SET-POSSIBLE-STATUSES", payload: data});
 
 
 export default dealPageReducer;

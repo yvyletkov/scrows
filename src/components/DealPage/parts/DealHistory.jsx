@@ -7,7 +7,7 @@ const DealHistory = () => {
         </div>
 
         <div className='card-body'>
-            <div className='d-flex  mb-1'>
+            <div className='d-flex  mb-2'>
                 <div style={{color: "#fff", height: "fit-content"}}
                      className="badge badge-warning mr-2 align-bottom">07.10.2020 23:24:31
                 </div>
@@ -15,7 +15,7 @@ const DealHistory = () => {
                 </div>
             </div>
 
-            <div className='d-flex  mb-1'>
+            <div className='d-flex  mb-2'>
                 <div style={{color: "#fff", height: "fit-content"}}
                      className="badge badge-warning mr-2 align-bottom">07.10.2020 23:24:31
                 </div>
@@ -23,7 +23,7 @@ const DealHistory = () => {
                 </div>
             </div>
 
-            <div className='d-flex  mb-1'>
+            <div className='d-flex  mb-2'>
                 <div style={{color: "#fff", height: "fit-content"}}
                      className="badge badge-warning mr-2 align-bottom">07.10.2020 23:24:31
                 </div>
@@ -31,7 +31,7 @@ const DealHistory = () => {
                 </div>
             </div>
 
-            <div className='d-flex  mb-1'>
+            <div className='d-flex  mb-2'>
                 <div style={{color: "#fff", height: "fit-content"}}
                      className="badge badge-warning mr-2 align-bottom">07.10.2020 23:24:31
                 </div>
@@ -39,7 +39,7 @@ const DealHistory = () => {
                 </div>
             </div>
 
-            <div className='d-flex mb-1'>
+            <div className='d-flex mb-2'>
                 <div style={{color: "#fff", height: "fit-content"}}
                      className="badge badge-warning mr-2 align-bottom">07.10.2020 23:24:31
                 </div>
