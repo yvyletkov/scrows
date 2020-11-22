@@ -1,41 +1,49 @@
 import React from "react";
 import s from "../DealPage.module.css";
+import classNames from "classnames";
 
-const StatusTimelineItem = ({title, index, currentStatusPriority, last, first}) => {
+const StatusTimelineItem = ({title, index, currentStatusPriority, last, first, error}) => {
 
     let [showDescr, setShowDescr] = React.useState(false);
+
+    const itemClassNames = classNames(s.statusItem, {[s.archieved]: index <= currentStatusPriority, [s.past]: index < currentStatusPriority, [s.error]: error});
+    const descrClassNames = classNames(s.statusDescription, {
+        [s.active]: showDescr || ((index <= currentStatusPriority) && window.matchMedia("(min-width: 1200px)").matches),
+        [s.current]: index === currentStatusPriority,
+        [s.error]: error,
+        [s.first]: first,
+        [s.last]: last,
+        [s.small]: currentStatusPriority === 7
+    });
 
     return <div onMouseEnter={() => setShowDescr(true)} onMouseLeave={() => setShowDescr(false)}
                 className={s.statusItemWrapper}>
         <div
-            className={index < currentStatusPriority ? `${s.statusItem} ${s.archieved} ${s.past}` : index === currentStatusPriority ? `${s.statusItem} ${s.archieved}` : `${s.statusItem}`}>
+            className={itemClassNames}>
             {index < currentStatusPriority ? <i className="fas fa-check fa-2x"></i> : index === currentStatusPriority ?
                 <div className="spinner-border text-light" role="status">
                     <span className="sr-only">Loading...</span>
                 </div> : null}
         </div>
         <div
-            className={`${s.statusDescription}
-                ${last ? s.last : ""}
-                ${first ? s.first : ""}
-                ${(showDescr && s.active) || (((index <= currentStatusPriority) && window.matchMedia("(min-width: 1200px)").matches) && s.active)}
-                ${index === currentStatusPriority ? s.current : ""}`}
+            className={descrClassNames}
         >
             {title}
         </div>
     </div>
 };
 
-const StatusTimeline = ({possibleStatuses, currentStatusPriority, problem = false, ...props}) => {
+const StatusTimeline = ({possibleStatuses, currentStatusPriority}) => {
 
     let [descrShown, setDescrShown] = React.useState(false);
 
-    if (currentStatusPriority !== 7) {
-        possibleStatuses.splice(7, 1)
+    if (currentStatusPriority !== 7 && currentStatusPriority !== undefined) {
+        possibleStatuses = possibleStatuses.filter( i => i.priority !== 7)
     }
 
     let statusItems = possibleStatuses.map((item, index) => {
-        return <StatusTimelineItem key={index} title={item.title} index={index} first={index === 0} last={index === possibleStatuses.length - 1}
+        return <StatusTimelineItem key={index} title={item.title} index={index} error={item.priority === 7} first={index === 0}
+                                   last={index === possibleStatuses.length - 1}
                                    currentStatusPriority={currentStatusPriority}/>
     });
 

@@ -46,10 +46,18 @@
     box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02);
 }
 
+.statusDescription.small {
+    transform: scale(0.9);
+}
+
 
 .statusDescription.current {
     background-color: #6ade5f;
     color: #fff
+}
+
+.statusDescription.error{
+    background-color: #ef876d !important;
 }
 
 .statusDescription.active {
@@ -86,7 +94,10 @@
     box-shadow: 0 0.46875rem 2.1875rem rgba(90,97,105,.1), 0 0.9375rem 1.40625rem rgba(90,97,105,.1), 0 0.25rem 0.53125rem rgba(90,97,105,.12), 0 0.125rem 0.1875rem rgba(90,97,105,.1);;
 }
 
-
+.statusItem.error {
+    border: 6px solid rgb(232, 126, 107) !important;
+    background-color: #ef876d !important;
+}
 
 .statusItem.archieved {
     width: 100px;

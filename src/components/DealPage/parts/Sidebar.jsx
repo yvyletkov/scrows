@@ -3,21 +3,21 @@ import s from "../DealPage.module.css";
 import vvpImg from "../../../img/vvp.jpg";
 import damImg from "../../../img/dam.jpg";
 
-const ParticipantCard = ({id, participants}) => {
+const ParticipantCard = ({participant, img}) => {
     return <div className={`card mt-3 mb-3 mt-md-0 ${s.sidebarCard}`}>
         <div className='card-header'>
-            <span className={'text-lg-left text-center font-weight-bold'}>{participants[id].role.title}</span>
+            <span className={'text-lg-left text-center font-weight-bold'}>{participant.role.title} {participant.me && "(это Вы)"}</span>
         </div>
         <div className='card-body'>
-            <img className={s.cardImg} src={vvpImg} alt="Путин"/>
-            <p className='mb-2'><b>Имя: </b>{participants[id].user.name} {participants[id].user.last_name}</p>
-            <p className='mb-2'><b>email: </b>нет</p>
-            <span className='badge badge-outline-dark mt-2'>{participants[id].invite.type}</span>
+            <img className={s.cardImg} src={img} alt="Путин"/>
+            <p className='mb-2'><b>Имя: </b>{participant.user.name} {participant.user.last_name}</p>
+            <p className='mb-2'><b>E-mail: </b>нет</p>
+            <span className='badge badge-outline-dark mt-2'>{participant.invite.type}</span>
         </div>
     </div>
 }
 
-const Sidebar = ({ userId = 0, ...props}) => {
+const Sidebar = (props) => {
 
     const createdAt = new Date(props.createdAt).toLocaleString('ru', {
         year: 'numeric',
@@ -27,13 +27,17 @@ const Sidebar = ({ userId = 0, ...props}) => {
         minute: 'numeric',
     });
 
+    let currentUserID;
 
-    const priceWithCommission = props.participants[userId].user_commission_amount + props.price;
+    for (let i = 0; i<=1; i++) {
+        if (props.participants[i].me) currentUserID = i
+    }
+    const priceWithCommission = props.participants[0].user_commission_amount && props.participants[currentUserID].user_commission_amount + props.price;
 
     return (<>
 
-        <ParticipantCard id={0} participants={props.participants}/>
-        <ParticipantCard id={1} participants={props.participants}/>
+        <ParticipantCard participant={props.participants[0]} img={vvpImg}/>
+        <ParticipantCard participant={props.participants[1]} img={damImg}/>
 
         <div className={`card mt-3 ${s.sidebarCard}`}>
             <div className='card-header'>
