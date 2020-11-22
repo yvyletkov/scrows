@@ -5,14 +5,10 @@ import {Modal, ModalBody, ModalHeader} from "shards-react";
 import iconAdd from "../../../img/icons/plus.svg";
 import {getPaymentData} from "../../../redux/PersonalAreaReducer";
 import {validate, warn} from "../../../utils/validators/validators";
-import {
-    renderCardNumberInput,
-    renderCheckBoxCards,
-} from "../../shared/FormContols/FormControls";
+import {renderCardNumberInput, renderCheckBoxCards,} from "../../shared/FormContols/FormControls";
 import PersonalAreaCard from "../../shared/PersonalAreaCard/PersonalAreaCard";
 import Preloader from "../../shared/Preloader/Preloader";
 import s from "./PaymentUserForm.module.css";
-import {NavLink} from "react-router-dom";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 import MobilePersonalAreaTabs from "../../shared/MobilePersonalAreaTabs/MobilePersonalAreaTabs";
@@ -30,38 +26,42 @@ const PaymentUserForm = (props) => {
 
     const cards = payment_data.map((card) => {
         const cardChecked = card.card_checked ? "checked" : null;
+        const cardNumber = card.card_number.match(/.{1,4}/g).join(" ");
         return (
-            <div
-                className={`card col-md-5 col-12 ${s.creditCard}`}
-                key={card.card_number}
-            >
+            <div className={`card col-md-5 col-12 ${s.creditCard}`}
+                 key={card.card_number}>
                 <div className={`card-body ${s.cardBodyCustom}`}>
-                    <p className={s.cardNumber}>{card.card_number}</p>
-                    <div className="custom-control custom-checkbox d-flex-column my-2">
-                        <input
-                            className="custom-control-input custom-checkbox"
-                            id="card-checked"
-                            type="checkbox"
-                            disabled
-                            checked={cardChecked}
-                        />
-                        <label
-                            className={`custom-control-label ${s.checkBoxLabel}`}
-                            htmlFor="card-checked"
-                        >
-                            Карта подтверждена
-                        </label>
+                    <div className="d-flex justify-content-between">
+                        <p className={s.cardBank}>{card.card_bank}</p>
+                        <img src={card.svg_icon} style={{ width: '30px', height: '30px'}}/>
                     </div>
-                    <form>
-                        <div className="custom-control custom-checkbox">
-                            <Field
+                    <div className={s.cardNumber}>
+                        <p className={s.cardNumberTitle}>Номер карты</p>
+                        <p>{cardNumber}</p>
+                    </div>
+                    <div className="d-flex justify-content-between">
+                        <div className={`custom-control custom-checkbox ${s.controlsGroup}`}>
+                            <input
+                                className="custom-control-input custom-checkbox"
+                                id="card-checked"
                                 type="checkbox"
-                                name="main_card"
-                                component={renderCheckBoxCards}
-                                label={"Основная карта"}
-                            />
+                                disabled
+                                checked={cardChecked}/>
+                            <label
+                                className={`custom-control-label ${s.checkBoxLabel}`}
+                                htmlFor="card-checked">Карта подтверждена
+                            </label>
                         </div>
-                    </form>
+                        <form>
+                            <div className={`custom-control custom-checkbox ${s.controlsGroup}`}>
+                                <Field
+                                    type="checkbox"
+                                    name="main_card"
+                                    component={renderCheckBoxCards}
+                                    label={"Основная карта"}/>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         );

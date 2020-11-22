@@ -7,6 +7,10 @@
   color:#171717;
 }
 
+.navProfile:hover {
+  color:#5a6169;
+}
+
 .avatarImg {
   position: relative;
   width: 150px;
