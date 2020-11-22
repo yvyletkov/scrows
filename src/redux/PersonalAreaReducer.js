@@ -9,7 +9,7 @@ let initialState = {
   avatar: null,
   entity_type: null,
   email: null,
-  phone_number: null,
+  phone: null,
   isFetching: false,
   document_type: null,
   passport_data_created: null,
@@ -103,19 +103,6 @@ export const changeUserData = (
     });
 };
 
-export const getSecureData = () => (dispatch) => {
-  dispatch(toggleIsFetching(true));
-  api
-    .getSecureData()
-    .then((response) => {
-      dispatch(setSecureData(response));
-      dispatch(toggleIsFetching(false));
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-
 export const getIndividualData = () => (dispatch) => {
   dispatch(toggleIsFetching(true));
   api
@@ -185,6 +172,7 @@ export const getPaymentData = () => (dispatch) => {
   api
       .getPaymentData()
       .then((response) => {
+        console.log(response)
         dispatch(setPaymentData(response));
         dispatch(toggleIsFetching(false));
       })

@@ -151,7 +151,7 @@ const authApi = {
   async getPaymentData() {
     this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
     // this.headers.Authorization = `Bearer token`;
-    return await this.request(`/users/profile/payment/`, {
+    return await this.request(`/users/profile/payment/cards/`, {
       method: "GET",
       headers: this.headers,
     });

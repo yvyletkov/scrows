@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {Field, reduxForm} from "redux-form";
 import {validate, warn} from "../../../utils/validators/validators";
 import {renderInput, renderPersonalAreaInput,} from "../../shared/FormContols/FormControls";
-import {getSecureData,} from "../../../redux/PersonalAreaReducer";
+import {getUserData} from "../../../redux/PersonalAreaReducer";
 import {connect} from "react-redux";
 import PersonalAreaCard from "../../shared/PersonalAreaCard/PersonalAreaCard";
 import s from "./SecureUserForm.module.css";
@@ -42,7 +42,7 @@ const SecureUserForm = (props) => {
                             Номер телефона
                         </label>
                         <Field
-                            name="phone_number"
+                            name="phone"
                             type="tel"
                             component={renderPersonalAreaInput}
                             placeholder="Введите номер телефона"
@@ -76,10 +76,10 @@ const SecureUserReduxForm = reduxForm({
 })(SecureUserForm);
 
 const SecureUserArea = (props) => {
-    const {getSecureData, phone_number, email, isFetching} = props;
+    const {getUserData, phone, email, isFetching} = props;
 
     useEffect(() => {
-        getSecureData();
+        getUserData();
     }, []);
 
     return (
@@ -94,7 +94,7 @@ const SecureUserArea = (props) => {
                     <div className="card-body">
                         <SecureUserReduxForm
                             initialValues={{
-                                phone_number,
+                                phone,
                                 email
                             }}
                             isFetching={isFetching}
@@ -108,10 +108,10 @@ const SecureUserArea = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        phone_number: state.infoUser.phone_number,
+        phone: state.infoUser.phone,
         email: state.infoUser.email,
         isFetching: state.infoUser.isFetching,
     };
 };
 
-export default compose(connect(mapStateToProps, {getSecureData}),withAuthRedirect)(SecureUserArea);
+export default compose(connect(mapStateToProps, {getUserData}),withAuthRedirect)(SecureUserArea);
