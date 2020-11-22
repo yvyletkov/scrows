@@ -113,25 +113,38 @@ const authApi = {
             method: "GET",
             headers: this.headers,
         });
-  },
+    },
 
-  async getUserData() {
-    this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
-    // this.headers.Authorization = `Bearer token`;
-    return await this.request(`/users/profile/personal/`, {
-      method: "GET",
-      headers: this.headers,
-    });
-  },
+    async getUserData() {
+        this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+        // this.headers.Authorization = `Bearer token`;
+        return await this.request(`/users/profile/personal/`, {
+            method: "GET",
+            headers: this.headers,
+        });
+    },
 
-  async changeEntityData(judical_type, entity_id, entity_tin, entity_bank_account_data,entity_name) {
-    console.log(
-        JSON.stringify({
-          judical_type: `${judical_type}`,
-          entity_id: `${entity_id}`,
-          entity_tin: `${entity_tin}`,
-          entity_bank_account_data: `${entity_bank_account_data}`,
-          entity_name: `${entity_name}`,
+    async addUserCard(card_number) {
+        this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+        // this.headers.Authorization = `Bearer token`;
+        return await this.request(`/users/profile/payment/cards/`, {
+            method: "POST",
+            headers: this.headers,
+            body: JSON.stringify({
+                card_number: `${card_number}`
+            })
+        });
+    },
+
+
+    async changeEntityData(judical_type, entity_id, entity_tin, entity_bank_account_data, entity_name) {
+        console.log(
+            JSON.stringify({
+                judical_type: `${judical_type}`,
+                entity_id: `${entity_id}`,
+                entity_tin: `${entity_tin}`,
+                entity_bank_account_data: `${entity_bank_account_data}`,
+                entity_name: `${entity_name}`,
         }));
     this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
     // this.headers.Authorization = `Bearer token`;
