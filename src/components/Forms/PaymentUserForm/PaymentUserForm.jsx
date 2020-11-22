@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {Field, reduxForm} from "redux-form";
 import {Modal, ModalBody, ModalHeader} from "shards-react";
 import iconAdd from "../../../img/icons/plus.svg";
-import {getPaymentData} from "../../../redux/PersonalAreaReducer";
+import {getPaymentData, addUserCard} from "../../../redux/PersonalAreaReducer";
 import {validate, warn} from "../../../utils/validators/validators";
 import {renderCardNumberInput, renderCheckBoxCards,} from "../../shared/FormContols/FormControls";
 import PersonalAreaCard from "../../shared/PersonalAreaCard/PersonalAreaCard";
@@ -71,7 +71,7 @@ const PaymentUserForm = (props) => {
         <Preloader/>
     ) : (
         <div className="row">
-            <div className={`card col-md-5 col-12 ${s.creditCard}`}>
+            {payment_data.length >= 3 ? null : <div className={`card col-md-5 col-12 ${s.creditCard}`}>
                 <div className="card-body d-flex justify-content-center align-items-center">
                     <div onClick={() => openModal(true)}>
                         <img className={s.btnAdd} src={iconAdd} alt="Добавить карту"/>
@@ -87,7 +87,7 @@ const PaymentUserForm = (props) => {
                             <p>Добавить карту</p>
                         </ModalHeader>
                         <ModalBody>
-                            <form>
+                            <form onSubmit={handleSubmit}>
                                 <Field
                                     placeholder="Введите номер карты"
                                     name="card_number"
@@ -106,7 +106,7 @@ const PaymentUserForm = (props) => {
                         </ModalBody>
                     </Modal>
                 </div>
-            </div>
+            </div>}
             {cards}
             <div className="col-12 mt-3 p-0 p-lg-3">
                 <button
@@ -129,11 +129,15 @@ const PaymentUserReduxForm = reduxForm({
 })(PaymentUserForm);
 
 const PaymentUserArea = (props) => {
-    const {getPaymentData, payment_data, isFetching} = props;
+    const {getPaymentData, payment_data, isFetching, addUserCard} = props;
 
     useEffect(() => {
         getPaymentData();
     }, []);
+
+    const handleSubmit = (data) => {
+        addUserCard(data.card_number)
+    }
 
     return (
         <div className="container my-5">
@@ -146,6 +150,7 @@ const PaymentUserArea = (props) => {
                     </div>
                     <div className="card-body">
                         <PaymentUserReduxForm
+                            onSubmit={handleSubmit}
                             payment_data={payment_data}
                             isFetching={isFetching}
                         />
@@ -163,4 +168,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default compose(connect(mapStateToProps, {getPaymentData}),withAuthRedirect)(PaymentUserArea);
+export default compose(connect(mapStateToProps, {getPaymentData, addUserCard}),withAuthRedirect)(PaymentUserArea);

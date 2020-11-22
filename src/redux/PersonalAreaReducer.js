@@ -53,7 +53,6 @@ const personalAreaReducer = (state = initialState, action) => {
       };
     }
     case "SET_PAYMENT_DATA": {
-      console.log(action.payload)
       return {
         ...state,
         payment_data : action.payload,
@@ -149,6 +148,16 @@ export const getEntityData = () => (dispatch) => {
         console.log(err);
       });
 };
+
+export  const addUserCard = (card_number) => (dispatch) => {
+  api.addUserCard(card_number)
+      .then((response) => {
+        console.log(response)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+}
 
 export const changeEntityData =
     (judical_type, entity_id, entity_tin, entity_bank_account_data,entity_name) => (dispatch) => {
