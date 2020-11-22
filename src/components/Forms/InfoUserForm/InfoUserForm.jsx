@@ -9,11 +9,11 @@ import s from "./InfoUserForm.module.css";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 import MobilePersonalAreaTabs from "../../shared/MobilePersonalAreaTabs/MobilePersonalAreaTabs";
-import {AlertSuccess} from "../../shared/CustomAlerts/CustomAlerts";
+import {AlertDanger, AlertSuccess} from "../../shared/CustomAlerts/CustomAlerts";
 import Preloader from "../../shared/Preloader/Preloader";
 
 const InfoUserForm = (props) => {
-    const {handleSubmit, isFetching, submitting, pristine, openAlert} = props;
+    const {handleSubmit, isFetching, submitting, pristine, error} = props;
     return isFetching ? (
         <Preloader/>
         ) : (
@@ -87,8 +87,7 @@ const InfoUserForm = (props) => {
                 <button
                     type="submit"
                     className="btn btn-success"
-                    disabled={submitting || pristine}
-                    onClick={() => openAlert(true)}>Сохранить</button>
+                    disabled={submitting || pristine }>Сохранить</button>
             </div>
         </form>
     );
@@ -108,7 +107,9 @@ const PersonalUserArea = (props) => {
         entity_type,
         gender,
         isFetching,
-        changeUserData
+        changeUserData,
+        alertSuccessShow,
+        alertErrorShow,
     } = props;
 
     useEffect(() => {
@@ -125,14 +126,6 @@ const PersonalUserArea = (props) => {
             data.gender)
     }
 
-    const [alert, openAlert] = useState(false);
-    useEffect(()=>{
-        const timer = setTimeout(() => {
-            openAlert(false)
-        }, 1000);
-        return clearTimeout(timer);
-    }, [alert])
-
     return (
         <div className="container my-5">
             <div className="row">
@@ -142,7 +135,8 @@ const PersonalUserArea = (props) => {
                     <div className="card-header">
                         <h4 className="m-0">Личная информация</h4>
                     </div>
-                    <AlertSuccess show={alert} text={"Информация сохранена"}/>
+                    <AlertSuccess show={alertSuccessShow} text={"Информация сохранена"}/>
+                    <AlertDanger show={alertErrorShow} text={"Не удалось сохранить данные"} />
                     <div className="card-body">
                         <InfoUserReduxForm
                             initialValues={{
@@ -154,7 +148,6 @@ const PersonalUserArea = (props) => {
                                 gender,
                             }}
                             onSubmit={handleSubmit}
-                            openAlert={openAlert}
                             isFetching={isFetching}
                         />
                     </div>
@@ -173,6 +166,8 @@ const mapStateToProps = (state) => {
         gender: state.infoUser.gender,
         entity_type: state.infoUser.entity_type,
         isFetching: state.infoUser.isFetching,
+        alertSuccessShow: state.infoUser.alertSuccessShow,
+        alertErrorShow: state.infoUser.alertErrorShow,
     };
 };
 

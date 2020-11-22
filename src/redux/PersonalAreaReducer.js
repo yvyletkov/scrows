@@ -21,7 +21,7 @@ let initialState = {
   entity_name:null,
   entity_bank_account_data: null,
   payment_data: [],
-  alertSuccesShow:false,
+  alertSuccessShow:false,
   alertErrorShow:false,
 };
 
@@ -57,6 +57,12 @@ const personalAreaReducer = (state = initialState, action) => {
         ...state,
         payment_data : action.payload,
       };
+    }
+    case "SHOW_SUCCESS_ALERT": {
+      return { ...state, alertSuccessShow: action.status };
+    }
+    case "SHOW_ERROR_ALERT": {
+      return { ...state, alertErrorShow: action.status };
     }
 
     default:
@@ -96,9 +102,10 @@ export const changeUserData = (
     )
     .then((response) => {
       dispatch(setUserData(response));
+      dispatch(showSuccessAlert(true));
     })
     .catch((err) => {
-
+      dispatch(showErrorAlert(true));
       console.log(err);
     });
 };
@@ -210,6 +217,16 @@ export const setEntityData = (data) => ({
 export const setPaymentData = (data) => ({
   type: "SET_PAYMENT_DATA",
   payload: data,
+});
+
+export const showSuccessAlert = (status) => ({
+  type: "SHOW_SUCCESS_ALERT",
+  status: status,
+});
+
+export const showErrorAlert = (status) => ({
+  type: "SHOW_ERROR_ALERT",
+  status: status,
 });
 
 
