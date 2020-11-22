@@ -14,13 +14,15 @@ let initialState = {
             invite: {id: null, type: ""},
             role: {id: null, title: "", assigned: null},
             user: {name: "", last_name: "", middle_name: "", gender: "", entity_type: "", date_of_birth: ""},
-            user_commission_amount: null
+            user_commission_amount: null,
+            me: false
         },
         {
             invite: {id: null, type: ""},
             role: {id: null, title: "", assigned: null},
             user: {name: "", last_name: "", middle_name: "", gender: "", entity_type: "", date_of_birth: ""},
-            user_commission_amount: null
+            user_commission_amount: null,
+            me: false
         }
     ],
     price: null,

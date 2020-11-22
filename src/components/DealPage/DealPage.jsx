@@ -13,11 +13,10 @@ import {NavLink} from "react-router-dom";
 
 const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, notFound, ...props}) => {
 
+    console.log(props.possibleStatuses);
+
     const idForRequest = props.match.params.id;
-
-    console.log('idForRequest', idForRequest);
-
-    // console.log('dealPage props', props);
+    const priceString = props.price && props.price.toString().replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ');
 
     React.useEffect( () => {
         getDealInfo(idForRequest);
@@ -26,7 +25,7 @@ const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, notFound, ...
 
     const onChatFormSubmit = values => {
         console.log(values);
-    }
+    };
 
     if (props.isFetching) return <div className='mt-5'><Preloader/></div>;
 
@@ -38,7 +37,7 @@ const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, notFound, ...
                     <div className={'d-md-flex justify-content-between'}>
                         {!notFound ? <h4 className='mb-0'><span className="mb-2 mb-md-0 badge badge-outline-secondary">Сделка №{props.dealId}</span></h4>
                             : <p><b>К сожалению, сделки с таким ID ({idForRequest}) не существует</b></p> }
-                        {!notFound && <h4 className='mb-0'><span className="badge badge-secondary">Сумма: {props.price}₽</span></h4>}
+                        {!notFound && <h4 className='mb-0'><span className="badge badge-secondary">Сумма: {priceString}₽</span></h4>}
                     </div>
                 </div>
                 <div className="card-body">
