@@ -12,7 +12,6 @@ import {Modal, ModalBody, ModalHeader} from "shards-react";
 import {Field, reduxForm} from "redux-form";
 import {validate, warn} from "../../../utils/validators/validators";
 import {renderPersonalAreaInput} from "../FormContols/FormControls";
-import Preloader from "../Preloader/Preloader";
 
 const PersonalAvatarUser = (props) => {
   const {submitting, pristine, handleSubmit} = props;

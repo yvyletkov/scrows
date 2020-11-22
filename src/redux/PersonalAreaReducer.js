@@ -53,9 +53,10 @@ const personalAreaReducer = (state = initialState, action) => {
       };
     }
     case "SET_PAYMENT_DATA": {
+      console.log(action.payload)
       return {
         ...state,
-        ...action.payload,
+        payment_data : action.payload,
       };
     }
 
@@ -172,7 +173,6 @@ export const getPaymentData = () => (dispatch) => {
   api
       .getPaymentData()
       .then((response) => {
-        console.log(response)
         dispatch(setPaymentData(response));
         dispatch(toggleIsFetching(false));
       })
