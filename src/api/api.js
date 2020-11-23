@@ -182,6 +182,24 @@ const dealApi = {
         });
     },
 
+    async postNewDeal(data) {
+
+        debugger
+        this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+        return this.request(`/deals/`, {
+            method: "POST",
+            headers: this.headers,
+            body: JSON.stringify({
+                participant_email: data.participantEmail,
+                subject: data.subject,
+                price: +data.price,
+                commission_type_id: +data.whoPays,
+                role_id: +data.userRole,
+                deal_type_id: +data.dealType
+            }),
+        })
+    },
+
     async getDealsData() {
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
         // this.headers.Authorization = `Bearer token`;

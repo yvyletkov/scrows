@@ -1,80 +1,85 @@
 import React from "react";
-import {reduxForm} from "redux-form";
+import {Field, formValueSelector, reduxForm} from "redux-form";
+import {connect} from "react-redux";
 
-
-const AddDealReduxForm = ({step, setStep, handleSubmit}) => {
-    let [dealType, setDealType] = React.useState('goods');
-    let [userRole, setUserRole] = React.useState(1); // 1 - продавец/исполнитель, 2 - покупатель/заказчик
-    let [priceValue, setPriceValue] = React.useState(null);
-    let [whoPays, setWhoPays] = React.useState(null);
+const AddDealReduxForm = ({step, setStep, handleSubmit, dealType, userRole, price, whoPays, ...props}) => {
 
     return (
         <form onSubmit={handleSubmit}>
-            {step === 1 && <Step1 setStep={setStep} setDealType={setDealType} dealType={dealType} setUserRole={setUserRole} userRole={userRole}/> }
-            {step === 2 && <Step2 setStep={setStep} dealType={dealType} userRole={userRole} whoPays={whoPays} priceValue={priceValue} setWhoPays={setWhoPays} setPriceValue={setPriceValue}/>}
+            {step === 1 &&
+            <Step1 setStep={setStep} dealType={dealType}
+                   userRole={userRole}/>}
+            {step === 2 &&
+            <Step2 setStep={setStep} dealType={dealType} userRole={userRole} whoPays={whoPays} price={price}/>}
             {step === 3 && <Step3 dealType={dealType} userRole={userRole}/>}
         </form>
     )
 };
 
-export default reduxForm({form: 'addDeal'})(AddDealReduxForm);
+let mapStateToProps = (state) => {
+    return {
+        dealType: formValueSelector('addDeal')(state, 'dealType'),
+        userRole: formValueSelector('addDeal')(state, 'userRole'),
+        price: formValueSelector('addDeal')(state, 'price'),
+        whoPays: formValueSelector('addDeal')(state, 'whoPays'),
+    }
+};
 
-const Step1 = ({setStep, setUserRole, setDealType, userRole, dealType}) => {
-    const whoToInvite = dealType === "goods" && userRole === 1 ? 'покупателя' : dealType === "goods" && userRole === 2 ? "продавца"
-        : dealType === "services" && userRole === 1 ? 'заказчика' : dealType === "services" && userRole === 2 ? "исполнителя" : "FEWGVGFVFWVFWVVEF";
+export default connect(mapStateToProps, {})(reduxForm({form: 'addDeal'})(AddDealReduxForm));
+
+const Step1 = ({setStep, userRole, dealType}) => {
+
+    const whoToInvite = dealType === "1" && userRole === '1' ? 'покупателя' : dealType === "1" && userRole === '2' ? "продавца"
+        : dealType === "2" && userRole === '1' ? 'заказчика' : dealType === "2" && userRole === '2' ? "исполнителя" : "FEWGVGFVFWVFWVVEF";
 
     return (
         <div className='row'>
             <div className='col-md-6 mb-4 mb-md-0'>
                 <div className='pt-0'>
 
-                    <div className='d-flex border border-success rounded p-3 justify-content-between align-items-center mb-4'>
+                    <div
+                        className='d-flex border border-success rounded p-3 justify-content-between align-items-center mb-4'>
 
                         <div className='font-weight-bold'>Выберите тип сделки:</div>
 
                         <div className="custom-controls-stacked">
                             <div className="d-inline-block custom-control custom-radio mr-3">
-                                <input type="radio" id="radioDealType1" name="deal-type"
-                                       className="custom-control-input" checked={dealType === 'goods'}/>
+                                <Field component='input' type="radio" id="radioDealType1" name="dealType"
+                                       value={'1'}
+                                       className="custom-control-input"/>
                                 <label className="custom-control-label"
-                                       htmlFor="radioDealType1"
-                                       onClick={() => setDealType('goods')}>Товар</label>
+                                       htmlFor="radioDealType1">Товар</label>
                             </div>
 
                             <div className="d-inline-block custom-control custom-radio">
-                                <input type="radio" id="radioDealType2" name="deal-type"
-                                       className="custom-control-input" checked={dealType === 'services'}/>
+                                <Field component='input' type="radio" id="radioDealType2" name="dealType"
+                                       className="custom-control-input" value={'2'}/>
                                 <label className="custom-control-label"
-                                       htmlFor="radioDealType2"
-                                       onClick={() => setDealType('services')}>Услуга</label>
+                                       htmlFor="radioDealType2">Услуга</label>
                             </div>
                         </div>
 
                     </div>
 
-                    <div className='d-flex border border-success rounded p-3 justify-content-between align-items-center mb-4'>
+                    <div
+                        className='d-flex border border-success rounded p-3 justify-content-between align-items-center mb-4'>
 
                         <div className='font-weight-bold'>Выберите роль в сделке:</div>
 
                         <div className="custom-controls-stacked">
+
                             <div className="d-inline-block custom-control custom-radio mr-3">
-                                <input type="radio" id="radioUserRole1" name="user-role"
-                                       className="custom-control-input" checked={userRole === 1}/>
+                                <Field component='input' type="radio" id="radioUserRole1" name="userRole"
+                                       className="custom-control-input" value={'1'}/>
                                 <label className="custom-control-label"
-                                       htmlFor="radioUserRole1"
-                                       onClick={() => setUserRole(1)}>
-                                    {dealType === 'goods' ? 'Продавец' : 'Исполнитель'}
-                                </label>
+                                       htmlFor="radioUserRole1">{dealType === 'goods' ? 'Продавец' : 'Исполнитель'}</label>
                             </div>
 
                             <div className="d-inline-block custom-control custom-radio">
-                                <input type="radio" id="radioUserRole2" name="user-role"
-                                       className="custom-control-input" checked={userRole === 2}/>
+                                <Field component='input' type="radio" id="radioUserRole2" name="userRole"
+                                       className="custom-control-input" value={'2'}/>
                                 <label className="custom-control-label"
-                                       htmlFor="radioUserRole2"
-                                       onClick={() => setUserRole(2)}>
-                                    {dealType === 'goods' ? 'Покупатель' : 'Заказчик'}
-                                </label>
+                                       htmlFor="radioUserRole2">{dealType === 'goods' ? 'Покупатель' : 'Заказчик'}</label>
                             </div>
                         </div>
 
@@ -83,14 +88,14 @@ const Step1 = ({setStep, setUserRole, setDealType, userRole, dealType}) => {
                     <p className='font-weight-bold mb-3'>Пригласите в сделку <span
                         className='text-success'>{whoToInvite}</span>.
                         Введите его почту:</p>
-                    <input type="text" className="form-control mb-4" name="inviteEmail"
+                    <Field component={'input'} type="text" className="form-control mb-4" name="participantEmail"
                            placeholder={"E-mail " + whoToInvite}
                            aria-label="E-mail"/>
 
                     <p className='mb-3'>Вы можете прикрепить к сделки техническое задание и/или другие
                         файлы: </p>
                     <div className="custom-file mb-3">
-                        <input type="file" className="custom-file-input" id="customFile"/>
+                        <Field component={'input'} type="file" className="custom-file-input" id="customFile"/>
                         <label className="custom-file-label" htmlFor="customFile">Нажмите, чтобы выбрать
                             файлы</label>
                     </div>
@@ -104,11 +109,12 @@ const Step1 = ({setStep, setUserRole, setDealType, userRole, dealType}) => {
                 <div className='card shadow-none'>
                     <div className='card-body rounded mb-3 border border-secondary'>
                         <p className='font-weight-bold mb-3'>Название сделки:</p>
-                        <input type="text" name='dealName' className="form-control mb-3"
+                        <Field component={'input'} type="text" name='subject' className="form-control mb-3"
                                placeholder="Введите название сделки"/>
 
                         <p className='font-weight-bold mb-3'>Описание сделки:</p>
-                        <textarea className="form-control" placeholder="Введите описание сделки"/>
+                        <Field component={'textarea'} type="text" name='description' className="form-control"
+                               placeholder="Введите описание сделки"/>
                     </div>
 
                 </div>
@@ -117,12 +123,13 @@ const Step1 = ({setStep, setUserRole, setDealType, userRole, dealType}) => {
     )
 };
 
-const Step2 = ({setStep, userRole, dealType, whoPays, setWhoPays, priceValue, setPriceValue}) => {
-    let commission = (priceValue / 100 * 5.5);
-    let amount = Math.round(userRole === whoPays
-        ? priceValue + commission
-        : whoPays === 3 ? (priceValue + commission / 2)
-            : priceValue);
+const Step2 = ({setStep, userRole, dealType, whoPays, price}) => {
+    price = +price;
+    let commission = price ? (price / 100 * 5.5) : 0;
+    let amount = price ? Math.round(userRole === whoPays
+        ? price + commission
+        : whoPays === "3" ? (price + commission / 2)
+            : price) : 0;
     let amountString = amount.toString().replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ');
 
     return (
@@ -132,50 +139,44 @@ const Step2 = ({setStep, userRole, dealType, whoPays, setWhoPays, priceValue, se
 
                     <p className='font-weight-bold mb-3'>Стоимость сделки (в рублях)</p>
 
-                    <input value={priceValue} onChange={(e) => setPriceValue(+e.target.value)} type="number"
-                           className="form-control" name="inviteEmail"
+                    <Field component={'input'} type="number" className="form-control mb-2" name="price"
                            placeholder={"Введите стоимость сделки"}
-                           aria-label="Price"/>
+                           aria-label="price"/>
 
                     <p className='text-success mt-2 mb-5'>Комиссия площадки – {commission}₽</p>
 
-                    <div className=''>
 
-                        <div className='font-weight-bold mb-3'>Кто будет оплачивать комиссию:</div>
+                    <div className='font-weight-bold mb-3'>Кто будет оплачивать комиссию:</div>
 
-                        <div className="custom-controls-stacked">
-                            <div className="d-block custom-control custom-radio mr-3">
-                                <input type="radio" id="radioWhoPays1" name="who-pays"
-                                       className="custom-control-input" checked={whoPays === 1}/>
-                                <label className="custom-control-label"
-                                       htmlFor="radioWhoPays1"
-                                       onClick={() => setWhoPays(1)}>
-                                    {dealType === 'goods' ? 'Продавец' : 'Исполнитель'}
-                                </label>
-                                {/*// 1 - продавец/исполнитель, 2 - покупатель/заказчик*/}
-                            </div>
-
-                            <div className="d-block custom-control custom-radio">
-                                <input type="radio" id="radioWhoPays2" name="who-pays"
-                                       className="custom-control-input" checked={whoPays === 2}/>
-                                <label className="custom-control-label"
-                                       htmlFor="radioWhoPays2"
-                                       onClick={() => setWhoPays(2)}>
-                                    {dealType === 'goods' ? 'Покупатель' : 'Заказчик'}
-                                </label>
-                            </div>
-
-                            <div className="d-block custom-control custom-radio">
-                                <input type="radio" id="radioWhoPays3" name="who-pays"
-                                       className="custom-control-input" checked={whoPays === 3}/>
-                                <label className="custom-control-label"
-                                       htmlFor="radioWhoPays3"
-                                       onClick={() => setWhoPays(3)}>50%
-                                    –{dealType === 'goods' ? ' Продавец' : ' Исполнитель'}, 50% –
-                                    {dealType === 'goods' ? ' Покупатель' : ' Заказчик'}</label>
-                            </div>
+                    <div className="custom-controls-stacked">
+                        <div className="custom-control custom-radio mr-3">
+                            <Field component='input' type="radio" id="radioWhoPays1" name="whoPays"
+                                   value={'1'}
+                                   className="custom-control-input"/>
+                            <label className="custom-control-label"
+                                   htmlFor="radioWhoPays1">
+                                {dealType === '1' ? 'Продавец' : 'Исполнитель'}
+                            </label>
                         </div>
 
+                        <div className="custom-control custom-radio">
+                            <Field component='input' type="radio" id="radioWhoPays2" name="whoPays"
+                                   className="custom-control-input" value={'2'}/>
+                            <label className="custom-control-label"
+                                   htmlFor="radioWhoPays2">
+                                {dealType === '1' ? 'Покупатель' : 'Заказчик'}
+                            </label>
+                        </div>
+
+                        <div className="custom-control custom-radio">
+                            <Field component='input' type="radio" id="radioWhoPays3" name="whoPays"
+                                   className="custom-control-input" value={'3'}/>
+                            <label className="custom-control-label"
+                                   htmlFor="radioWhoPays3">
+                                50% –{dealType === '1' ? ' Продавец' : ' Исполнитель'}, 50% –
+                                {dealType === '1' ? ' Покупатель' : ' Заказчик'}
+                            </label>
+                        </div>
                     </div>
 
 
