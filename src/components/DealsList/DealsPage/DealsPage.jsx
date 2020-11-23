@@ -4,6 +4,7 @@ import {getDealsData} from "../../../redux/DealsPageReducer";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 import {compose} from "redux";
 import Preloader from "../../shared/Preloader/Preloader";
+import {NavLink} from "react-router-dom";
 import DealsItem from "../../shared/DealsItem/DealsItem";
 import DealsListTabs from "../../shared/DealsListTabs/DealsListTabs";
 
@@ -17,10 +18,10 @@ const DealsPage = (props) => {
         let month = new Date(deal.created_at).getUTCMonth() + 1;
         let day = new Date(deal.created_at).getUTCDate();
         let year = new Date(deal.created_at).getUTCFullYear();
-        
+
         const badge = (status) => {
             if(status === 8){
-                return "badge-success"
+                return "badge-light"
             }
             if(status === 7){
                 return "badge-danger"
@@ -49,7 +50,10 @@ const DealsPage = (props) => {
             <div className="container mt-5">
                 <div className="card col-lg-12 p-0 col-12">
                     <div className="card-header">
-                        <h4>Сделки</h4>
+                        <div className="col-12 d-flex my-3">
+                            <h4>Сделки</h4>
+                            <NavLink className="btn btn-success ml-auto" to="/add-deal">Создать сделку</NavLink>
+                        </div>
                         <DealsListTabs />
                     </div>
                     <div className="card-body pt-0">
