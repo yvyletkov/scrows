@@ -19,8 +19,7 @@ import handleSubmit from "redux-form/lib/handleSubmit";
 
 const SecureUserForm = (props) => {
     const {
-        handleSubmitPhone,
-        handleSubmitEmail,
+        handleSubmit,
         pristine,
         reset,
         submitting,
@@ -28,6 +27,7 @@ const SecureUserForm = (props) => {
         phone,
         email
     } = props;
+    console.log(props)
 
     const [modalPhone, openModalPhone] = useState(false);
     const [modalEmail, openModalEmail] = useState(false);
@@ -35,7 +35,7 @@ const SecureUserForm = (props) => {
     return isFetching ? (
         <Preloader/>
     ) : (
-        <div className="popup__form" onSubmit={handleSubmit}>
+        <div className="popup__form">
             <div className="row">
                 <div className="col-12">
                     <div className={s.securityField} onClick={()=> openModalPhone(true)}>
@@ -65,7 +65,7 @@ const SecureUserForm = (props) => {
                 <AlertSuccess show={false} text={"Информация сохранена"}/>
                 <AlertDanger show={false} text={"Не удалось сохранить данные"} />
                 <ModalBody>
-                    <form onSubmitEmail={handleSubmitPhone}>
+                    <form onSubmit={handleSubmit}>
                         <Field
                             placeholder="Введите номер телефона"
                             name="phone"
@@ -92,7 +92,7 @@ const SecureUserForm = (props) => {
                 <AlertSuccess show={false} text={"Информация сохранена"}/>
                 <AlertDanger show={false} text={"Не удалось сохранить данные"} />
                 <ModalBody>
-                    <form onSubmitPhone={handleSubmitEmail}>
+                    <form onSubmit={handleSubmit}>
                         <Field
                             placeholder="Введите номер телефона"
                             name="email"
@@ -144,7 +144,6 @@ const SecureUserArea = (props) => {
                             phone={phone}
                             email={email}
                             onSubmit={handleSubmitPhone}
-                            onSubmit={handleSubmitEmail}
                             initialValues={{
                                 phone,
                                 email

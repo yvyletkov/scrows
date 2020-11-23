@@ -2,7 +2,7 @@ import React from "react";
 import s from "./DealsItem.module.css";
 import {NavLink} from "react-router-dom";
 
-const DealsItem = ({id, subject, newDate, price, status}) => (
+const DealsItem = ({id, subject, newDate, price, status, badge}) => (
     <NavLink className={s.navLink} to={`/deals/${id}`}>
         <div className={`card mt-3 ${s.card}`}>
             <div className="card-header d-flex flex-lg-row flex-column p-0">
@@ -20,7 +20,7 @@ const DealsItem = ({id, subject, newDate, price, status}) => (
                     </div>
                     <div className={`col-lg-5 col-12 ${s.block}`}>
                         <p className={s.titleBlock}>Статус</p>
-                        <span className={`badge badge-info ${s.contentBlock}`}>{status}</span>
+                        <span className={`badge ${badge} ${s.contentBlock}`}>{status}</span>
                     </div>
                 </div>
             </div>
