@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {Field, reduxForm} from "redux-form";
 import {validate, warn} from "../../../utils/validators/validators";
 import {renderPersonalAreaInput, renderSelect,} from "../../shared/FormContols/FormControls";
-import {changeUserData, getUserData} from "../../../redux/PersonalAreaReducer";
+import {changeUserData, getUserData, hideErrorAlert, hideSuccessAlert} from "../../../redux/PersonalAreaReducer";
 import {connect} from "react-redux";
 import PersonalAreaCard from "../../shared/PersonalAreaCard/PersonalAreaCard";
 import s from "./InfoUserForm.module.css";
@@ -11,6 +11,9 @@ import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 import MobilePersonalAreaTabs from "../../shared/MobilePersonalAreaTabs/MobilePersonalAreaTabs";
 import {AlertDanger, AlertSuccess} from "../../shared/CustomAlerts/CustomAlerts";
 import Preloader from "../../shared/Preloader/Preloader";
+import {styleForm} from "../../../style/StyleForm";
+
+
 
 const InfoUserForm = (props) => {
     const {handleSubmit, isFetching, submitting, pristine, valid} = props;
@@ -110,10 +113,27 @@ const PersonalUserArea = (props) => {
         changeUserData,
         alertSuccessShow,
         alertErrorShow,
+        dispatch
     } = props;
+
+
+    const timeoutAlert = (action) => {
+        setTimeout(() => {
+            dispatch(action)
+        }, 1500)
+    }
+
+    if(alertSuccessShow) {
+        timeoutAlert(hideSuccessAlert(false))
+    }
+
+    if(alertErrorShow) {
+        timeoutAlert(hideErrorAlert(false))
+    }
 
     useEffect(() => {
         getUserData();
+        return clearTimeout(timeoutAlert);
     }, []);
 
     const handleSubmit = (data) => {
@@ -135,9 +155,14 @@ const PersonalUserArea = (props) => {
                     <div className="card-header">
                         <h4 className="m-0">Личная информация</h4>
                     </div>
-                    <AlertSuccess show={alertSuccessShow} text={"Информация сохранена"}/>
-                    <AlertDanger show={alertErrorShow} text={"Не удалось сохранить данные"} />
-                    <div className="card-body">
+                    <AlertSuccess show={alertSuccessShow}
+                                  style={styleForm.styleAlert}
+                                  text={"Информация сохранена"}/>
+                    <AlertDanger
+                        show={alertErrorShow}
+                        text={"Не удалось сохранить данные"}
+                        style={styleForm.styleAlert}/>
+                    <div className="card-body" style={styleForm.styleCard}>
                         <InfoUserReduxForm
                             initialValues={{
                                 middle_name,

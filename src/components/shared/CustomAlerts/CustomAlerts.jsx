@@ -2,18 +2,18 @@ import {Alert} from "shards-react";
 import React from "react";
 
 
-const AlertSuccess = ({show, text}) => {
+const AlertSuccess = ({show, text, style}) => {
     return (
-        <Alert className="m-0" open={show} theme="success">
-            {text}
+        <Alert style={style} className="m-0" open={show} theme="success">
+            <p>{text}</p>
         </Alert>
     )
 }
 
-const AlertDanger = ({show, text}) => {
+const AlertDanger = ({show, text, style}) => {
     return (
-        <Alert className="m-0" open={show} theme="danger">
-            <p className="text-center">{text}</p>
+        <Alert style={style} className="m-0" open={show} theme="danger">
+            <p>{text}</p>
         </Alert>
     )
 }

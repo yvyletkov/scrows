@@ -185,7 +185,7 @@ const dealApi = {
     async getDealsData() {
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
         // this.headers.Authorization = `Bearer token`;
-        return await this.request(`/deals/`, {
+        return await this.request(`/deals?status=8`, {
             method: "GET",
             headers: this.headers,
         });

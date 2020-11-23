@@ -1,7 +1,7 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {Field, reduxForm} from "redux-form";
 import {validate, warn} from "../../../utils/validators/validators";
-import {renderInput, renderPersonalAreaInput,} from "../../shared/FormContols/FormControls";
+import {renderCardNumberInput, renderInput, renderPersonalAreaInput,} from "../../shared/FormContols/FormControls";
 import {getUserData} from "../../../redux/PersonalAreaReducer";
 import {connect} from "react-redux";
 import PersonalAreaCard from "../../shared/PersonalAreaCard/PersonalAreaCard";
@@ -10,61 +10,106 @@ import Preloader from "../../shared/Preloader/Preloader";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 import MobilePersonalAreaTabs from "../../shared/MobilePersonalAreaTabs/MobilePersonalAreaTabs";
+import {Modal, ModalBody, ModalHeader} from "shards-react";
+import {AlertDanger, AlertSuccess} from "../../shared/CustomAlerts/CustomAlerts";
+import emailIcon from "../../../img/icons/email.svg";
+import phoneIcon from "../../../img/icons/phone.svg";
+import keyIcon from "../../../img/icons/key.svg";
+import handleSubmit from "redux-form/lib/handleSubmit";
 
 const SecureUserForm = (props) => {
     const {
-        handleSubmit,
+        handleSubmitPhone,
+        handleSubmitEmail,
         pristine,
         reset,
         submitting,
         isFetching,
+        phone,
+        email
     } = props;
+
+    const [modalPhone, openModalPhone] = useState(false);
+    const [modalEmail, openModalEmail] = useState(false);
 
     return isFetching ? (
         <Preloader/>
     ) : (
-        <form className="popup__form" onSubmit={handleSubmit}>
+        <div className="popup__form" onSubmit={handleSubmit}>
             <div className="row">
                 <div className="col-12">
-                    <div className={`form-group ${s.userInfo}`}>
-                        <label className={s.labelField} htmlFor="email">
-                            Email
-                        </label>
-                        <Field
-                            placeholder="Введите почту"
-                            name="email"
-                            type="email"
-                            component={renderInput}
-                        />
+                    <div className={s.securityField} onClick={()=> openModalPhone(true)}>
+                        <img className={s.securityIcon} src={phoneIcon} alt="Телефон"/>
+                        <span className={s.fieldName}>Номер телефона</span>
+                        <p className={s.fieldDesc}>{phone}</p>
                     </div>
-                    <div className={`form-group ${s.userInfo}`}>
-                        <label className={s.labelField} htmlFor="phone_number">
-                            Номер телефона
-                        </label>
-                        <Field
-                            name="phone"
-                            type="tel"
-                            component={renderPersonalAreaInput}
-                            placeholder="Введите номер телефона"
-                        />
+                    <div className={s.securityField} onClick={()=> openModalEmail(true)}>
+                        <img className={s.securityIcon} src={emailIcon} alt="Email"/>
+                        <span className={s.fieldName}>Email</span>
+                        <p className={s.fieldDesc}>{email}</p>
                     </div>
-                    <div className={`form-group mb-5 mb-lg-3 ${s.userInfo}`}>
-                        <span className={s.passField}>Пароль</span>
-                        <button className={`btn btn-danger ${s.passResetBtn}`}>Сбросить пароль</button>
+                    <div className={s.securityField}>
+                        <img className={s.securityIcon} src={keyIcon} alt="Пароль"/>
+                        <span className={s.fieldName}>Пароль</span>
+                        <p className={s.fieldDesc}>Последнее изменение месяц назад</p>
                     </div>
                 </div>
             </div>
 
-            <div>
-                <button
-                    type="submit"
-                    className="btn btn-success"
-                    disabled={submitting || pristine}
-                >
-                    Сохранить
-                </button>
-            </div>
-        </form>
+            <Modal className={s.modalWindow}
+                   open={modalPhone}
+                   toggle={() => openModalPhone(false)}>
+                <ModalHeader className="justify-content-center">
+                    <p>Изменить номер</p>
+                </ModalHeader>
+                <AlertSuccess show={false} text={"Информация сохранена"}/>
+                <AlertDanger show={false} text={"Не удалось сохранить данные"} />
+                <ModalBody>
+                    <form onSubmitEmail={handleSubmitPhone}>
+                        <Field
+                            placeholder="Введите номер телефона"
+                            name="phone"
+                            type="number"
+                            component={renderCardNumberInput}
+                            required
+                        />
+                        <button
+                            type="submit"
+                            className="btn btn-success mt-3"
+                            disabled={submitting || pristine}>
+                            Изменить номер
+                        </button>
+                    </form>
+                </ModalBody>
+            </Modal>
+
+            <Modal className={s.modalWindow}
+                   open={modalEmail}
+                   toggle={() => openModalEmail(false)}>
+                <ModalHeader className="justify-content-center">
+                    <p>Изменить email</p>
+                </ModalHeader>
+                <AlertSuccess show={false} text={"Информация сохранена"}/>
+                <AlertDanger show={false} text={"Не удалось сохранить данные"} />
+                <ModalBody>
+                    <form onSubmitPhone={handleSubmitEmail}>
+                        <Field
+                            placeholder="Введите номер телефона"
+                            name="email"
+                            type="email"
+                            component={renderCardNumberInput}
+                            required
+                        />
+                        <button
+                            type="submit"
+                            className="btn btn-success mt-3"
+                            disabled={submitting || pristine}>
+                            Изменить email
+                        </button>
+                    </form>
+                </ModalBody>
+            </Modal>
+        </div>
     );
 };
 
@@ -82,6 +127,9 @@ const SecureUserArea = (props) => {
         getUserData();
     }, []);
 
+    const handleSubmitEmail = (data) => {console.log(data)}
+    const handleSubmitPhone = (data) => {console.log(data)}
+
     return (
         <div className="container my-5">
             <div className="row">
@@ -93,6 +141,10 @@ const SecureUserArea = (props) => {
                     </div>
                     <div className="card-body">
                         <SecureUserReduxForm
+                            phone={phone}
+                            email={email}
+                            onSubmit={handleSubmitPhone}
+                            onSubmit={handleSubmitEmail}
                             initialValues={{
                                 phone,
                                 email

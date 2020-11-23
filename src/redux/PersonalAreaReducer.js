@@ -64,6 +64,12 @@ const personalAreaReducer = (state = initialState, action) => {
     case "SHOW_ERROR_ALERT": {
       return { ...state, alertErrorShow: action.status };
     }
+    case "HIDE_SUCCESS_ALERT": {
+      return { ...state, alertSuccessShow: action.status };
+    }
+    case "HIDE_ERROR_ALERT": {
+      return { ...state, alertErrorShow: action.status };
+    }
 
     default:
       return state;
@@ -103,6 +109,9 @@ export const changeUserData = (
     .then((response) => {
       dispatch(setUserData(response));
       dispatch(showSuccessAlert(true));
+      setTimeout(() => {
+        dispatch(showSuccessAlert(false))
+      }, 2000)
     })
     .catch((err) => {
       dispatch(showErrorAlert(true));
@@ -181,9 +190,11 @@ export const changeEntityData =
       )
       .then((response) => {
         dispatch(setUserData(response));
+        dispatch(showSuccessAlert(true));
       })
       .catch((err) => {
         console.log(err);
+        dispatch(showErrorAlert(true));
       });
 };
 
@@ -232,5 +243,14 @@ export const showErrorAlert = (status) => ({
   status: status,
 });
 
+export const hideSuccessAlert = (status) => ({
+  type:"HIDE_SUCCESS_ALERT",
+  status: status,
+})
+
+export const hideErrorAlert = (status) => ({
+  type:"HIDE_ERROR_ALERT",
+  status: status,
+})
 
 export default personalAreaReducer;
