@@ -22,6 +22,7 @@ const validate = (values) => {
     "passport_data_number",
     "passport_data_code",
     "entity_name",
+    "card_number",
   ];
 
   fields.forEach((field) => {

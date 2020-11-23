@@ -12,6 +12,7 @@ import s from "./PaymentUserForm.module.css";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 import MobilePersonalAreaTabs from "../../shared/MobilePersonalAreaTabs/MobilePersonalAreaTabs";
+import {AlertDanger, AlertSuccess} from "../../shared/CustomAlerts/CustomAlerts";
 
 const PaymentUserForm = (props) => {
     const [open, openModal] = useState(false);
@@ -22,6 +23,9 @@ const PaymentUserForm = (props) => {
         submitting,
         payment_data,
         isFetching,
+        valid,
+        alertSuccessShow,
+        alertErrorShow,
     } = props;
 
     const cards = payment_data.map((card) => {
@@ -86,6 +90,8 @@ const PaymentUserForm = (props) => {
                         <ModalHeader className="justify-content-center">
                             <p>Добавить карту</p>
                         </ModalHeader>
+                        <AlertSuccess show={alertSuccessShow} text={"Информация сохранена"}/>
+                        <AlertDanger show={alertErrorShow} text={"Не удалось сохранить данные"} />
                         <ModalBody>
                             <form onSubmit={handleSubmit}>
                                 <Field
@@ -98,8 +104,7 @@ const PaymentUserForm = (props) => {
                                 <button
                                     type="submit"
                                     className="btn btn-success mt-3"
-                                    disabled={submitting || pristine}
-                                >
+                                    disabled={submitting || pristine || !valid}>
                                     Добавить карту
                                 </button>
                             </form>
@@ -108,12 +113,11 @@ const PaymentUserForm = (props) => {
                 </div>
             </div>}
             {cards}
-            <div className="col-12 mt-3 p-0 p-lg-3">
+            <div className="col-12 mt-3 p-0 p-lg-3 ml-3">
                 <button
                     type="submit"
                     className="btn btn-success"
-                    disabled={submitting || pristine}
-                >
+                    disabled={submitting || pristine || !valid}>
                     Сохранить
                 </button>
             </div>
@@ -129,7 +133,7 @@ const PaymentUserReduxForm = reduxForm({
 })(PaymentUserForm);
 
 const PaymentUserArea = (props) => {
-    const {getPaymentData, payment_data, isFetching, addUserCard} = props;
+    const {getPaymentData, payment_data, isFetching, addUserCard, alertSuccessShow, alertErrorShow,} = props;
 
     useEffect(() => {
         getPaymentData();
@@ -153,6 +157,8 @@ const PaymentUserArea = (props) => {
                             onSubmit={handleSubmit}
                             payment_data={payment_data}
                             isFetching={isFetching}
+                            alertSuccessShow={alertSuccessShow}
+                            alertErrorShow={alertErrorShow}
                         />
                     </div>
                 </div>
@@ -165,6 +171,8 @@ const mapStateToProps = (state) => {
     return {
         payment_data: state.infoUser.payment_data,
         isFetching: state.infoUser.isFetching,
+        alertSuccessShow: state.infoUser.alertSuccessShow,
+        alertErrorShow: state.infoUser.alertErrorShow,
     };
 };
 

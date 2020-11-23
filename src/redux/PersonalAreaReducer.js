@@ -128,17 +128,18 @@ export const changeIndividualData = (
     passport_data_number,
     passport_data_created,
     passport_data_code) => (dispatch) => {
-  api
-      .changeIndividualData(
+  api.changeIndividualData(
           document_type,
           passport_data_number,
           passport_data_created,
           passport_data_code,
       )
       .then((response) => {
-        dispatch(setUserData(response));
+        dispatch(setIndividualData(response));
+        dispatch(showSuccessAlert(true));
       })
       .catch((err) => {
+        dispatch(showErrorAlert(true));
         console.log(err);
       });
 };
@@ -159,9 +160,11 @@ export const getEntityData = () => (dispatch) => {
 export  const addUserCard = (card_number) => (dispatch) => {
   api.addUserCard(card_number)
       .then((response) => {
+        dispatch(showSuccessAlert(true));
         console.log(response)
       })
       .catch((err) => {
+        dispatch(showErrorAlert(true));
         console.log(err)
       })
 }
