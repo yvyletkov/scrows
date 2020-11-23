@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {Field, reduxForm} from "redux-form";
-import {changeEntityData, getEntityData} from "../../../redux/PersonalAreaReducer";
+import {changeEntityData, getEntityData, hideErrorAlert, hideSuccessAlert} from "../../../redux/PersonalAreaReducer";
 import {validate, warn} from "../../../utils/validators/validators";
 import {renderPersonalAreaInput} from "../../shared/FormContols/FormControls";
 import PersonalAreaCard from "../../shared/PersonalAreaCard/PersonalAreaCard";
@@ -10,6 +10,8 @@ import s from './EntityUserForm.module.css';
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 import {compose} from "redux";
 import MobilePersonalAreaTabs from "../../shared/MobilePersonalAreaTabs/MobilePersonalAreaTabs";
+import {AlertDanger, AlertSuccess} from "../../shared/CustomAlerts/CustomAlerts";
+import {styleForm} from "../../../style/StyleForm";
 
 const EntityUserForm = (props) => {
     const {
@@ -114,10 +116,28 @@ const EntityUserArea = (props) => {
         changeEntityData,
         entity_name,
         isFetching,
+        alertSuccessShow,
+        alertErrorShow,
+        dispatch
     } = props;
+
+    const timeoutAlert = (action) => {
+        setTimeout(() => {
+            dispatch(action)
+        }, 1500)
+    }
+
+    if(alertSuccessShow) {
+        timeoutAlert(hideSuccessAlert(false))
+    }
+
+    if(alertErrorShow) {
+        timeoutAlert(hideErrorAlert(false))
+    }
 
     useEffect(() => {
         getEntityData();
+        return clearTimeout(timeoutAlert)
     }, []);
 
     const handleSubmit = (data) => {
@@ -138,7 +158,13 @@ const EntityUserArea = (props) => {
                     <div className="card-header">
                         <h4 className="m-0">Личный кабинет</h4>
                     </div>
-                    <div className="card-body">
+                    <AlertSuccess style={styleForm.styleAlert}
+                                  show={alertSuccessShow}
+                                  text={"Информация сохранена"}/>
+                    <AlertDanger show={alertErrorShow}
+                                 style={styleForm.styleAlert}
+                                 text={"Не удалось сохранить данные"}/>
+                    <div className="card-body" style={styleForm.styleCard}>
                         <EntityUserReduxForm
                             initialValues={{
                                 judical_type,
@@ -166,6 +192,8 @@ const mapStateToProps = (state) => {
         entity_bank_account_data: state.infoUser.entity_bank_account_data,
         entity_name:state.infoUser.entity_name,
         isFetching: state.infoUser.isFetching,
+        alertSuccessShow: state.infoUser.alertSuccessShow,
+        alertErrorShow: state.infoUser.alertErrorShow,
     };
 };
 

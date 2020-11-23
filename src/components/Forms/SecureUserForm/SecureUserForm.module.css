@@ -4,24 +4,40 @@
     margin: 0;
 }
 
-.labelField {
-    width: 30%;
-    height: auto;
-    padding: 1rem 0;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    font-weight: 300;
-    margin: 0;
+.modalWindow {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%) !important;
+    width: 350px;
+    height: 200px;
 }
 
-.passResetBtn {
-    margin:0.5rem 0;
+.securityField {
+    display: flex;
+    height:50px;
+    border-radius: 20px;
+    align-items: center;
 }
 
-.passField {
-    width: 23%;
+.securityIcon {
+    width:20px;
+    height:20px;
+    margin: 1rem;
+}
+
+.fieldName {
+    padding: 1rem;
+    color:#171717;
+}
+
+.fieldDesc {
+    padding: 1rem;
+    margin-left: auto;
+}
+
+.securityField:hover {
+    background-color: rgba(90,97,105,.06);
 }
 
 .cardMob {
@@ -29,9 +45,6 @@
 }
 
 @media screen and (max-width: 992px) {
-    .labelField {
-        width: 100%;
-    }
     .userInfo {
         flex-direction: column;
     }
@@ -48,26 +61,10 @@
         margin: 0;
         text-align: left;
     }
-
-    .passResetBtn {
-        max-width: 300px;
-        margin:0 auto 0 0;
-    }
 }
 
 @media screen and (max-width: 425px) {
-    .labelField {
-        width: 100%;
-        font-size: 12px;
-        margin-bottom: .5rem;
-        padding: 0;
-    }
     .userInfo {
         margin-bottom: 1rem;
-    }
-
-    .passField {
-        padding: 0;
-        margin-bottom: .5rem;
     }
 }

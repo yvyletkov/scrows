@@ -1,8 +1,6 @@
 import React, {useEffect} from 'react';
-import s from './DealsPage.module.css';
 import {connect} from "react-redux";
 import {getDealsData} from "../../../redux/DealsPageReducer";
-import {NavLink} from "react-router-dom";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 import {compose} from "redux";
 import Preloader from "../../shared/Preloader/Preloader";
