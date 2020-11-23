@@ -1,3 +1,7 @@
+import {BrowserRouter as Router, Route} from "react-router-dom";
+import DealsPage from "../components/DealsList/DealsPage/DealsPage";
+import React from "react";
+
 const baseApi = {
     baseUrl: "https://api.scrows.ml/api/v1",
     // baseUrl: "https://virtserver.swaggerhub.com/C67615/Scrows/1.0.5/api/v1",
@@ -203,12 +207,38 @@ const dealApi = {
     async getDealsData() {
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
         // this.headers.Authorization = `Bearer token`;
+        return await this.request(`/deals/`, {
+            method: "GET",
+            headers: this.headers,
+        });
+    },
+
+    async getDealsDataCompleted() {
+        this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+        // this.headers.Authorization = `Bearer token`;
         return await this.request(`/deals?status=8`, {
             method: "GET",
             headers: this.headers,
         });
     },
 
+    async getDealsDataClaim() {
+        this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+        // this.headers.Authorization = `Bearer token`;
+        return await this.request(`/deals?status=7`, {
+            method: "GET",
+            headers: this.headers,
+        });
+    },
+
+    async getDealsDataAction() {
+        this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+        // this.headers.Authorization = `Bearer token`;
+        return await this.request(`/deals?status=6`, {
+            method: "GET",
+            headers: this.headers,
+        });
+    },
 };
 
 

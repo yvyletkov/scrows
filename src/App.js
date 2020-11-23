@@ -15,6 +15,9 @@ import PaymentUserArea from './components/Forms/PaymentUserForm/PaymentUserForm'
 import HeaderContainer from "./components/Header/HeaderContainer";
 import AddDealPage from "./components/AddDealPage/AddDealPage";
 import DealsPage from "./components/DealsList/DealsPage/DealsPage";
+import DealsPageCompleted from "./components/DealsList/DealsPageCompleted/DealsPageCompleted";
+import DealsPageClaim from "./components/DealsList/DealsPageClaim/DealsPageClaim";
+import DealsPageAction from "./components/DealsList/DealsPageAction/DealsPageAction";
 
 function App(props) {
     return (<>
@@ -31,9 +34,9 @@ function App(props) {
                 <Route path="/entity-info" component={EntityUserArea}/>
                 <Route path="/individual-info" component={IndividualUserArea}/>
                 <Route exact path="/deals" component={DealsPage}/>
-                <Route exact path="/deals-completed" component={DealsPage}/>
-                <Route exact path="/deals-claim" component={DealsPage}/>
-                <Route exact path="/deals-action" component={DealsPage}/>
+                <Route exact path="/deals-completed" component={DealsPageCompleted}/>
+                <Route exact path="/deals-claim" component={DealsPageClaim}/>
+                <Route exact path="/deals-action" component={DealsPageAction}/>
             </Router>
         </Provider>
     </>)
