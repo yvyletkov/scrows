@@ -1,16 +1,16 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {Field, reduxForm} from "redux-form";
 import {validate, warn} from "../../../utils/validators/validators";
 import {renderPersonalAreaInput, renderSelect,} from "../../shared/FormContols/FormControls";
 import {connect} from "react-redux";
 import PersonalAreaCard from "../../shared/PersonalAreaCard/PersonalAreaCard";
-import {getIndividualData, changeIndividualData} from "../../../redux/PersonalAreaReducer";
+import {changeIndividualData, getIndividualData} from "../../../redux/PersonalAreaReducer";
 import Preloader from "../../shared/Preloader/Preloader";
 import s from "../PaymentUserForm/PaymentUserForm.module.css";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 import MobilePersonalAreaTabs from "../../shared/MobilePersonalAreaTabs/MobilePersonalAreaTabs";
-import AlertSucces from "../../shared/CustomAlerts/CustomAlerts";
+import {AlertDanger, AlertSuccess} from "../../shared/CustomAlerts/CustomAlerts";
 
 const IndividualUserForm = (props) => {
   const {
@@ -19,6 +19,7 @@ const IndividualUserForm = (props) => {
     reset,
     submitting,
     isFetching,
+    valid,
   } = props;
 
   return isFetching ? (
@@ -74,10 +75,9 @@ const IndividualUserForm = (props) => {
 
       <div>
         <button
-          type="submit"
-          className="btn btn-success"
-          disabled={submitting || pristine}
-        >
+            type="submit"
+            className="btn btn-success"
+            disabled={submitting || pristine || !valid}>
           Сохранить
         </button>
       </div>
@@ -101,6 +101,8 @@ const IndividualUserArea = (props) => {
     passport_data_code,
     isFetching,
     changeIndividualData,
+    alertSuccessShow,
+    alertErrorShow,
   } = props;
 
   useEffect(() => {
@@ -124,6 +126,8 @@ const IndividualUserArea = (props) => {
             <div className="card-header">
               <h4 className="m-0">Платежные данные</h4>
             </div>
+            <AlertSuccess show={alertSuccessShow} text={"Информация сохранена"}/>
+            <AlertDanger show={alertErrorShow} text={"Не удалось сохранить данные"}/>
             <div className="card-body">
               <IndividualUserReduxForm
                   initialValues={{
@@ -149,6 +153,8 @@ const mapStateToProps = (state) => {
     passport_data_number: state.infoUser.passport_data_number,
     passport_data_code: state.infoUser.passport_data_code,
     isFetching: state.infoUser.isFetching,
+    alertSuccessShow: state.infoUser.alertSuccessShow,
+    alertErrorShow: state.infoUser.alertErrorShow,
   };
 };
 

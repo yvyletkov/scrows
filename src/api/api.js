@@ -85,13 +85,6 @@ const authApi = {
     },
 
     async changeIndividualData(document_type, passport_data_number, passport_data_created, passport_data_code) {
-        console.log(
-            JSON.stringify({
-                document_type: `${document_type}`,
-                passport_data_number: `${passport_data_number}`,
-                passport_data_created: `${passport_data_created}`,
-                passport_data_code: `${passport_data_code}`,
-            }));
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
         // this.headers.Authorization = `Bearer token`;
         return await this.request(`/users/profile/judical/single`, {

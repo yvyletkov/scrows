@@ -13,7 +13,7 @@ import {AlertDanger, AlertSuccess} from "../../shared/CustomAlerts/CustomAlerts"
 import Preloader from "../../shared/Preloader/Preloader";
 
 const InfoUserForm = (props) => {
-    const {handleSubmit, isFetching, submitting, pristine, error} = props;
+    const {handleSubmit, isFetching, submitting, pristine, valid} = props;
     return isFetching ? (
         <Preloader/>
         ) : (
@@ -87,7 +87,7 @@ const InfoUserForm = (props) => {
                 <button
                     type="submit"
                     className="btn btn-success"
-                    disabled={submitting || pristine }>Сохранить</button>
+                    disabled={submitting || pristine || !valid}>Сохранить</button>
             </div>
         </form>
     );
