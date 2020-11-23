@@ -6,6 +6,7 @@ import {compose} from "redux";
 import Preloader from "../../shared/Preloader/Preloader";
 import DealsItem from "../../shared/DealsItem/DealsItem";
 import DealsListTabs from "../../shared/DealsListTabs/DealsListTabs";
+import {NavLink} from "react-router-dom";
 
 const DealsPageClaim = (props) => {
     const {getDealsDataClaim, deals, isFetching} = props;
@@ -34,7 +35,10 @@ const DealsPageClaim = (props) => {
             <div className="container mt-5">
                 <div className="card col-lg-12 p-0 col-12">
                     <div className="card-header">
-                        <h4>Сделки</h4>
+                        <div className="col-12 d-flex my-3">
+                            <h4>Сделки</h4>
+                            <NavLink className="btn btn-success ml-auto" to="/add-deal">Создать сделку</NavLink>
+                        </div>
                         <DealsListTabs />
                     </div>
                     <div className="card-body pt-0">
