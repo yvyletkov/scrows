@@ -1,13 +1,16 @@
 import React from "react";
 import AddDealReduxForm from "./AddDealReduxForm";
+import {postNewDeal} from "../../redux/AddDealPageReducer";
+import {connect} from "react-redux";
 
 
-const AddDealPage = () => {
+const AddDealPage = ({postNewDeal}) => {
 
     let [step, setStep] = React.useState(1);
 
     const submit = (values) => {
-        console.log('values:', values)
+        console.log('values:', values);
+        postNewDeal(values);
     };
 
     return (
@@ -33,7 +36,7 @@ const AddDealPage = () => {
                              aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">ШАГ 3</div>
                     </div>
 
-                    <AddDealReduxForm onSubmit={submit} step={step} setStep={setStep}/>
+                    <AddDealReduxForm onSubmit={submit} step={step} setStep={setStep} initialValues={{userRole: "1", dealType: "1"}}/>
 
                 </div>
             </div>
@@ -41,4 +44,5 @@ const AddDealPage = () => {
     )
 };
 
-export default AddDealPage;
+
+export default connect(null, {postNewDeal})(AddDealPage);
