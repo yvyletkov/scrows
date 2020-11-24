@@ -20,6 +20,7 @@ const authReducer = (state = initialState, action) => {
 export const login = (email, password, rememberMe) => dispatch => {
     api.login(email, password, rememberMe)
         .then((response) => {
+            console.log(response.statusCode)
             localStorage.setItem('jwt', response.token);
             dispatch(setAuthUserData(true));
         })

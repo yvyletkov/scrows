@@ -9,9 +9,9 @@ const baseApi = {
 
     async request(endpoint, params) {
         const res = await fetch(`${this.baseUrl}${endpoint}`, params);
-        // if (!res.ok) {
-        //     throw new Error(`Запрос не удался на ${endpoint}, ошибка ${res.status}`);
-        // }
+        if (!res.ok) {
+             throw new Error(`Запрос не удался на ${endpoint}, ошибка ${res.status}`);
+        }
         return await res.json();
     },
 };

@@ -9,7 +9,6 @@ const AddDealPage = ({postNewDeal}) => {
     let [step, setStep] = React.useState(1);
 
     const submit = (values) => {
-        console.log('values:', values);
         postNewDeal(values);
     };
 

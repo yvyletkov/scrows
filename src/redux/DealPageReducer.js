@@ -13,14 +13,14 @@ let initialState = {
         {
             invite: {id: null, type: ""},
             role: {id: null, title: "", assigned: null},
-            user: {name: "", last_name: "", middle_name: "", gender: "", entity_type: "", date_of_birth: ""},
+            user: {name: "", last_name: "", middle_name: "", gender: "", entity_type: "", date_of_birth: "", email: ""},
             user_commission_amount: null,
             me: false
         },
         {
             invite: {id: null, type: ""},
             role: {id: null, title: "", assigned: null},
-            user: {name: "", last_name: "", middle_name: "", gender: "", entity_type: "", date_of_birth: ""},
+            user: {name: "", last_name: "", middle_name: "", gender: "", entity_type: "", date_of_birth: "", email: ""},
             user_commission_amount: null,
             me: false
         }
@@ -92,6 +92,7 @@ export const getDealInfo = (id) => (dispatch) => {
     api
         .getDealInfo(id)
         .then((response) => {
+            console.log('Response')
             console.log('response', response);
             if (response.detail === 'Not found.') dispatch(setNotFound(true));
             else {
@@ -101,6 +102,7 @@ export const getDealInfo = (id) => (dispatch) => {
             }
         })
         .catch((err) => {
+            console.log('Error')
             console.log(err);
             dispatch(toggleIsFetching(false));
         });
