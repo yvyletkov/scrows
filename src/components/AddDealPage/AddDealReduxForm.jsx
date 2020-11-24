@@ -72,14 +72,14 @@ const Step1 = ({setStep, userRole, dealType}) => {
                                 <Field component='input' type="radio" id="radioUserRole1" name="userRole"
                                        className="custom-control-input" value={'1'}/>
                                 <label className="custom-control-label"
-                                       htmlFor="radioUserRole1">{dealType === 'goods' ? 'Продавец' : 'Исполнитель'}</label>
+                                       htmlFor="radioUserRole1">{dealType === '1' ? 'Продавец' : 'Исполнитель'}</label>
                             </div>
 
                             <div className="d-inline-block custom-control custom-radio">
                                 <Field component='input' type="radio" id="radioUserRole2" name="userRole"
                                        className="custom-control-input" value={'2'}/>
                                 <label className="custom-control-label"
-                                       htmlFor="radioUserRole2">{dealType === 'goods' ? 'Покупатель' : 'Заказчик'}</label>
+                                       htmlFor="radioUserRole2">{dealType === '1' ? 'Покупатель' : 'Заказчик'}</label>
                             </div>
                         </div>
 
