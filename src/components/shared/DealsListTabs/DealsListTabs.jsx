@@ -7,7 +7,7 @@ const DealsListTabs = () => (
     <ul className={`nav nav-tabs card-header-tabs ${s.navList}`}>
         <li className={`nav-item col-3 ${s.navTab}`}>
             <NavLink to="/deals" className={`nav-link ${s.navLink}`}>
-                Активные
+                Мои сделки
             </NavLink>
         </li>
         <li className={`nav-item col-3 ${s.navTab}`}>
