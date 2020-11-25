@@ -24,7 +24,7 @@ function App(props) {
     return (<>
         <Provider store={props.store}>
             <Router>
-                <div style={{minHeight: "calc(100vh - 86px)"}}>
+                <div style={{minHeight: "calc(100vh - 86px - 3rem)"}}>
                     <HeaderContainer/>
                     <Route path="/add-deal" component={AddDealPage} exact/>
                     <Route path="/login" component={LoginPage}/>
