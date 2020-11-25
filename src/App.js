@@ -18,25 +18,29 @@ import DealsPage from "./components/DealsList/DealsPage/DealsPage";
 import DealsPageCompleted from "./components/DealsList/DealsPageCompleted/DealsPageCompleted";
 import DealsPageClaim from "./components/DealsList/DealsPageClaim/DealsPageClaim";
 import DealsPageAction from "./components/DealsList/DealsPageAction/DealsPageAction";
+import Footer from "./components/Footer/Footer";
 
 function App(props) {
     return (<>
         <Provider store={props.store}>
             <Router>
-                <HeaderContainer/>
-                <Route path="/add-deal" component={AddDealPage} exact/>
-                <Route path="/login" component={LoginPage}/>
-                <Route path="/auth" component={RegistrationPage}/>
-                <Route exact path="/deals/:id" component={DealPage}/>
-                <Route path="/personal-info" component={PersonalUserArea}/>
-                <Route path="/security" component={SecureUserArea}/>
-                <Route path="/payment-info" component={PaymentUserArea}/>
-                <Route path="/entity-info" component={EntityUserArea}/>
-                <Route path="/individual-info" component={IndividualUserArea}/>
-                <Route exact path="/deals" component={DealsPage}/>
-                <Route exact path="/deals-completed" component={DealsPageCompleted}/>
-                <Route exact path="/deals-claim" component={DealsPageClaim}/>
-                <Route exact path="/deals-action" component={DealsPageAction}/>
+                <div style={{minHeight: "calc(100vh - 86px)"}}>
+                    <HeaderContainer/>
+                    <Route path="/add-deal" component={AddDealPage} exact/>
+                    <Route path="/login" component={LoginPage}/>
+                    <Route path="/auth" component={RegistrationPage}/>
+                    <Route exact path="/deals/:id" component={DealPage}/>
+                    <Route path="/personal-info" component={PersonalUserArea}/>
+                    <Route path="/security" component={SecureUserArea}/>
+                    <Route path="/payment-info" component={PaymentUserArea}/>
+                    <Route path="/entity-info" component={EntityUserArea}/>
+                    <Route path="/individual-info" component={IndividualUserArea}/>
+                    <Route exact path="/deals" component={DealsPage}/>
+                    <Route exact path="/deals-completed" component={DealsPageCompleted}/>
+                    <Route exact path="/deals-claim" component={DealsPageClaim}/>
+                    <Route exact path="/deals-action" component={DealsPageAction}/>
+                </div>
+                <Footer/>
             </Router>
         </Provider>
     </>)

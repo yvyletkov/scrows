@@ -18,10 +18,10 @@ const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, notFound, ...
     const idForRequest = props.match.params.id;
     const priceString = props.price && props.price.toString().replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ');
 
-    React.useEffect( () => {
+    React.useEffect(() => {
         getDealInfo(idForRequest);
         getPossibleStatuses();
-    },[getDealInfo, idForRequest, getPossibleStatuses]);
+    }, [getDealInfo, idForRequest, getPossibleStatuses]);
 
     const onChatFormSubmit = values => {
         console.log(values);
@@ -35,24 +35,31 @@ const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, notFound, ...
             <div className='card'>
                 <div className="card-header">
                     <div className={'d-md-flex justify-content-between'}>
-                        {!notFound ? <h4 className='mb-0'><span className="mb-2 mb-md-0 badge badge-outline-secondary">Сделка №{props.dealId}</span></h4>
-                            : <p><b>К сожалению, сделки с таким ID ({idForRequest}) не существует</b></p> }
-                        {!notFound && <h4 className='mb-0'><span className="badge badge-secondary">Сумма: {priceString}₽</span></h4>}
+
+                        {!notFound ?
+                            <h4 className='mb-0'><span className="mb-2 mb-md-0">Сделка №{props.dealId}</span></h4>
+                            : <p><b>К сожалению, сделки с таким ID ({idForRequest}) не существует</b></p>}
+
+                        {/*{!notFound && <div>{props.status.title}</div>}*/}
+
+                        {!notFound &&
+                        <h4 className='mb-0'><span className="">Сумма: {priceString}₽</span></h4>}
+
                     </div>
                 </div>
-                <div className="card-body">
-                    {!notFound ? <div>{props.status.title}</div>
-                        : <NavLink className='btn btn-light' to={'/deals'}>Вернуться к списку сделок</NavLink>}
-                </div>
+                {notFound ? <div className="card-body">
+                    <NavLink className='btn btn-light' to={'/deals'}>Вернуться к списку сделок</NavLink>
+                </div> : null }
             </div>
 
 
-            {!notFound && <StatusTimeline currentStatusPriority={props.status.priority} possibleStatuses={props.possibleStatuses}/>}
+            {!notFound &&
+            <StatusTimeline currentStatusPriority={props.status.priority} possibleStatuses={props.possibleStatuses}/>}
 
             {!notFound && <div className='row mt-4'>
                 <div className='col-md-8 px-0 px-md-3'>
 
-                    <div className={'card ' + s.main}>
+                    <div className={'card px-0 px-sm-3 ' + s.main}>
 
                         <div className='row mb-lg-0 m-0'>
 
@@ -85,7 +92,7 @@ const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, notFound, ...
                     <Sidebar {...props}/>
 
                 </div>
-            </div> }
+            </div>}
         </div>
     )
 };
