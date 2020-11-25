@@ -15,6 +15,7 @@ import {
     ButtonGroup,
     ButtonToolbar,
 } from "shards-react";
+import logo from "./../../img/scrows-logo.png"
 
 const Header = (props) => {
 
@@ -38,36 +39,36 @@ const Header = (props) => {
     return (
         <Navbar type="dark" theme="dark" expand="md">
             <div className='container'>
-                <NavbarBrand href="#">SCROWS.RU</NavbarBrand>
+                <NavbarBrand><img src={logo} style={{maxWidth: "200px"}} alt="Scrows.ru - Сервис безопасных сделок"/></NavbarBrand>
                 <NavbarToggler onClick={toggleNavbar}/>
                 <Collapse className={'justify-content-end'} open={collapseOpen} navbar>
                     <Nav navbar>
-                        <Dropdown
-                            open={dropdownOpen1}
-                            toggle={toggleDropdown1}
-                        >
-                            <DropdownToggle nav caret>
-                                Для кого
-                            </DropdownToggle>
-                            <DropdownMenu>
-                                <DropdownItem>1</DropdownItem>
-                                <DropdownItem>2</DropdownItem>
-                                <DropdownItem>3</DropdownItem>
-                            </DropdownMenu>
-                        </Dropdown>
-                        <Dropdown
-                            open={dropdownOpen2}
-                            toggle={toggleDropdown2}
-                        >
-                            <DropdownToggle nav caret>
-                                О нас
-                            </DropdownToggle>
-                            <DropdownMenu>
-                                <DropdownItem>1</DropdownItem>
-                                <DropdownItem>2</DropdownItem>
-                                <DropdownItem>3</DropdownItem>
-                            </DropdownMenu>
-                        </Dropdown>
+
+                        {/*<Dropdown*/}
+                        {/*    open={dropdownOpen1}*/}
+                        {/*    toggle={toggleDropdown1}>*/}
+                        {/*    <DropdownToggle nav caret>*/}
+                        {/*        Для кого*/}
+                        {/*    </DropdownToggle>*/}
+                        {/*    <DropdownMenu>*/}
+                        {/*        <DropdownItem>1</DropdownItem>*/}
+                        {/*        <DropdownItem>2</DropdownItem>*/}
+                        {/*        <DropdownItem>3</DropdownItem>*/}
+                        {/*    </DropdownMenu>*/}
+                        {/*</Dropdown>*/}
+                        {/*<Dropdown*/}
+                        {/*    open={dropdownOpen2}*/}
+                        {/*    toggle={toggleDropdown2}>*/}
+                        {/*    <DropdownToggle nav caret>*/}
+                        {/*        О нас*/}
+                        {/*    </DropdownToggle>*/}
+                        {/*    <DropdownMenu>*/}
+                        {/*        <DropdownItem>1</DropdownItem>*/}
+                        {/*        <DropdownItem>2</DropdownItem>*/}
+                        {/*        <DropdownItem>3</DropdownItem>*/}
+                        {/*    </DropdownMenu>*/}
+                        {/*</Dropdown>*/}
+
                         <NavItem>
                             <NavLink href="/personal-info">
                                 Личный кабинет
