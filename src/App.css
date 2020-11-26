@@ -15,5 +15,8 @@ p {
 
 .custom-control-label {
     font-size: 1rem !important;
+}
 
+.themeColor {
+    background-color: #5fbdff1f;
 }
