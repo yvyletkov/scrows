@@ -153,7 +153,7 @@ const PersonalUserArea = (props) => {
                 <div className={`card col-lg-8 col-12 ${s.cardMob}`}>
                     <MobilePersonalAreaTabs/>
                     <div className="card-header">
-                        <h4 className="m-0">Личная информация</h4>
+                        <h5 className="m-0">Личная информация</h5>
                     </div>
                     <AlertSuccess show={alertSuccessShow}
                                   style={styleForm.styleAlert}

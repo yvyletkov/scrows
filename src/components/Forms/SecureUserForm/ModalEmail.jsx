@@ -18,18 +18,18 @@ const ModalEmail = (props) => {
         email,
     } = props;
 
-    const [modalEmail, openModalEmail] = useState(false);
+    let [modalEmail, openModalEmail] = useState(false);
     console.log(modalEmail)
 
     return (
-        <div className={s.securityField} onClick={() => openModalEmail(!modalEmail)}>
+        <div className={s.securityField} onClick={() => openModalEmail(true)}>
             <img className={s.securityIcon} src={emailIcon} alt="Email"/>
             <span className={s.fieldName}>Email</span>
             <p className={s.fieldDesc}>{email}</p>
             <Modal className={s.modalWindow}
                    open={modalEmail}
                    toggle={() => openModalEmail(!modalEmail)}>
-                <ModalHeader className="justify-content-center">
+                <ModalHeader className={s.modalHeader}>
                     <p>Изменить email</p>
                 </ModalHeader>
                 <AlertSuccess show={false} text={"Информация сохранена"}/>
