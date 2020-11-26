@@ -146,7 +146,7 @@ const IndividualUserArea = (props) => {
           <div className={`card shadow-none col-lg-8 col-12 ${s.cardMob}`}>
             <MobilePersonalAreaTabs />
             <div className="card-header">
-              <h4 className="m-0">Платежные данные</h4>
+              <h5 className="m-0">Платежные данные</h5>
             </div>
             <AlertSuccess style={styleForm.styleAlert}
                           show={alertSuccessShow}

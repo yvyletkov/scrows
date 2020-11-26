@@ -20,6 +20,13 @@
     align-items: center;
 }
 
+.modalHeader {
+    text-align: justify;
+    border:none;
+    background-color: rgba(90,97,105,.06);
+    justify-content: center;
+}
+
 .securityIcon {
     width:20px;
     height:20px;

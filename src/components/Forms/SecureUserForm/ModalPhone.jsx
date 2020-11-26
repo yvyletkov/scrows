@@ -28,7 +28,7 @@ const ModalPhone = (props) => {
             <Modal className={s.modalWindow}
                    open={modalPhone}
                    toggle={() => openModalPhone(false)}>
-                <ModalHeader className="justify-content-center">
+                <ModalHeader className={s.modalHeader}>
                     <p>Изменить номер</p>
                 </ModalHeader>
                 <AlertSuccess show={false} text={"Информация сохранена"}/>
