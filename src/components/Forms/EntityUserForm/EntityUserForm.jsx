@@ -153,7 +153,7 @@ const EntityUserArea = (props) => {
         <div className="container my-5">
             <div className="row">
                 <PersonalAreaCard/>
-                <div className={`card col-lg-8 col-12 ${s.cardMob}`}>
+                <div className={`card shadow-none col-lg-8 col-12 ${s.cardMob}`}>
                     <MobilePersonalAreaTabs/>
                     <div className="card-header">
                         <h4 className="m-0">Личный кабинет</h4>

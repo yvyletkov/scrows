@@ -14,7 +14,7 @@ const AddDealPage = ({postNewDeal}) => {
 
     return (
         <div className='container'>
-            <div className='card mt-4'>
+            <div className='card shadow-none mt-4'>
                 <div className='card-header font-weight-bold'>Создание новой безопасной сделки (ШАГ {step})</div>
                 <div className='card-body'>
 
