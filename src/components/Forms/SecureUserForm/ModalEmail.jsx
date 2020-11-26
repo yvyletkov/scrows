@@ -22,13 +22,13 @@ const ModalEmail = (props) => {
     console.log(modalEmail)
 
     return (
-        <div className={s.securityField} onClick={() => openModalEmail(true)}>
+        <div className={s.securityField} onClick={() => openModalEmail(!modalEmail)}>
             <img className={s.securityIcon} src={emailIcon} alt="Email"/>
             <span className={s.fieldName}>Email</span>
             <p className={s.fieldDesc}>{email}</p>
             <Modal className={s.modalWindow}
                    open={modalEmail}
-                   toggle={() => openModalEmail(false)}>
+                   toggle={() => openModalEmail(!modalEmail)}>
                 <ModalHeader className="justify-content-center">
                     <p>Изменить email</p>
                 </ModalHeader>

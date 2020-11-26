@@ -1,6 +1,7 @@
 import React from "react";
 import {Field, formValueSelector, reduxForm} from "redux-form";
 import {connect} from "react-redux";
+import {validate} from "../../utils/validators/validators";
 
 const AddDealReduxForm = ({step, setStep, handleSubmit, dealType, userRole, price, whoPays, ...props}) => {
 
@@ -25,7 +26,7 @@ let mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps, {})(reduxForm({form: 'addDeal'})(AddDealReduxForm));
+export default connect(mapStateToProps, {})(reduxForm({form: 'addDeal'}, validate)(AddDealReduxForm));
 
 const Step1 = ({setStep, userRole, dealType}) => {
 
