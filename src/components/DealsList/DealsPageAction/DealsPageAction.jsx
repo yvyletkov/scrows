@@ -33,7 +33,7 @@ const DealsPageAction = (props) => {
 
     return (
             <div className="container mt-5">
-                <div className="card col-lg-12 p-0 col-12">
+                <div className="card shadow-none col-lg-12 p-0 col-12">
                     <div className="card-header">
                         <div className="col-12 d-flex my-3">
                             <h4>Сделки</h4>
