@@ -4,7 +4,7 @@ import vvpImg from "../../../img/vvp.jpg";
 import damImg from "../../../img/dam.jpg";
 
 const ParticipantCard = ({participant, img}) => {
-    return <div className={`card mt-3 mb-3 mt-md-0 ${s.sidebarCard}`}>
+    return <div className={`card shadow-none mt-3 mb-3 mt-md-0 ${s.sidebarCard}`}>
         <div className='card-header'>
             <span className={'text-lg-left text-center font-weight-bold'}>
                 {participant.role.title} {participant.me && "(это Вы)"}
@@ -55,7 +55,7 @@ const Sidebar = (props) => {
         <ParticipantCard participant={props.participants[0]} img={vvpImg}/>
         <ParticipantCard participant={props.participants[1]} img={damImg}/>
 
-        <div className={`card mt-3 ${s.sidebarCard}`}>
+        <div className={`card mt-3 shadow-none ${s.sidebarCard}`}>
             <div className='card-header'>
                 <div className={'text-lg-left text-center font-weight-bold'}>Описание сделки</div>
             </div>

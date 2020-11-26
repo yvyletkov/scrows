@@ -32,7 +32,7 @@ const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, notFound, ...
     return (
         <div style={{marginTop: "4rem"}} className='container mb-4'>
 
-            <div className='card'>
+            <div className='card shadow-none'>
                 <div className="card-header">
                     <div className={'d-md-flex justify-content-between'}>
 
@@ -59,7 +59,7 @@ const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, notFound, ...
             {!notFound && <div className='row mt-4'>
                 <div className='col-md-8 px-0 px-md-3'>
 
-                    <div className={'card px-0 px-sm-3 ' + s.main}>
+                    <div className={'p-0 ' + s.main}>
 
                         <div className='row mb-lg-0 m-0'>
 

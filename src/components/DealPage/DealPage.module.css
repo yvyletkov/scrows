@@ -11,10 +11,11 @@
     margin-bottom: 7.5rem;
     /*padding: 0 25px;*/
     transition: all 200ms;
-    background: #202529;
+    /*background: #44544f;*/
+    background: #5fbdff1f;
     border-radius: 100px;
     z-index: 0;
-    box-shadow: 0 0.46875rem 2.1875rem rgba(90,97,105,.1), 0 0.9375rem 1.40625rem rgba(90,97,105,.1), 0 0.25rem 0.53125rem rgba(90,97,105,.12), 0 0.125rem 0.1875rem rgba(90,97,105,.1);;
+    /*box-shadow: 0 0.46875rem 2.1875rem rgba(90,97,105,.1), 0 0.9375rem 1.40625rem rgba(90,97,105,.1), 0 0.25rem 0.53125rem rgba(90,97,105,.12), 0 0.125rem 0.1875rem rgba(90,97,105,.1);;*/
 
 }
 
@@ -37,7 +38,7 @@
     text-align: center;
     align-items: center;
     justify-content: center;
-    color: #000;
+    color: ##656565;
     background-color: #ffffff;
     font-size: 11px;
     position: absolute;
@@ -48,7 +49,7 @@
     bottom: -65px;
     transition: all 300ms ease;
     opacity: 0;
-    box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02);
+    /*box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02);*/
 }
 
 .statusDescription:before {
@@ -149,6 +150,7 @@
 
 .sidebarCard {
     position: relative;
+
 }
 
 .sidebarCard .cardImg {
@@ -213,12 +215,14 @@
 
 .message .messageText {
     padding: 5px 10px;
-    background: #ffffff;
-    color: #2f3237;
+    background: #5fbdff;
+    color: #ffffff;
     border-radius: 20px 20px 20px 0;
-    /*border: 1px solid #eeeeee;*/
+    /* border: 1px solid #eeeeee; */
+    width: -moz-fit-content;
     width: fit-content;
-    box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02);
+    text-shadow: 1px 1px 1.7px rgba(0, 0, 0, 0.07);
+    box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.07), 0 0 0 1px rgba(10, 10, 10, 0.02);
 }
 
 .message.dark .messageText {
