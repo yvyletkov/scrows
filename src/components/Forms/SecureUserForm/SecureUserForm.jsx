@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import PersonalAreaCard from "../../shared/PersonalAreaCard/PersonalAreaCard";
 import s from "./SecureUserForm.module.css";
@@ -9,14 +9,40 @@ import keyIcon from "../../../img/icons/key.svg";
 import PhoneUserReduxForm from "./ModalPhone";
 import {getUserData} from "../../../redux/AuthReducer";
 import EmailUserReduxForm from "./ModalEmail";
+import emailIcon from "../../../img/icons/email.svg";
+import phoneIcon from "../../../img/icons/phone.svg";
+import {takeCodeForPhone, sendPhoneCode} from "../../../redux/PersonalAreaReducer";
 
 const SecureUserArea = (props) => {
-    const {isFetching, getUserData} = props;
-    console.log(props)
+    const {
+        isFetching,
+        getUserData,
+        email,
+        phone,
+        takeCodeForPhone,
+        verification_id,
+        sendPhoneCode } = props;
 
     useEffect(() => {
         getUserData()
     }, [])
+
+    const [modalEmail, openModalEmail] = useState(false);
+    const [modalPhone, openModalPhone] = useState(false);
+
+    const submitEmail = (data) => {
+        console.log(data)
+    }
+
+    const submitPhone = (phone) => {
+        console.log(phone)
+        takeCodeForPhone(phone.phone)
+    }
+
+    const verifyPhone = (code) => {
+        console.log(code)
+        sendPhoneCode(verification_id, code.code)
+    }
 
     return (
         <div className="container my-5">
@@ -30,8 +56,16 @@ const SecureUserArea = (props) => {
                     <div className="card-body">
                         <div className="row">
                             <div className="col-12">
-                                <PhoneUserReduxForm/>
-                                <EmailUserReduxForm/>
+                                <div className={s.securityField} onClick={() => openModalPhone(!modalPhone)}>
+                                    <img className={s.securityIcon} src={phoneIcon} alt="Телефон"/>
+                                    <span className={s.fieldName}>Номер телефона</span>
+                                    <p className={s.fieldDesc}>{phone}</p>
+                                </div>
+                                <div className={s.securityField} onClick={() => openModalEmail(!modalEmail)}>
+                                    <img className={s.securityIcon} src={emailIcon} alt="Email"/>
+                                    <span className={s.fieldName}>Email</span>
+                                    <p className={s.fieldDesc}>{email}</p>
+                                </div>
                                 <div className={s.securityField}>
                                     <img className={s.securityIcon} src={keyIcon} alt="Пароль"/>
                                     <span className={s.fieldName}>Пароль</span>
@@ -42,6 +76,12 @@ const SecureUserArea = (props) => {
                     </div>
                 </div>
             </div>
+            <EmailUserReduxForm openModalEmail={openModalEmail} modalEmail={modalEmail} onSubmit={submitEmail}/>
+            <PhoneUserReduxForm
+                modalPhone={modalPhone}
+                openModalPhone={openModalPhone}
+                onSubmit={submitPhone}
+                verifyPhone={verifyPhone}/>
         </div>
     );
 };
@@ -49,7 +89,10 @@ const SecureUserArea = (props) => {
 const mapStateToProps = (state) => {
     return {
         isFetching: state.infoUser.isFetching,
+        email:state.infoUser.email,
+        phone:state.infoUser.phone,
+        verification_id:state.infoUser.verification_id,
     };
 };
 
-export default compose(connect(mapStateToProps, {getUserData}), withAuthRedirect)(SecureUserArea);
+export default compose(connect(mapStateToProps, {getUserData, takeCodeForPhone, sendPhoneCode}), withAuthRedirect)(SecureUserArea);

@@ -7,6 +7,7 @@ import {renderCardNumberInput} from "../../shared/FormContols/FormControls";
 import {validate, warn} from "../../../utils/validators/validators";
 import {connect} from "react-redux";
 import phoneIcon from "../../../img/icons/phone.svg";
+import CodeReduxForm from "./CodeForm";
 
 
 const ModalPhone = (props) => {
@@ -15,49 +16,51 @@ const ModalPhone = (props) => {
         pristine,
         reset,
         submitting,
-        phone,
+        openModalPhone,
+        modalPhone,
+        showCodePhoneForm,
+        verifyPhone
     } = props;
 
-    const [modalPhone, openModalPhone] = useState(false);
+    // const showCodeForm = true;
 
     return (
-        <div className={s.securityField} onClick={() => openModalPhone(true)}>
-            <img className={s.securityIcon} src={phoneIcon} alt="Телефон"/>
-            <span className={s.fieldName}>Номер телефона</span>
-            <p className={s.fieldDesc}>{phone}</p>
             <Modal className={s.modalWindow}
                    open={modalPhone}
-                   toggle={() => openModalPhone(false)}>
+                   toggle={() => openModalPhone(!modalPhone)}>
                 <ModalHeader className={s.modalHeader}>
                     <p>Изменить номер</p>
                 </ModalHeader>
                 <AlertSuccess show={false} text={"Информация сохранена"}/>
                 <AlertDanger show={false} text={"Не удалось сохранить данные"}/>
                 <ModalBody>
-                    <form onSubmit={handleSubmit}>
-                        <Field
-                            placeholder="Введите номер телефона"
-                            name="phone"
-                            type="number"
-                            component={renderCardNumberInput}
-                            required
-                        />
-                        <button
-                            type="submit"
-                            className="btn btn-success mt-3"
-                            disabled={submitting || pristine}>
-                            Изменить номер
-                        </button>
-                    </form>
+                    {
+                        showCodePhoneForm ?
+                        <CodeReduxForm onSubmit={verifyPhone}/> :
+                        <form className={s.formModal} onSubmit={handleSubmit}>
+                            <Field
+                                placeholder="Введите номер телефона"
+                                name="phone"
+                                type="number"
+                                component={renderCardNumberInput}
+                                required
+                            />
+                            <button
+                                type="submit"
+                                className="btn btn-success mt-3"
+                                disabled={submitting || pristine}>
+                                Изменить номер
+                            </button>
+                        </form>
+                    }
                 </ModalBody>
             </Modal>
-        </div>
     )
 }
 
 
 const PhoneUserReduxForm = reduxForm({
-    form: "phoneUserForm",
+    form: "codePhoneUser",
     validate,
     enableReinitialize: true,
     warn,
@@ -65,7 +68,9 @@ const PhoneUserReduxForm = reduxForm({
 
 const mapStateToProps = (state) => {
     return {
-        phone: state.infoUser.phone,
+        phone_number: state.infoUser.phone_number,
+        showCodePhoneForm: state.infoUser.showCodePhoneForm,
+        verification_id:state.infoUser.verification_id,
     };
 };
 

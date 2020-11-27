@@ -12,7 +12,7 @@ const validate = (values) => {
         "date_of_birth",
         "entity_type",
         "gender",
-        "phone_number",
+        "phone",
         "entity_id",
         "entity_tin",
         "document_type",
@@ -23,7 +23,8 @@ const validate = (values) => {
         "passport_data_code",
         "entity_name",
         "card_number",
-        "participantEmail"
+        "participantEmail",
+        "code"
     ];
 
     fields.forEach((field) => {
