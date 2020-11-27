@@ -121,15 +121,12 @@ const authApi = {
         });
     },
 
-    async addUserCard(card_number) {
+    async addUserCard() {
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
         // this.headers.Authorization = `Bearer token`;
         return await this.request(`/users/profile/payment/cards/`, {
             method: "POST",
             headers: this.headers,
-            body: JSON.stringify({
-                card_number: `${card_number}`
-            })
         });
     },
 

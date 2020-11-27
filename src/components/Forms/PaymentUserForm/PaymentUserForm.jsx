@@ -13,9 +13,10 @@ import {compose} from "redux";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 import MobilePersonalAreaTabs from "../../shared/MobilePersonalAreaTabs/MobilePersonalAreaTabs";
 import {AlertDanger, AlertSuccess} from "../../shared/CustomAlerts/CustomAlerts";
+import {Route} from "react-router-dom";
 
 const PaymentUserForm = (props) => {
-    const [open, openModal] = useState(false);
+
     const {
         handleSubmit,
         pristine,
@@ -26,6 +27,7 @@ const PaymentUserForm = (props) => {
         valid,
         alertSuccessShow,
         alertErrorShow,
+        addUserCard
     } = props;
 
     const cards = payment_data.map((card) => {
@@ -77,39 +79,9 @@ const PaymentUserForm = (props) => {
         <div className="row">
             {payment_data.length >= 3 ? null : <div className={`card col-md-5 col-12 ${s.creditCard}`}>
                 <div className="card-body d-flex justify-content-center align-items-center">
-                    <div onClick={() => openModal(true)}>
+                    <div onClick={() => addUserCard()}>
                         <img className={s.btnAdd} src={iconAdd} alt="Добавить карту"/>
                     </div>
-                    <Modal
-                        className={s.modalWindow}
-                        open={open}
-                        toggle={() => {
-                            openModal(false);
-                        }}
-                    >
-                        <ModalHeader className="justify-content-center">
-                            <p>Добавить карту</p>
-                        </ModalHeader>
-                        <AlertSuccess show={alertSuccessShow} text={"Информация сохранена"}/>
-                        <AlertDanger show={alertErrorShow} text={"Не удалось сохранить данные"} />
-                        <ModalBody>
-                            <form onSubmit={handleSubmit}>
-                                <Field
-                                    placeholder="Введите номер карты"
-                                    name="card_number"
-                                    type="number"
-                                    component={renderCardNumberInput}
-                                    required
-                                />
-                                <button
-                                    type="submit"
-                                    className="btn btn-success mt-3"
-                                    disabled={submitting || pristine || !valid}>
-                                    Добавить карту
-                                </button>
-                            </form>
-                        </ModalBody>
-                    </Modal>
                 </div>
             </div>}
             {cards}
@@ -133,14 +105,22 @@ const PaymentUserReduxForm = reduxForm({
 })(PaymentUserForm);
 
 const PaymentUserArea = (props) => {
-    const {getPaymentData, payment_data, isFetching, addUserCard, alertSuccessShow, alertErrorShow,} = props;
+    const {
+        getPaymentData,
+        payment_data,
+        isFetching,
+        addUserCard,
+        alertSuccessShow,
+        alertErrorShow,
+        urlRedirect } = props;
 
+    console.log(props);
     useEffect(() => {
         getPaymentData();
     }, []);
 
-    const handleSubmit = (data) => {
-        addUserCard(data.card_number)
+    if (urlRedirect) {
+        return <Route path={'/'} render={() => (window.location = urlRedirect)}  />
     }
 
     return (
@@ -154,9 +134,9 @@ const PaymentUserArea = (props) => {
                     </div>
                     <div className="card-body">
                         <PaymentUserReduxForm
-                            onSubmit={handleSubmit}
                             payment_data={payment_data}
                             isFetching={isFetching}
+                            addUserCard={addUserCard}
                             alertSuccessShow={alertSuccessShow}
                             alertErrorShow={alertErrorShow}
                         />
@@ -173,6 +153,7 @@ const mapStateToProps = (state) => {
         isFetching: state.infoUser.isFetching,
         alertSuccessShow: state.infoUser.alertSuccessShow,
         alertErrorShow: state.infoUser.alertErrorShow,
+        urlRedirect: state.infoUser.urlRedirect,
     };
 };
 
