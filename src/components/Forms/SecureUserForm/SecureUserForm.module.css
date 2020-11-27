@@ -20,6 +20,11 @@
     align-items: center;
 }
 
+.formModal {
+    display: flex;
+    flex-direction: column;
+}
+
 .modalHeader {
     text-align: justify;
     border:none;

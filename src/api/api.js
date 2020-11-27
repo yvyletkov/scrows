@@ -1,5 +1,3 @@
-import {BrowserRouter as Router, Route} from "react-router-dom";
-import DealsPage from "../components/DealsList/DealsPage/DealsPage";
 import React from "react";
 
 const baseApi = {
@@ -153,16 +151,39 @@ const authApi = {
         entity_name: `${entity_name}`,
       }),
     });
-  },
+    },
 
-  async getPaymentData() {
-    this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
-    // this.headers.Authorization = `Bearer token`;
-    return await this.request(`/users/profile/payment/cards/`, {
-      method: "GET",
-      headers: this.headers,
-    });
-  },
+    async getPaymentData() {
+        this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+        // this.headers.Authorization = `Bearer token`;
+        return await this.request(`/users/profile/payment/cards/`, {
+            method: "GET",
+            headers: this.headers,
+        });
+    },
+
+    async takeCodeForPhone(phone) {
+        this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+        return await this.request(`/users/profile/security/update-phone/initialize`, {
+            method: "POST",
+            headers: this.headers,
+            body: JSON.stringify({
+                phone_number: `${phone}`,
+            }),
+        });
+    },
+
+    async sendCodeForPhone(id, code) {
+        this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+        return await this.request(`/users/profile/security/update-phone/verify`, {
+            method: "POST",
+            headers: this.headers,
+            body: JSON.stringify({
+                verification_id:`${id}`,
+                code: `${code}`,
+            }),
+        });
+    },
 };
 
 const dealApi = {

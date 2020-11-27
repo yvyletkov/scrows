@@ -24,6 +24,8 @@ let initialState = {
   alertSuccessShow:false,
   alertErrorShow:false,
   urlRedirect:'',
+  showCodePhoneForm:false,
+  verification_id: null,
 };
 
 const personalAreaReducer = (state = initialState, action) => {
@@ -71,9 +73,17 @@ const personalAreaReducer = (state = initialState, action) => {
     case "HIDE_ERROR_ALERT": {
       return { ...state, alertErrorShow: action.status };
     }
-
     case "SET_URL_REDIRECT": {
       return { ...state, urlRedirect: action.payload.redirect_url };
+    }
+    case "SET_VERIFICATION_ID": {
+      return { ...state, ...action.payload };
+    }
+    case "SHOW_CODE_PHONE": {
+      return { ...state, showCodePhoneForm: action.status };
+    }
+    case "SET_USER_PHONE": {
+      return { ...state, phone: action.payload };
     }
 
     default:
@@ -217,6 +227,32 @@ export const getPaymentData = () => (dispatch) => {
     });
 };
 
+export const takeCodeForPhone = (phone) => (dispatch) => {
+  dispatch(toggleIsFetching(true));
+  api.takeCodeForPhone(phone)
+      .then((response) => {
+        dispatch(setVerificationId(response));
+        dispatch(showCodePhoneForm(true))
+        dispatch(toggleIsFetching(false));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+};
+
+export const sendPhoneCode = (id, code) => (dispatch) => {
+  // dispatch(toggleIsFetching(true));
+  api.sendCodeForPhone(id, code)
+      .then((response) => {
+        console.log(response)
+        // dispatch(setUserPhone(response));
+        // dispatch(toggleIsFetching(false));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+};
+
 export const setUserData = (data) => ({ type: "SET_USER_DATA", payload: data });
 export const setSecureData = (data) => ({
   type: "SET_SECURE_DATA",
@@ -264,5 +300,20 @@ export const hideErrorAlert = (status) => ({
   type:"HIDE_ERROR_ALERT",
   status: status,
 })
+
+export const showCodePhoneForm = (status) => ({
+  type:"SHOW_CODE_PHONE",
+  status: status,
+})
+
+export const setVerificationId = (data) => ({
+  type: "SET_VERIFICATION_ID",
+  payload: data
+});
+
+export const setUserPhone = (data) => ({
+  type: "SET_USER_PHONE",
+  payload: data
+});
 
 export default personalAreaReducer;
