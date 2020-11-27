@@ -120,7 +120,7 @@ const PaymentUserArea = (props) => {
     }, []);
 
     if (urlRedirect) {
-        return <Route path={'/'} render={() => (window.location = urlRedirect)}  />
+        window.location = urlRedirect
     }
 
     return (
