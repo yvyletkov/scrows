@@ -23,6 +23,7 @@ let initialState = {
   payment_data: [],
   alertSuccessShow:false,
   alertErrorShow:false,
+  urlRedirect:'',
 };
 
 const personalAreaReducer = (state = initialState, action) => {
@@ -69,6 +70,10 @@ const personalAreaReducer = (state = initialState, action) => {
     }
     case "HIDE_ERROR_ALERT": {
       return { ...state, alertErrorShow: action.status };
+    }
+
+    case "SET_URL_REDIRECT": {
+      return { ...state, urlRedirect: action.payload.redirect_url };
     }
 
     default:
@@ -166,10 +171,11 @@ export const getEntityData = () => (dispatch) => {
       });
 };
 
-export  const addUserCard = (card_number) => (dispatch) => {
-  api.addUserCard(card_number)
+export  const addUserCard = () => (dispatch) => {
+  api.addUserCard()
       .then((response) => {
         dispatch(showSuccessAlert(true));
+        dispatch(setUrlRedirect(response));
         console.log(response)
       })
       .catch((err) => {
@@ -224,6 +230,12 @@ export const setIndividualData = (data) => ({
   type: "SET_INDIVIDUAL_DATA",
   payload: data,
 });
+
+export const setUrlRedirect = (data) => ({
+  type: "SET_URL_REDIRECT",
+  payload: data,
+});
+
 export const setEntityData = (data) => ({
   type: "SET_ENTITY_DATA",
   payload: data,
