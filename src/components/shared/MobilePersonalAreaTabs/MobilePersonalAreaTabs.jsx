@@ -1,12 +1,19 @@
-import React from "react";
+import React, {useState} from "react";
 import s from "./MobilePersonalAreaTabs.module.css"
 import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
 import {getUserData} from "../../../redux/PersonalAreaReducer";
+import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from "shards-react";
 
 
 const MobilePersonalAreaTabs = (props) => {
     const {entity_type} = props;
+
+    let [dropdownOpen2, setDropdownOpen2] = React.useState(false);
+
+    const toggleDropdown2 = () => {
+        setDropdownOpen2(!dropdownOpen2)
+    };
 
     let userType = entity_type === "entity" ?
         <li className={`nav-item ${s.navLinkMob}`}>
@@ -40,9 +47,26 @@ const MobilePersonalAreaTabs = (props) => {
                 </li>
                 {userType}
                 <li className={`nav-item ${s.navLinkMob}`}>
-                    <NavLink to="/deals"
-                             className={`nav-link ${s.navProfile}`}>Сделки
-                    </NavLink>
+                    <Dropdown open={dropdownOpen2}
+                              toggle={toggleDropdown2}>
+                        <DropdownToggle className={`nav-link ${s.navProfile}`} nav caret>
+                            Сделки
+                        </DropdownToggle>
+                        <DropdownMenu className={s.dropMenu}>
+                            <NavLink to="/deals">
+                                <DropdownItem>Все сделки</DropdownItem>
+                            </NavLink>
+                            <NavLink to="/deals-completed">
+                                <DropdownItem>Завершенные</DropdownItem>
+                            </NavLink>
+                            <NavLink to="/deals-claim">
+                                <DropdownItem>Претензии</DropdownItem>
+                            </NavLink>
+                            <NavLink to="/deals-action">
+                                <DropdownItem>Ждут действия</DropdownItem>
+                            </NavLink>
+                        </DropdownMenu>
+                    </Dropdown>
                 </li>
             </ul>
         </div>

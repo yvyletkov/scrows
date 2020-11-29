@@ -17,3 +17,9 @@
 .navList {
     padding: 0 10px;
 }
+
+@media screen and (max-width:992px) {
+    .navTab {
+        display: none;
+    }
+}

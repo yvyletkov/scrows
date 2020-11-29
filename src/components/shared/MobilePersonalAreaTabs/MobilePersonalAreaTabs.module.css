@@ -6,6 +6,15 @@
     align-items: center;
 }
 
+.navProfile:focus {
+    color: #171717;
+}
+
+.dropMenu {
+    width: 100%;
+    text-align: center;
+}
+
 .cardHeaderMob {
     display: none;
 }
