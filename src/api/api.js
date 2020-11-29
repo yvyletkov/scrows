@@ -80,7 +80,7 @@ const authApi = {
 
     async getIndividualData() {
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
-        return await this.request(`/users/profile/judical/single`, {
+        return await this.request(`/users/profile/judical/single/`, {
             method: "GET",
             headers: this.headers,
         });
@@ -89,7 +89,7 @@ const authApi = {
     async changeIndividualData(document_type, passport_data_number, passport_data_created, passport_data_code) {
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
         // this.headers.Authorization = `Bearer token`;
-        return await this.request(`/users/profile/judical/single`, {
+        return await this.request(`/users/profile/judical/single/`, {
             method: "PATCH",
             headers: this.headers,
             body: JSON.stringify({
@@ -104,7 +104,7 @@ const authApi = {
     async getEntityData() {
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
         // this.headers.Authorization = `Bearer token`;
-        return await this.request(`/users/profile/judical/entity`, {
+        return await this.request(`/users/profile/judical/entity/`, {
             method: "GET",
             headers: this.headers,
         });
@@ -140,7 +140,7 @@ const authApi = {
         }));
     this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
     // this.headers.Authorization = `Bearer token`;
-    return await this.request(`/users/profile/judical/entity`, {
+    return await this.request(`/users/profile/judical/entity/`, {
       method: "PATCH",
       headers: this.headers,
       body: JSON.stringify({
@@ -164,7 +164,7 @@ const authApi = {
 
     async takeCodeForPhone(phone) {
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
-        return await this.request(`/users/profile/security/update-phone/initialize`, {
+        return await this.request(`/users/profile/security/update-phone/initialize/`, {
             method: "POST",
             headers: this.headers,
             body: JSON.stringify({
@@ -175,7 +175,7 @@ const authApi = {
 
     async sendCodeForPhone(id, code) {
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
-        return await this.request(`/users/profile/security/update-phone/verify`, {
+        return await this.request(`/users/profile/security/update-phone/verify/`, {
             method: "POST",
             headers: this.headers,
             body: JSON.stringify({
@@ -190,7 +190,7 @@ const dealApi = {
 
     async getDealInfo(id) {
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
-        return await this.request(`/deals/${id}`, {
+        return await this.request(`/deals/${id}/`, {
             method: "GET",
             headers: this.headers,
         });
@@ -198,15 +198,30 @@ const dealApi = {
 
     async getPossibleStatuses() {
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
-        return await this.request(`/common/statuses`, {
+        return await this.request(`/common/statuses/`, {
             method: "GET",
             headers: this.headers,
         });
     },
 
-    async postNewDeal(data) {
+    async getActions(id) {
+        this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+        return await this.request(`/actions/deals/${id}/`, {
+            method: "GET",
+            headers: this.headers,
+        });
+    },
 
-        debugger
+    async sendAction(payload) {
+        this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+        return await this.request(`${payload.request_url}`, {
+            method: "POST",
+            headers: this.headers,
+            body: JSON.stringify(payload.content),
+        });
+    },
+
+    async postNewDeal(data) {
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
         return this.request(`/deals/`, {
             method: "POST",
@@ -234,7 +249,7 @@ const dealApi = {
     async getDealsDataCompleted() {
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
         // this.headers.Authorization = `Bearer token`;
-        return await this.request(`/deals?status=8`, {
+        return await this.request(`/deals/?status=8`, {
             method: "GET",
             headers: this.headers,
         });
@@ -243,7 +258,7 @@ const dealApi = {
     async getDealsDataClaim() {
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
         // this.headers.Authorization = `Bearer token`;
-        return await this.request(`/deals?status=7`, {
+        return await this.request(`/deals/?status=7`, {
             method: "GET",
             headers: this.headers,
         });
@@ -252,7 +267,7 @@ const dealApi = {
     async getDealsDataAction() {
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
         // this.headers.Authorization = `Bearer token`;
-        return await this.request(`/deals?status=6`, {
+        return await this.request(`/deals/?status=6`, {
             method: "GET",
             headers: this.headers,
         });

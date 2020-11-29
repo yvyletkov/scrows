@@ -50,7 +50,15 @@ const Sidebar = (props) => {
         commission_label = "Сумма к оплате"
     }
 
+    const goToNextStatus = (payload) => {
+        props.sendAction(payload)
+    };
+
     return (<>
+
+        {props.actions ? props.actions.map( item => {
+            return <div onClick={ () => goToNextStatus(item.payload)} className='btn w-100 mb-3 btn-success'>{item.text}</div>
+        }) : null}
 
         <ParticipantCard participant={props.participants[0]} img={vvpImg}/>
         <ParticipantCard participant={props.participants[1]} img={damImg}/>

@@ -2,7 +2,7 @@ import React from "react";
 import s from "./DealPage.module.css";
 import './DealPage.module.css'
 import {connect} from "react-redux";
-import {getDealInfo, getPossibleStatuses} from "../../redux/DealPageReducer";
+import {getActions, getDealInfo, getPossibleStatuses, sendAction} from "../../redux/DealPageReducer";
 import Sidebar from "./parts/Sidebar";
 import StatusTimeline from "./parts/StatusTimeline";
 import Chat from "./parts/Chat";
@@ -11,7 +11,7 @@ import DealFiles from "./parts/DealFiles";
 import Preloader from "../shared/Preloader/Preloader";
 import {NavLink} from "react-router-dom";
 
-const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, notFound, ...props}) => {
+const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, getActions, notFound, ...props}) => {
 
     console.log(props.possibleStatuses);
 
@@ -21,6 +21,7 @@ const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, notFound, ...
     React.useEffect(() => {
         getDealInfo(idForRequest);
         getPossibleStatuses();
+        getActions(idForRequest);
     }, [getDealInfo, idForRequest, getPossibleStatuses]);
 
     const onChatFormSubmit = values => {
@@ -101,6 +102,7 @@ let mapStateToProps = (state) => {
     return {
         notFound: state.deal.notFound,
         dealId: state.deal.dealId,
+        actions: state.deal.actions,
         participants: state.deal.participants,
         createdAt: state.deal.createdAt,
         subject: state.deal.subject,
@@ -115,4 +117,4 @@ let mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {getDealInfo, getPossibleStatuses})(DealPage);
+export default connect(mapStateToProps, {getDealInfo, getPossibleStatuses, getActions, sendAction})(DealPage);

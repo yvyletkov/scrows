@@ -38,8 +38,8 @@ const Step1 = ({setStep, userRole, dealType}) => {
             <div className='col-md-6 mb-4 mb-md-0'>
                 <div className='pt-0'>
 
-                    <div
-                        className='d-flex border border-success rounded p-3 justify-content-between align-items-center mb-4'>
+                    <div style={{background: 'rgb(241, 249, 254)', borderColor: 'rgb(222, 226, 230)'}}
+                        className='d-flex border rounded p-3 justify-content-between align-items-center mb-4'>
 
                         <div className='font-weight-bold'>Выберите тип сделки:</div>
 
@@ -62,8 +62,8 @@ const Step1 = ({setStep, userRole, dealType}) => {
 
                     </div>
 
-                    <div
-                        className='d-flex border border-success rounded p-3 justify-content-between align-items-center mb-4'>
+                    <div  style={{background: 'rgb(241, 249, 254)', borderColor: 'rgb(222, 226, 230)'}}
+                        className='d-flex border rounded p-3 justify-content-between align-items-center mb-4'>
 
                         <div className='font-weight-bold'>Выберите роль в сделке:</div>
 
@@ -108,7 +108,7 @@ const Step1 = ({setStep, userRole, dealType}) => {
             </div>
             <div className='col-md-6'>
                 <div className='card shadow-none'>
-                    <div className='card-body rounded mb-3 border border-secondary'>
+                    <div className='card-body rounded mb-3 border' style={{background: '#f6f6f6', borderColor: 'rgb(222, 226, 230)'}}>
                         <p className='font-weight-bold mb-3'>Название сделки:</p>
                         <Field component={'input'} type="text" name='subject' className="form-control mb-3"
                                placeholder="Введите название сделки"/>
@@ -190,7 +190,7 @@ const Step2 = ({setStep, userRole, dealType, whoPays, price}) => {
                 <div className='h-100 w-75 d-flex align-items-center mx-auto'>
                     <div>
                         <h4 className="mb-1">Итого к оплате:</h4>
-                        <h2><p className='text-success'>{amountString} ₽</p></h2>
+                        <b><p style={{fontSize: "27px"}} className='text-success mb-2'>{amountString} ₽</p></b>
                         <p>После принятие условий сделки вторым участником, Вам будет выставлен счет на
                             указанную сумму</p>
                     </div>
