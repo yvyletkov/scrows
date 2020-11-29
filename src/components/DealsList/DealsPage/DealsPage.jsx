@@ -7,6 +7,8 @@ import Preloader from "../../shared/Preloader/Preloader";
 import {NavLink} from "react-router-dom";
 import DealsItem from "../../shared/DealsItem/DealsItem";
 import DealsListTabs from "../../shared/DealsListTabs/DealsListTabs";
+import PersonalAreaCard from "../../shared/PersonalAreaTabs/PersonalAreaTabs";
+import MobilePersonalAreaTabs from "../../shared/MobilePersonalAreaTabs/MobilePersonalAreaTabs";
 
 const DealsPage = (props) => {
     const {getDealsData, deals, isFetching} = props;
@@ -19,18 +21,18 @@ const DealsPage = (props) => {
         let day = new Date(deal.created_at).getUTCDate();
         let year = new Date(deal.created_at).getUTCFullYear();
 
-        const badge = (status) => {
+        const statusColor = (status) => {
             if(status === 8){
-                return "badge-light"
+                return {backgroundColor:"#d9d9d9"}
             }
             if(status === 7){
-                return "badge-danger"
+                return {backgroundColor:"#ff0000"}
             }
             if(status === 6){
-                return "badge-warning"
+                return {backgroundColor:"#dcde5f"}
             }
             else {
-                return "badge-info"
+                return {backgroundColor:"#4da22f"}
             }
         }
 
@@ -42,22 +44,26 @@ const DealsPage = (props) => {
                        newDate={newDate}
                        price={deal.price}
                        status={deal.status.title}
-                       badge={badge(deal.status.priority)}/>
+                       statusColor={statusColor(deal.status.priority)}/>
         )
     })
 
     return (
-            <div className="container mt-5">
-                <div className="card shadow-none col-lg-12 p-0 col-12">
-                    <div className="card-header">
-                        <div className="col-12 d-flex my-3">
-                            <h4>Сделки</h4>
-                            <NavLink className="btn btn-success ml-auto" to="/add-deal">Создать сделку</NavLink>
+            <div className="container mt-lg-5">
+                <div className="row">
+                    <PersonalAreaCard />
+                    <div className="card shadow-none col-lg-8 p-0 col-12">
+                        <MobilePersonalAreaTabs/>
+                        <div className="card-header">
+                            <div className="col-12 d-flex my-3 align-items-center">
+                                <h5 className="m-0">Список сделок</h5>
+                                <NavLink className="btn btn-success ml-auto" to="/add-deal">Создать сделку</NavLink>
+                            </div>
+                            <DealsListTabs />
                         </div>
-                        <DealsListTabs />
-                    </div>
-                    <div className="card-body pt-0">
-                        {isFetching ? <Preloader/> : dealsList}
+                        <div className="card-body pt-0">
+                            {isFetching ? <Preloader/> : dealsList}
+                        </div>
                     </div>
                 </div>
             </div>

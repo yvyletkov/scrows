@@ -10,19 +10,13 @@ const MobilePersonalAreaTabs = (props) => {
 
     let userType = entity_type === "entity" ?
         <li className={`nav-item ${s.navLinkMob}`}>
-            <NavLink
-                to="/entity-info"
-                className={`nav-link ${s.navProfile}`}
-            >
-                Данные юр.лица
+            <NavLink to="/entity-info"
+                     className={`nav-link ${s.navProfile}`}>Данные юр.лица
             </NavLink>
         </li> :
         <li className={`nav-item ${s.navLinkMob}`}>
-            <NavLink
-                to="/individual-info"
-                className={`nav-link mb-2 ${s.navProfile}`}
-            >
-                Данные физ.лица
+            <NavLink to="/individual-info"
+                     className={`nav-link mb-2 ${s.navProfile}`}>Данные физ.лица
             </NavLink>
         </li>;
 
@@ -30,11 +24,8 @@ const MobilePersonalAreaTabs = (props) => {
         <div className={`card-header ${s.cardHeaderMob}`}>
             <ul className="nav nav-tabs card-header-tabs">
                 <li className={`nav-item ${s.navLinkMob}`}>
-                    <NavLink
-                        to="/personal-info"
-                        className={`nav-link ${s.navProfile}`}
-                    >
-                        Данные о пользователе
+                    <NavLink to="/personal-info"
+                             className={`nav-link ${s.navProfile}`}>Данные о пользователе
                     </NavLink>
                 </li>
                 <li className={`nav-item ${s.navLinkMob}`}>
@@ -43,14 +34,16 @@ const MobilePersonalAreaTabs = (props) => {
                     </NavLink>
                 </li>
                 <li className={`nav-item ${s.navLinkMob}`}>
-                    <NavLink
-                        to="/payment-info"
-                        className={`nav-link ${s.navProfile}`}
-                    >
-                        Платежные данные
+                    <NavLink to="/payment-info"
+                             className={`nav-link ${s.navProfile}`}>Платежные данные
                     </NavLink>
                 </li>
                 {userType}
+                <li className={`nav-item ${s.navLinkMob}`}>
+                    <NavLink to="/deals"
+                             className={`nav-link ${s.navProfile}`}>Сделки
+                    </NavLink>
+                </li>
             </ul>
         </div>
     )

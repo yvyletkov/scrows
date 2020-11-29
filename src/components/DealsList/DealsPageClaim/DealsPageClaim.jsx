@@ -7,6 +7,8 @@ import Preloader from "../../shared/Preloader/Preloader";
 import DealsItem from "../../shared/DealsItem/DealsItem";
 import DealsListTabs from "../../shared/DealsListTabs/DealsListTabs";
 import {NavLink} from "react-router-dom";
+import PersonalAreaTabs from "../../shared/PersonalAreaTabs/PersonalAreaTabs";
+import MobilePersonalAreaTabs from "../../shared/MobilePersonalAreaTabs/MobilePersonalAreaTabs";
 
 const DealsPageClaim = (props) => {
     const {getDealsDataClaim, deals, isFetching} = props;
@@ -27,25 +29,29 @@ const DealsPageClaim = (props) => {
                        newDate={newDate}
                        price={deal.price}
                        status={deal.status.title}
-                       badge={"badge-danger"}/>
+                       statusColor={{backgroundColor: "#ff0000"}}/>
         )
     })
 
     return (
-            <div className="container mt-5">
-                <div className="card shadow-none col-lg-12 p-0 col-12">
+        <div className="container mt-5">
+            <div className="row">
+                <PersonalAreaTabs/>
+                <div className="card shadow-none col-lg-8 p-0 col-12">
+                    <MobilePersonalAreaTabs/>
                     <div className="card-header">
-                        <div className="col-12 d-flex my-3">
-                            <h5>Сделки</h5>
+                        <div className="col-12 d-flex my-3 align-items-center">
+                            <h5 className="m-0">Список сделок</h5>
                             <NavLink className="btn btn-success ml-auto" to="/add-deal">Создать сделку</NavLink>
                         </div>
-                        <DealsListTabs />
+                        <DealsListTabs/>
                     </div>
                     <div className="card-body pt-0">
                         {isFetching ? <Preloader/> : dealsList}
                     </div>
                 </div>
             </div>
+        </div>
     )
 }
 

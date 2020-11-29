@@ -6,7 +6,7 @@ import iconAdd from "../../../img/icons/plus.svg";
 import {getPaymentData, addUserCard} from "../../../redux/PersonalAreaReducer";
 import {validate, warn} from "../../../utils/validators/validators";
 import {renderCardNumberInput, renderCheckBoxCards,} from "../../shared/FormContols/FormControls";
-import PersonalAreaCard from "../../shared/PersonalAreaCard/PersonalAreaCard";
+import PersonalAreaCard from "../../shared/PersonalAreaTabs/PersonalAreaTabs";
 import Preloader from "../../shared/Preloader/Preloader";
 import s from "./PaymentUserForm.module.css";
 import {compose} from "redux";
@@ -124,7 +124,7 @@ const PaymentUserArea = (props) => {
     }
 
     return (
-        <div className="container my-5">
+        <div className="container my-lg-5">
             <div className="row">
                 <PersonalAreaCard/>
                 <div className={`card shadow-none col-lg-8 col-12 ${s.cardMob}`}>

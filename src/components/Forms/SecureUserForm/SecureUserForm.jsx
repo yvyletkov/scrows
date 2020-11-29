@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
-import PersonalAreaCard from "../../shared/PersonalAreaCard/PersonalAreaCard";
+import PersonalAreaCard from "../../shared/PersonalAreaTabs/PersonalAreaTabs";
 import s from "./SecureUserForm.module.css";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
@@ -45,7 +45,7 @@ const SecureUserArea = (props) => {
     }
 
     return (
-        <div className="container my-5">
+        <div className="container my-lg-5">
             <div className="row">
                 <PersonalAreaCard/>
                 <div className={`card shadow-none col-lg-8 col-12 ${s.cardMob}`}>
