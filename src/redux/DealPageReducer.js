@@ -3,6 +3,7 @@ import {api} from "../api/api";
 let initialState = {
     notFound: false,
     dealId: null,
+    actions: [],
     createdAt: '',
     subject: '',
     status: {},
@@ -64,6 +65,11 @@ const dealPageReducer = (state = initialState, action) => {
                 ...state,
                 chatMessages: [...action.payload]
             };
+        case "DEAL:SET-ACTIONS":
+            return {
+                ...state,
+                actions: [...action.payload]
+            };
         case "DEAL:TOGGLE-IS-FETCHING": {
             return {...state, isFetching: action.status};
         }
@@ -102,7 +108,6 @@ export const getDealInfo = (id) => (dispatch) => {
             }
         })
         .catch((err) => {
-            console.log('Error')
             console.log(err);
             dispatch(toggleIsFetching(false));
         });
@@ -122,11 +127,41 @@ export const getPossibleStatuses = () => (dispatch) => {
         });
 };
 
+export const getActions = (id) => (dispatch) => {
+    dispatch(toggleIsFetching(true));
+    api
+        .getActions(id)
+        .then((response) => {
+            console.log('actions:', response)
+            dispatch(setActions(response));
+            dispatch(toggleIsFetching(false));
+        })
+        .catch((err) => {
+            console.log(err);
+            dispatch(toggleIsFetching(false));
+        });
+};
+
+export const sendAction = (payload) => (dispatch) => {
+    dispatch(toggleIsFetching(true));
+    api
+        .sendAction()
+        .then((response) => {
+            dispatch(toggleIsFetching(false));
+        })
+        .catch((err) => {
+            console.log(err);
+            dispatch(toggleIsFetching(false));
+        });
+};
+
+
 export const toggleIsFetching = status => ({type: "DEAL:TOGGLE-IS-FETCHING", status: status});
 export const setNotFound = status => ({type: "DEAL:SET-NOT-FOUND", status: status});
 // export const setMessages = data => ({ type: "DEAL:SET-MESSAGES", payload: data });
 export const setDealInfo = data => ({type: "DEAL:SET-DEAL-INFO", payload: data});
 export const setPossibleStatuses = data => ({type: "DEAL:SET-POSSIBLE-STATUSES", payload: data});
+export const setActions = data => ({type: "DEAL:SET-ACTIONS", payload: data});
 
 
 export default dealPageReducer;

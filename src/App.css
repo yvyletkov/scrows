@@ -1,14 +1,17 @@
 body {
     background-color: #eeeeee;
     line-height: 1.2;
+    font-size: 13px;
 }
+
+* {font-size: 13px;}
 
 p {
     margin: 0;
 }
 
 @media screen and (max-width: 580px) {
-    body, body .custom-control-label {
+    body, body .custom-control-label, .btn {
         font-size: 11px !important;
     }
 }

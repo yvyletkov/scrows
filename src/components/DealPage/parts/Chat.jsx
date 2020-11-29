@@ -39,7 +39,7 @@ let ChatForm = ({ handleSubmit }) => {
             </label>
         </div>
 
-        <button type="submit" className="btn btn-outline-warning btn-pill">Отправить</button>
+        <button type="submit" className="btn btn-outline-success btn-pill">Отправить</button>
 
     </form>
 };
