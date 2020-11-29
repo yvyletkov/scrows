@@ -6,8 +6,9 @@ import extraDataIcon from "../../../img/icons/credit-card.svg";
 import persIcon from "../../../img/icons/personal-data.svg";
 import personalDataIcon from "../../../img/icons/information.svg";
 import secureIcon from "../../../img/icons/secure.svg";
+import dealsIcon from "../../../img/icons/handshake-active.svg";
 import {getUserData} from "../../../redux/PersonalAreaReducer";
-import s from "./PersonalAreaCard.module.css";
+import s from "./PersonalAreaTabs.module.css";
 import {Modal, ModalBody, ModalHeader} from "shards-react";
 import {Field, reduxForm} from "redux-form";
 import {validate, warn} from "../../../utils/validators/validators";
@@ -42,7 +43,7 @@ const PersonalReduxForm = reduxForm({
   warn,
 })(PersonalAvatarUser);
 
-const PersonalAreaCard = (props) => {
+const PersonalAreaTabs = (props) => {
   const {avatar, name, last_name, getUserData, entity_type} = props;
 
   const handleSubmit = (data) => {
@@ -52,7 +53,7 @@ const PersonalAreaCard = (props) => {
       (<li className="nav-item">
         <NavLink
             to="/entity-info"
-            className={`nav-link ${s.navProfile}`}
+            className={`nav-link ${s.navProfileTabs}`}
         >
           <img
               className={s.navIcon}
@@ -66,7 +67,7 @@ const PersonalAreaCard = (props) => {
       (<li className="nav-item mb-3">
         <NavLink
             to="/individual-info"
-            className={`nav-link ${s.navProfile}`}
+            className={`nav-link ${s.navProfileTabs}`}
         >
           <img className={s.navIcon} src={persIcon} alt="pers-icon"/>
           Данные физ.лица
@@ -99,51 +100,46 @@ const PersonalAreaCard = (props) => {
         <div className={s.navProfile}>
           <ul className={`nav-tabs ${s.navTabs}`}>
             <li className="nav-item">
-              <NavLink
-                  to="/personal-info"
-                  className={`nav-link ${s.navProfile}`}
-              >
-                <img
-                    className={s.navIcon}
-                    src={personalDataIcon}
-                    alt="user-icon"
-                />
+              <NavLink to="/personal-info"
+                       className={`nav-link ${s.navProfileTabs}`}>
+                <img className={s.navIcon}
+                     src={personalDataIcon}
+                     alt="user-icon"/>
                 Личная информация
               </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className={`nav-link ${s.navProfile}`} to="/security">
-                  <img
-                    className={s.navIcon}
-                    src={secureIcon}
-                    alt="secure-icon"
-                  />
+                <NavLink className={`nav-link ${s.navProfileTabs}`} to="/security">
+                  <img className={s.navIcon}
+                       src={secureIcon}
+                       alt="secure-icon"/>
                   Безопасность
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink
-                    className={`nav-link ${s.navProfile}`}
-                    to="/payment-info"
-                >
-                  <img
-                      className={s.navIcon}
-                      src={extraDataIcon}
-                      alt="extra-icon"
-                  />
+                <NavLink className={`nav-link ${s.navProfileTabs}`}
+                         to="/payment-info">
+                  <img className={s.navIcon}
+                       src={extraDataIcon}
+                       alt="extra-icon"/>
                   Платежные данные
                 </NavLink>
               </li>
             {userTypeTabs}
+              <li className="nav-item">
+                  <NavLink className={`nav-link ${s.navProfileTabs}`}
+                           to="/deals">
+                      <img className={s.navIcon}
+                           src={dealsIcon}
+                           alt="deals-icon"/>
+                      Сделки
+                  </NavLink>
+              </li>
           </ul>
         </div>
-        <Modal
-            className={s.modalWindow}
-            open={open}
-            toggle={() => {
-              openModal(false);
-            }}
-        >
+        <Modal className={s.modalWindow}
+               open={open}
+               toggle={() => openModal(false)}>
           <ModalHeader className="justify-content-center">
             <p>Введите ссылку на аватар</p>
           </ModalHeader>
@@ -166,4 +162,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { getUserData })(PersonalAreaCard);
+export default connect(mapStateToProps, { getUserData })(PersonalAreaTabs);

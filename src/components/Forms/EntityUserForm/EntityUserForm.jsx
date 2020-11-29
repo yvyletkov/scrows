@@ -4,7 +4,7 @@ import {Field, reduxForm} from "redux-form";
 import {changeEntityData, getEntityData, hideErrorAlert, hideSuccessAlert} from "../../../redux/PersonalAreaReducer";
 import {validate, warn} from "../../../utils/validators/validators";
 import {renderPersonalAreaInput} from "../../shared/FormContols/FormControls";
-import PersonalAreaCard from "../../shared/PersonalAreaCard/PersonalAreaCard";
+import PersonalAreaCard from "../../shared/PersonalAreaTabs/PersonalAreaTabs";
 import Preloader from "../../shared/Preloader/Preloader";
 import s from './EntityUserForm.module.css';
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
@@ -150,7 +150,7 @@ const EntityUserArea = (props) => {
     }
 
     return (
-        <div className="container my-5">
+        <div className="container my-lg-5">
             <div className="row">
                 <PersonalAreaCard/>
                 <div className={`card shadow-none col-lg-8 col-12 ${s.cardMob}`}>

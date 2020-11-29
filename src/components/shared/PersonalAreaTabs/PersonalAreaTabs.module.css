@@ -7,7 +7,13 @@
   color:#171717;
 }
 
-.navProfile:hover {
+.navProfileTabs {
+  color:#171717;
+  border-bottom-right-radius: .375rem;
+  border-bottom-left-radius: .375rem;
+}
+
+.navProfile:hover, .navProfileTabs:hover {
   color:#5a6169;
 }
 
@@ -80,6 +86,7 @@
   list-style: none;
   width: 100%;
   margin: 0;
+  border:none;
 }
 
 @media screen and (max-width: 992px) {

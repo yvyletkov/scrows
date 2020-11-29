@@ -22,7 +22,7 @@ const DealsListTabs = () => (
         </li>
         <li className={`nav-item col-3 ${s.navTab}`}>
             <NavLink to="/deals-action" className={`nav-link ${s.navLink}`}>
-                Требуют действия
+                Ждут действия
             </NavLink>
         </li>
     </ul>

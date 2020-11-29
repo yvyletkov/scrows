@@ -6,7 +6,17 @@
 .contentBlock {
   font-weight: 800;
   font-size: 1rem;
-  padding: .375rem .5rem;
+  padding: .375rem 0;
+  max-width: 200px;
+}
+
+.statusItem {
+  width:10px;
+  height: 10px;
+  background-color: #0b2e13;
+  border-radius: 50%;
+  margin-left: 10px;
+  margin-bottom: 8px;
 }
 
 .navLink {
@@ -19,6 +29,9 @@
 
 .block {
   padding: 1rem;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .card {

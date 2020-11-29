@@ -3,7 +3,7 @@ import {Field, reduxForm} from "redux-form";
 import {validate, warn} from "../../../utils/validators/validators";
 import {renderPersonalAreaInput, renderSelect,} from "../../shared/FormContols/FormControls";
 import {connect} from "react-redux";
-import PersonalAreaCard from "../../shared/PersonalAreaCard/PersonalAreaCard";
+import PersonalAreaCard from "../../shared/PersonalAreaTabs/PersonalAreaTabs";
 import {
   changeIndividualData,
   getIndividualData,
@@ -140,7 +140,7 @@ const IndividualUserArea = (props) => {
   }
 
   return (
-      <div className="container my-5">
+      <div className="container my-lg-5">
         <div className="row">
           <PersonalAreaCard/>
           <div className={`card shadow-none col-lg-8 col-12 ${s.cardMob}`}>

@@ -2,10 +2,8 @@ import React from "react";
 import s from "./DealsItem.module.css";
 import {NavLink} from "react-router-dom";
 
-const DealsItem = ({id, subject, newDate, price, status, badge}) => {
-
+const DealsItem = ({id, subject, newDate, price, status, statusColor}) => {
     const priceString = price && price.toString().replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ');
-
 
     return <NavLink className={s.navLink} to={`/deals/${id}`}>
         <div className={`card mt-3 ${s.card}`}>
@@ -14,7 +12,7 @@ const DealsItem = ({id, subject, newDate, price, status, badge}) => {
             </div>
             <div className={`card-body ${s.cardBody}`}>
                 <div className="d-lg-flex d-block">
-                    <div className={`col-lg-3 col-12 ${s.block}`}>
+                    <div className={`col-lg-4 col-12 ${s.block}`}>
                         <p className={s.titleBlock}>Дата создания</p>
                         <p className={s.contentBlock}>{newDate}</p>
                     </div>
@@ -22,9 +20,12 @@ const DealsItem = ({id, subject, newDate, price, status, badge}) => {
                         <p className={s.titleBlock}>Сумма сделки</p>
                         <p className={s.contentBlock}>{priceString} &#8381;</p>
                     </div>
-                    <div className={`col-lg-5 col-12 ${s.block}`}>
-                        <p className={s.titleBlock}>Статус</p>
-                        <span className={`badge ${badge} ${s.contentBlock}`}>{status}</span>
+                    <div className={`col-lg-4 col-12 ${s.block}`}>
+                        <div className="d-flex align-items-center">
+                            <p className={s.titleBlock}>Статус</p>
+                            <div className={s.statusItem} style={statusColor}/>
+                        </div>
+                        <span className={`${s.contentBlock}`}>{status}</span>
                     </div>
                 </div>
             </div>
