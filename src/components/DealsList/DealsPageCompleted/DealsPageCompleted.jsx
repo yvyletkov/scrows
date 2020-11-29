@@ -34,7 +34,7 @@ const DealsPageCompleted = (props) => {
     })
 
     return (
-        <div className="container mt-5">
+        <div className="container mt-lg-5">
             <div className="row">
                 <PersonalAreaTabs/>
                 <div className="card shadow-none col-lg-8 p-0 col-12">
