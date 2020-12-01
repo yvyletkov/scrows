@@ -26,7 +26,6 @@ const addDealPageReducer = (state = initialState, action) => {
 
 export const postNewDeal = (data) => (dispatch) => {
 
-    debugger
     dispatch(toggleIsFetching(true));
     api
         .postNewDeal(data)
