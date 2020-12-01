@@ -214,7 +214,9 @@ const dealApi = {
 
     async sendAction(payload) {
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
-        return await this.request(`${payload.request_url}`, {
+
+        const url = payload.request_url.slice(7);
+        return await this.request(url, {
             method: "POST",
             headers: this.headers,
             body: JSON.stringify(payload.content),

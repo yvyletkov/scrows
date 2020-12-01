@@ -145,8 +145,10 @@ export const getActions = (id) => (dispatch) => {
 export const sendAction = (payload) => (dispatch) => {
     dispatch(toggleIsFetching(true));
     api
-        .sendAction()
+        .sendAction(payload)
         .then((response) => {
+
+            console.log(response)
             dispatch(toggleIsFetching(false));
         })
         .catch((err) => {
