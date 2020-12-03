@@ -6,14 +6,15 @@ import {renderCheckBox, renderInput} from "../shared/FormContols/FormControls";
 import "./LoginPage.css";
 import {login} from '../../redux/AuthReducer';
 import {connect} from "react-redux";
-import {AlertDanger} from '../shared/CustomAlerts/CustomAlerts';
+import {AlertDanger, AlertSuccess} from '../shared/CustomAlerts/CustomAlerts';
+import {hideErrorAlert, hideSuccessAlert} from "../../redux/AuthReducer";
 
 const LoginForm = props => {
-    const {handleSubmit, pristine, reset, submitting, error, setErrorText,} = props;
+    const {handleSubmit, pristine, reset, submitting, error, setErrorText, valid} = props;
 
-    useEffect(()=> {
-        setErrorText(error);
-    }, [error])
+    // useEffect(()=> {
+    //     setErrorText(error);
+    // }, [error])
     return (
         <form className="popup__form" onSubmit={handleSubmit}>
             <div className="form-group">
@@ -26,7 +27,7 @@ const LoginForm = props => {
                 <Field type="checkbox" name="rememberMe" component={renderCheckBox} label={"Запомнить меня"}/>
       </div>
       <div>
-        <button type="submit" className="btn btn-primary btn-block btn-pill" disabled={submitting || pristine}>Войти</button>
+        <button type="submit" className="btn btn-primary btn-block btn-pill" disabled={submitting || pristine || !valid}>Войти</button>
       </div>
     </form>
   )
@@ -35,17 +36,40 @@ const LoginForm = props => {
 const LoginReduxForm = reduxForm({form:'login', validate, warn})(LoginForm);
 
 const LoginPage = (props) => {
-   const [errorText, setErrorText] = useState('');
-
     const handleSubmit = (data) => {
         props.login(data.email, data.password)
     }
 
+    const timeoutAlert = (action) => {
+        setTimeout(() => {
+            // props.dispatch(action)
+        }, 1500)
+    }
+
+    if(props.alertSuccessShow) {
+        timeoutAlert(hideSuccessAlert(false))
+    }
+
+    if(props.alertErrorShow) {
+        timeoutAlert(hideErrorAlert(false))
+    }
+
+    useEffect(() => {
+        return clearTimeout(timeoutAlert);
+    }, []);
+
     if (props.isAuth) return <Redirect to={'/personal-info'}/>
+
+    console.log(props)
 
     return (
         <>
-            {errorText && <AlertDanger text={errorText} show={errorText}/>}
+            <AlertSuccess style={{display:'flex', justifyContent: 'center'}}
+                          show={props.alertSuccessShow}
+                          text={"Данные верные выполяется вход"}/>
+            <AlertDanger show={props.alertErrorShow}
+                         style={{display:'flex', justifyContent: 'center'}}
+                         text={"Введены не верные данные"}/>
             <div className="card auth-card" style={{width: "20rem"}}>
                 <div className="card-header">
                     <ul className="nav nav-tabs card-header-tabs">
@@ -63,9 +87,7 @@ const LoginPage = (props) => {
                 </div>
                 <div className="card-body">
                     <h4 className="card-title text-center">Авторизация</h4>
-                    <LoginReduxForm onSubmit={handleSubmit}
-                                    setErrorText={setErrorText}
-                                    errorText={errorText}/>
+                    <LoginReduxForm onSubmit={handleSubmit}/>
                 </div>
             </div>
         </>
@@ -76,7 +98,8 @@ const mapStateToProps = (state) => {
     return {
         isAuth: state.auth.isAuth,
         isFetching: state.auth.isFetching,
-        errorStatus: state.auth.errorStatus,
+        alertSuccessShow:state.auth.alertSuccessShow,
+        alertErrorShow:state.auth.alertErrorShow,
     };
 };
 

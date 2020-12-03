@@ -184,6 +184,32 @@ const authApi = {
             }),
         });
     },
+
+    async regUser(name,
+                  lastName,
+                  middleName,
+                  gender,
+                  entity_type,
+                  date_of_birth,
+                  email,
+                  phone,
+                  password) {
+        return await this.request(`/users/create/`, {
+            method: "POST",
+            headers: this.headers,
+            body: JSON.stringify({
+                name:`${name}`,
+                last_name:`${lastName}`,
+                middle_name:`${middleName}`,
+                gender:`${gender}`,
+                entity_type:`${entity_type}`,
+                date_of_birth:`${date_of_birth}`,
+                email:`${email}`,
+                phone:`${phone}`,
+                password:`${password}`
+            }),
+        });
+    },
 };
 
 const dealApi = {

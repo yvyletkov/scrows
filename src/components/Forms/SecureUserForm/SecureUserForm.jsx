@@ -7,7 +7,7 @@ import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 import MobilePersonalAreaTabs from "../../shared/MobilePersonalAreaTabs/MobilePersonalAreaTabs";
 import keyIcon from "../../../img/icons/key.svg";
 import PhoneUserReduxForm from "./ModalPhone";
-import {getUserData} from "../../../redux/AuthReducer";
+import {getUserData} from "../../../redux/PersonalAreaReducer";
 import EmailUserReduxForm from "./ModalEmail";
 import emailIcon from "../../../img/icons/email.svg";
 import phoneIcon from "../../../img/icons/phone.svg";
@@ -35,12 +35,10 @@ const SecureUserArea = (props) => {
     }
 
     const submitPhone = (phone) => {
-        console.log(phone)
         takeCodeForPhone(phone.phone)
     }
 
     const verifyPhone = (code) => {
-        console.log(code)
         sendPhoneCode(verification_id, code.code)
     }
 

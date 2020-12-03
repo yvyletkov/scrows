@@ -7,7 +7,6 @@ const validate = (values) => {
         "middle_name",
         "email",
         "password",
-        "passwordFirst",
         "passwordSecond",
         "date_of_birth",
         "entity_type",
@@ -34,10 +33,10 @@ const validate = (values) => {
     if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
         errors.email = "Неверный email";
     }
-    if (!/[^]{6,}/i.test(values.passwordFirst)) {
-        errors.passwordFirst = "Пароль слишком короткий";
+    if (!/[^]{6,}/i.test(values.password)) {
+        errors.password = "Пароль слишком короткий";
     }
-    if (values.passwordFirst !== values.passwordSecond) {
+    if (values.password !== values.passwordSecond) {
         errors.passwordSecond = "Пароли не совпадают";
     }
 
