@@ -25,22 +25,18 @@ const InfoUserForm = (props) => {
                 <div className="col-lg-6 col-12">
                     <div className="form-group">
                         <label htmlFor="name">Имя</label>
-                        <Field
-                            placeholder="Введите имя"
-                            name="name"
-                            type="text"
-                            component={renderPersonalAreaInput}
-                            required
-                        />
+                        <Field placeholder="Введите имя"
+                               name="name"
+                               type="text"
+                               component={renderPersonalAreaInput}
+                               required/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="middle_name">Отчество</label>
-                        <Field
-                            placeholder="Введите отчество"
-                            name="middle_name"
-                            type="text"
-                            component={renderPersonalAreaInput}
-                        />
+                        <Field placeholder="Введите отчество"
+                               name="middle_name"
+                               type="text"
+                               component={renderPersonalAreaInput}/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="gender">Пол</label>
@@ -56,23 +52,19 @@ const InfoUserForm = (props) => {
                 <div className="col-lg-6 col-12">
                     <div className="form-group">
                         <label htmlFor="last_name">Фамилия</label>
-                        <Field
-                            placeholder="Введите фамилию"
-                            name="last_name"
-                            type="text"
-                            component={renderPersonalAreaInput}
-                            required
-                        />
+                        <Field placeholder="Введите фамилию"
+                               name="last_name"
+                               type="text"
+                               component={renderPersonalAreaInput}
+                               required/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="date_of_birth">Дата рождения</label>
-                        <Field
-                            placeholder="Выберите дату рождения"
-                            name="date_of_birth"
-                            type="date"
-                            component={renderPersonalAreaInput}
-                            required
-                        />
+                        <Field placeholder="Выберите дату рождения"
+                               name="date_of_birth"
+                               type="date"
+                               component={renderPersonalAreaInput}
+                               required/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="entity_type">Тип (Ф/Ю)</label>
@@ -87,10 +79,9 @@ const InfoUserForm = (props) => {
                 </div>
             </div>
             <div>
-                <button
-                    type="submit"
-                    className="btn btn-success"
-                    disabled={submitting || pristine || !valid}>Сохранить</button>
+                <button type="submit"
+                        className="btn btn-success"
+                        disabled={submitting || pristine || !valid}>Сохранить</button>
             </div>
         </form>
     );
@@ -115,7 +106,7 @@ const PersonalUserArea = (props) => {
         alertErrorShow,
         dispatch
     } = props;
-
+    console.log(props)
 
     const timeoutAlert = (action) => {
         setTimeout(() => {
