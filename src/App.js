@@ -19,17 +19,25 @@ import DealsPageCompleted from "./components/DealsList/DealsPageCompleted/DealsP
 import DealsPageClaim from "./components/DealsList/DealsPageClaim/DealsPageClaim";
 import DealsPageAction from "./components/DealsList/DealsPageAction/DealsPageAction";
 import Footer from "./components/Footer/Footer";
+import {withAuthRedirect} from "./hoc/withAuthRedirect";
 
 function App(props) {
     return (<>
         <Provider store={props.store}>
             <Router>
                 <div style={{minHeight: "calc(100vh - 86px - 3rem)"}}>
+                    {/*<HeaderContainer/>*/}
+                    {/*<Route path="/new-deal" component={withAuthRedirect(DealPage)} exact/>*/}
+                    {/*<Route path="/login" component={LoginPage}/>*/}
+                    {/*<Route path="/auth" component={RegistrationPage}/>*/}
+                    {/*<Route exact path="profile/deals/:id" component={withAuthRedirect(DealPage)}/>*/}
+                    {/*<Route path="/profile component={withAuthRedirect(Profile)}/>*/}
+
                     <HeaderContainer/>
-                    <Route path="/add-deal" component={AddDealPage} exact/>
+                    <Route path="/new-deal" component={AddDealPage} exact/>
                     <Route path="/login" component={LoginPage}/>
                     <Route path="/auth" component={RegistrationPage}/>
-                    <Route exact path="/deals/:id" component={DealPage}/>
+                    <Route exact path="/deals/:id" component={withAuthRedirect(DealPage)}/>
                     <Route path="/personal-info" component={PersonalUserArea}/>
                     <Route path="/security" component={SecureUserArea}/>
                     <Route path="/payment-info" component={PaymentUserArea}/>
@@ -39,6 +47,7 @@ function App(props) {
                     <Route exact path="/deals-completed" component={DealsPageCompleted}/>
                     <Route exact path="/deals-claim" component={DealsPageClaim}/>
                     <Route exact path="/deals-action" component={DealsPageAction}/>
+                    <Route exact path="/" component={withAuthRedirect(PersonalUserArea)}/>
                 </div>
                 <Footer/>
             </Router>
