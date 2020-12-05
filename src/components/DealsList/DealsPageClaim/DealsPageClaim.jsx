@@ -42,7 +42,7 @@ const DealsPageClaim = (props) => {
                     <div className="card-header">
                         <div className="col-12 d-flex my-3 align-items-center">
                             <h5 className="m-0">Список сделок</h5>
-                            <NavLink className="btn btn-success ml-auto" to="/add-deal">Создать сделку</NavLink>
+                            <NavLink className="btn btn-success ml-auto" to="/new-deal">Создать сделку</NavLink>
                         </div>
                         <DealsListTabs/>
                     </div>
