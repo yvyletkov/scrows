@@ -95,6 +95,7 @@ const IndividualUserReduxForm = reduxForm({
   form: "infoIndividualForm",
   validate,
   enableReinitialize: true,
+  destroyOnUnmount:false,
   warn,
 })(IndividualUserForm);
 
@@ -140,9 +141,6 @@ const IndividualUserArea = (props) => {
   }
 
   return (
-      <div className="container my-lg-5">
-        <div className="row">
-          <PersonalAreaCard/>
           <div className={`card shadow-none col-lg-8 col-12 ${s.cardMob}`}>
             <MobilePersonalAreaTabs />
             <div className="card-header">
@@ -167,8 +165,6 @@ const IndividualUserArea = (props) => {
               />
             </div>
           </div>
-        </div>
-      </div>
   );
 };
 

@@ -20,9 +20,10 @@ import DealsPageClaim from "./components/DealsList/DealsPageClaim/DealsPageClaim
 import DealsPageAction from "./components/DealsList/DealsPageAction/DealsPageAction";
 import Footer from "./components/Footer/Footer";
 import {withAuthRedirect} from "./hoc/withAuthRedirect";
+import Profile from "./components/Forms/Profile";
 
 function App(props) {
-    return (<>
+    return <>
         <Provider store={props.store}>
             <Router>
                 <div style={{minHeight: "calc(100vh - 86px - 3rem)"}}>
@@ -31,28 +32,18 @@ function App(props) {
                     {/*<Route path="/login" component={LoginPage}/>*/}
                     {/*<Route path="/auth" component={RegistrationPage}/>*/}
                     {/*<Route exact path="profile/deals/:id" component={withAuthRedirect(DealPage)}/>*/}
-                    {/*<Route path="/profile component={withAuthRedirect(Profile)}/>*/}
 
                     <HeaderContainer/>
                     <Route path="/new-deal" component={AddDealPage} exact/>
                     <Route path="/login" component={LoginPage}/>
                     <Route path="/auth" component={RegistrationPage}/>
                     <Route exact path="/deals/:id" component={withAuthRedirect(DealPage)}/>
-                    <Route path="/personal-info" component={PersonalUserArea}/>
-                    <Route path="/security" component={SecureUserArea}/>
-                    <Route path="/payment-info" component={PaymentUserArea}/>
-                    <Route path="/entity-info" component={EntityUserArea}/>
-                    <Route path="/individual-info" component={IndividualUserArea}/>
-                    <Route exact path="/deals" component={DealsPage}/>
-                    <Route exact path="/deals-completed" component={DealsPageCompleted}/>
-                    <Route exact path="/deals-claim" component={DealsPageClaim}/>
-                    <Route exact path="/deals-action" component={DealsPageAction}/>
-                    <Route exact path="/" component={withAuthRedirect(PersonalUserArea)}/>
+                    <Route path="/profile" component={withAuthRedirect(Profile)} />
                 </div>
                 <Footer/>
             </Router>
         </Provider>
-    </>)
+    </>
 }
 
 export default App;

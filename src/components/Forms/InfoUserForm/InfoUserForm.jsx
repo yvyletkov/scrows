@@ -4,7 +4,7 @@ import {validate, warn} from "../../../utils/validators/validators";
 import {renderPersonalAreaInput, renderSelect,} from "../../shared/FormContols/FormControls";
 import {changeUserData, getUserData, hideErrorAlert, hideSuccessAlert} from "../../../redux/PersonalAreaReducer";
 import {connect} from "react-redux";
-import PersonalAreaCard from "../../shared/PersonalAreaTabs/PersonalAreaTabs";
+import PersonalAreaTabs from "../../shared/PersonalAreaTabs/PersonalAreaTabs";
 import s from "./InfoUserForm.module.css";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
@@ -87,11 +87,15 @@ const InfoUserForm = (props) => {
     );
 };
 
-const InfoUserReduxForm = reduxForm({form: "infoUserForm", validate, enableReinitialize: true, warn})(
+const InfoUserReduxForm = reduxForm({form: "infoUserForm",
+    validate,
+    enableReinitialize: true,
+    destroyOnUnmount:false,
+    warn})(
     InfoUserForm
 );
 
-const PersonalUserArea = (props) => {
+const InfoUserArea = (props) => {
     const {
         getUserData,
         middle_name,
@@ -138,9 +142,6 @@ const PersonalUserArea = (props) => {
     }
 
     return (
-        <div className="container my-lg-5">
-            <div className="row">
-                <PersonalAreaCard/>
                 <div className={`card shadow-none col-lg-8 col-12 ${s.cardMob}`}>
                     <MobilePersonalAreaTabs/>
                     <div className="card-header">
@@ -168,8 +169,6 @@ const PersonalUserArea = (props) => {
                         />
                     </div>
                 </div>
-            </div>
-        </div>
     );
 };
 
@@ -187,4 +186,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default compose(connect(mapStateToProps, {getUserData, changeUserData}),withAuthRedirect)(PersonalUserArea);
+export default compose(connect(mapStateToProps, {getUserData, changeUserData}),withAuthRedirect)(InfoUserArea);
