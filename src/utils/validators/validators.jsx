@@ -23,6 +23,7 @@ const validate = (values) => {
         "entity_name",
         "card_number",
         "participantEmail",
+        'subject',
         "code"
     ];
 
@@ -33,6 +34,15 @@ const validate = (values) => {
     if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
         errors.email = "Неверный email";
     }
+
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.participantEmail)) {
+        errors.participantEmail = "Неверный email";
+    }
+
+    if (!/[^]{6,}/i.test(values.subject)) {
+        errors.subject = "Название слишком короткое";
+    }
+
     if (!/[^]{6,}/i.test(values.password)) {
         errors.password = "Пароль слишком короткий";
     }
