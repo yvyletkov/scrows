@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "shards-ui/dist/css/shards.min.css";
 import "./App.css";
 import LoginPage from "./components/LoginPage/LoginPage";
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {Redirect, BrowserRouter as Router, Route} from 'react-router-dom';
 import RegistrationPage from './components/RegistrationPage/RegistrationPage';
 import DealPage from "./components/DealPage/DealPage";
 import {Provider} from "react-redux";
@@ -30,6 +30,7 @@ function App(props) {
                     <Route path="/auth" component={RegistrationPage}/>
                     <Route exact path="/deals/:id" component={withAuthRedirect(DealPage)}/>
                     <Route path="/profile" component={withAuthRedirect(Profile)}/>
+                    {/*<Route path="/" render={() => <Redirect to='/profile'/>}/>*/}
                 </div>
                 <Footer/>
             </Router>

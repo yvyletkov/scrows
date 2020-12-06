@@ -1,5 +1,5 @@
 import React from "react";
-import {Route, Switch} from 'react-router-dom';
+import {Redirect, Route, Switch} from 'react-router-dom';
 import PersonalAreaTabs from "../shared/PersonalAreaTabs/PersonalAreaTabs";
 import InfoUserArea from "./InfoUserForm/InfoUserForm";
 import SecureUserArea from "./SecureUserForm/SecureUserForm";
@@ -10,7 +10,6 @@ import DealsPage from "../DealsList/DealsPage/DealsPage";
 import DealsPageCompleted from "../DealsList/DealsPageCompleted/DealsPageCompleted";
 import DealsPageClaim from "../DealsList/DealsPageClaim/DealsPageClaim";
 import DealsPageAction from "../DealsList/DealsPageAction/DealsPageAction";
-import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 const Profile = () => {
     return (
@@ -28,7 +27,7 @@ const Profile = () => {
                 <Route path="/profile/deals/deals-completed" component={() => <DealsPageCompleted />}/>
                 <Route path="/profile/deals/deals-claim" component={() => <DealsPageClaim />}/>
                 <Route path="/profile/deals/deals-action" component={() => <DealsPageAction />}/>
-                <Route path="/" component={() => <InfoUserArea/>}/>
+                <Route exact path="/profile" component={() => <Redirect to={'/profile/personal-info'}/>}/>
                 </Switch>
             </div>
         </div>

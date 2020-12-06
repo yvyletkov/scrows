@@ -14,13 +14,17 @@
 }
 
 .iconClose {
-    width:20px;
-    height:20px;
+    width: 13px;
+    /* height: 20px; */
     display: flex;
     position: absolute;
-    right: 5px;
-    top:5px;
+    right: 8px;
+    top: 10px;
+    cursor: pointer;
+    padding: 5px;
+    box-sizing: content-box;
 }
+
 
 .securityField {
     display: flex;
