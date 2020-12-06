@@ -1,19 +1,15 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {Field, reduxForm} from "redux-form";
-import {Modal, ModalBody, ModalHeader} from "shards-react";
 import iconAdd from "../../../img/icons/plus.svg";
-import {getPaymentData, addUserCard} from "../../../redux/PersonalAreaReducer";
+import {addUserCard, getPaymentData} from "../../../redux/PersonalAreaReducer";
 import {validate, warn} from "../../../utils/validators/validators";
-import {renderCardNumberInput, renderCheckBoxCards,} from "../../shared/FormContols/FormControls";
-import PersonalAreaCard from "../../shared/PersonalAreaTabs/PersonalAreaTabs";
+import {renderCheckBoxCards,} from "../../shared/FormContols/FormControls";
 import Preloader from "../../shared/Preloader/Preloader";
 import s from "./PaymentUserForm.module.css";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 import MobilePersonalAreaTabs from "../../shared/MobilePersonalAreaTabs/MobilePersonalAreaTabs";
-import {AlertDanger, AlertSuccess} from "../../shared/CustomAlerts/CustomAlerts";
-import {Route} from "react-router-dom";
 
 const PaymentUserForm = (props) => {
 
@@ -101,6 +97,7 @@ const PaymentUserReduxForm = reduxForm({
     form: "PaymentUserForm",
     validate,
     warn,
+    destroyOnUnmount:false,
     enableReinitialize: true,
 })(PaymentUserForm);
 
@@ -124,9 +121,6 @@ const PaymentUserArea = (props) => {
     }
 
     return (
-        <div className="container my-lg-5">
-            <div className="row">
-                <PersonalAreaCard/>
                 <div className={`card shadow-none col-lg-8 col-12 ${s.cardMob}`}>
                     <MobilePersonalAreaTabs />
                     <div className="card-header">
@@ -142,8 +136,6 @@ const PaymentUserArea = (props) => {
                         />
                     </div>
                 </div>
-            </div>
-        </div>
     );
 };
 

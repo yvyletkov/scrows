@@ -7,7 +7,6 @@ import Preloader from "../../shared/Preloader/Preloader";
 import {NavLink} from "react-router-dom";
 import DealsItem from "../../shared/DealsItem/DealsItem";
 import DealsListTabs from "../../shared/DealsListTabs/DealsListTabs";
-import PersonalAreaCard from "../../shared/PersonalAreaTabs/PersonalAreaTabs";
 import MobilePersonalAreaTabs from "../../shared/MobilePersonalAreaTabs/MobilePersonalAreaTabs";
 
 const DealsPage = (props) => {
@@ -49,9 +48,6 @@ const DealsPage = (props) => {
     })
 
     return (
-            <div className="container mt-lg-5">
-                <div className="row">
-                    <PersonalAreaCard />
                     <div className="card shadow-none col-lg-8 p-0 col-12">
                         <MobilePersonalAreaTabs/>
                         <div className="card-header">
@@ -65,8 +61,6 @@ const DealsPage = (props) => {
                             {isFetching ? <Preloader/> : dealsList}
                         </div>
                     </div>
-                </div>
-            </div>
     )
 }
 

@@ -71,12 +71,12 @@ const Header = (props) => {
                         {/*</Dropdown>*/}
 
                         <NavItem>
-                            <NavLink href="/personal-info">
+                            <NavLink href="/profile/personal-info">
                                 Личный кабинет
                             </NavLink>
                         </NavItem>
                         {isAuth && <NavItem>
-                            <NavLink href="/deals">
+                            <NavLink href="/profile/deals">
                                 Сделки
                             </NavLink>
                         </NavItem>}

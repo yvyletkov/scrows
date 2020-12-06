@@ -52,7 +52,7 @@ const PersonalAreaTabs = (props) => {
   const userTypeTabs = entity_type === "entity" ?
       (<li className="nav-item">
         <NavLink
-            to="/entity-info"
+            to="/profile/entity-info"
             className={`nav-link ${s.navProfileTabs}`}
         >
           <img
@@ -64,9 +64,9 @@ const PersonalAreaTabs = (props) => {
         </NavLink>
       </li>)
       :
-      (<li className="nav-item mb-3">
+      (<li className="nav-item">
         <NavLink
-            to="/individual-info"
+            to="/profile/individual-info"
             className={`nav-link ${s.navProfileTabs}`}
         >
           <img className={s.navIcon} src={persIcon} alt="pers-icon"/>
@@ -100,7 +100,7 @@ const PersonalAreaTabs = (props) => {
         <div className={s.navProfile}>
           <ul className={`nav-tabs ${s.navTabs}`}>
             <li className="nav-item">
-              <NavLink to="/personal-info"
+              <NavLink to="/profile/personal-info"
                        className={`nav-link ${s.navProfileTabs}`}>
                 <img className={s.navIcon}
                      src={personalDataIcon}
@@ -109,7 +109,7 @@ const PersonalAreaTabs = (props) => {
               </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className={`nav-link ${s.navProfileTabs}`} to="/security">
+                <NavLink className={`nav-link ${s.navProfileTabs}`} to="/profile/security">
                   <img className={s.navIcon}
                        src={secureIcon}
                        alt="secure-icon"/>
@@ -118,7 +118,7 @@ const PersonalAreaTabs = (props) => {
               </li>
               <li className="nav-item">
                 <NavLink className={`nav-link ${s.navProfileTabs}`}
-                         to="/payment-info">
+                         to="/profile/payment-info">
                   <img className={s.navIcon}
                        src={extraDataIcon}
                        alt="extra-icon"/>
@@ -128,7 +128,7 @@ const PersonalAreaTabs = (props) => {
             {userTypeTabs}
               <li className="nav-item">
                   <NavLink className={`nav-link ${s.navProfileTabs}`}
-                           to="/deals">
+                           to="/profile/deals/">
                       <img className={s.navIcon}
                            src={dealsIcon}
                            alt="deals-icon"/>

@@ -43,9 +43,6 @@ const SecureUserArea = (props) => {
     }
 
     return (
-        <div className="container my-lg-5">
-            <div className="row">
-                <PersonalAreaCard/>
                 <div className={`card shadow-none col-lg-8 col-12 ${s.cardMob}`}>
                     <MobilePersonalAreaTabs/>
                     <div className="card-header">
@@ -72,8 +69,6 @@ const SecureUserArea = (props) => {
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
             <EmailUserReduxForm openModalEmail={openModalEmail} modalEmail={modalEmail} onSubmit={submitEmail}/>
             <PhoneUserReduxForm
                 modalPhone={modalPhone}

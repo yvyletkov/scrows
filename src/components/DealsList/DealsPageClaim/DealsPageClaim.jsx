@@ -7,7 +7,6 @@ import Preloader from "../../shared/Preloader/Preloader";
 import DealsItem from "../../shared/DealsItem/DealsItem";
 import DealsListTabs from "../../shared/DealsListTabs/DealsListTabs";
 import {NavLink} from "react-router-dom";
-import PersonalAreaTabs from "../../shared/PersonalAreaTabs/PersonalAreaTabs";
 import MobilePersonalAreaTabs from "../../shared/MobilePersonalAreaTabs/MobilePersonalAreaTabs";
 
 const DealsPageClaim = (props) => {
@@ -34,9 +33,6 @@ const DealsPageClaim = (props) => {
     })
 
     return (
-        <div className="container mt-lg-5">
-            <div className="row">
-                <PersonalAreaTabs/>
                 <div className="card shadow-none col-lg-8 p-0 col-12">
                     <MobilePersonalAreaTabs/>
                     <div className="card-header">
@@ -50,8 +46,6 @@ const DealsPageClaim = (props) => {
                         {isFetching ? <Preloader/> : dealsList}
                     </div>
                 </div>
-            </div>
-        </div>
     )
 }
 
