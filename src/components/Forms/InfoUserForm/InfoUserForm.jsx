@@ -14,7 +14,6 @@ import Preloader from "../../shared/Preloader/Preloader";
 import {styleForm} from "../../../style/StyleForm";
 
 
-
 const InfoUserForm = (props) => {
     const {handleSubmit, isFetching, submitting, pristine, valid} = props;
     return isFetching ? (

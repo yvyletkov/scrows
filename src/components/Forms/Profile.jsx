@@ -16,7 +16,7 @@ const Profile = () => {
     return (
         <div className="container my-lg-5">
             <div className="row">
-                <Route path="/profile/" component={() => <PersonalAreaTabs/>}/>
+                <PersonalAreaTabs/>
                 <Switch>
                 <Route path="/profile/personal-info" component={() => <InfoUserArea/>}/>
                 <Route path="/profile/security" component={() => <SecureUserArea/>}/>
