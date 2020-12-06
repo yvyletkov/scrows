@@ -2,9 +2,9 @@ import React from "react";
 import {Field, formValueSelector, reduxForm} from "redux-form";
 import {connect} from "react-redux";
 import {validate} from "../../utils/validators/validators";
+import cx from "classnames"
 
 const AddDealReduxForm = ({step, setStep, handleSubmit, dealType, userRole, price, whoPays, ...props}) => {
-
     return (
         <form onSubmit={handleSubmit}>
             {step === 1 &&
@@ -26,7 +26,17 @@ let mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps, {})(reduxForm({form: 'addDeal'}, validate)(AddDealReduxForm));
+export default connect(mapStateToProps, {})(reduxForm({form: 'addDeal', validate})(AddDealReduxForm));
+
+const renderField = ({input, id, value, placeholder, className, name, type, meta: {touched, error, warning}}) => {
+    let classNames = cx(className, {'is-invalid': touched && error, 'is-valid': touched && !error})
+
+    return <input {...input} className={classNames} value={value} name={name} id={id} placeholder={placeholder} type={type}/>
+    // {
+    //     touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))
+    // }
+
+}
 
 const Step1 = ({setStep, userRole, dealType}) => {
 
@@ -39,7 +49,7 @@ const Step1 = ({setStep, userRole, dealType}) => {
                 <div className='pt-0'>
 
                     <div style={{background: 'rgb(241, 249, 254)', borderColor: 'rgb(222, 226, 230)'}}
-                        className='d-flex border rounded p-3 justify-content-between align-items-center mb-4'>
+                         className='d-flex border rounded p-3 justify-content-between align-items-center mb-4'>
 
                         <div className='font-weight-bold'>Выберите тип сделки:</div>
 
@@ -62,8 +72,8 @@ const Step1 = ({setStep, userRole, dealType}) => {
 
                     </div>
 
-                    <div  style={{background: 'rgb(241, 249, 254)', borderColor: 'rgb(222, 226, 230)'}}
-                        className='d-flex border rounded p-3 justify-content-between align-items-center mb-4'>
+                    <div style={{background: 'rgb(241, 249, 254)', borderColor: 'rgb(222, 226, 230)'}}
+                         className='d-flex border rounded p-3 justify-content-between align-items-center mb-4'>
 
                         <div className='font-weight-bold'>Выберите роль в сделке:</div>
 
@@ -89,7 +99,7 @@ const Step1 = ({setStep, userRole, dealType}) => {
                     <p className='font-weight-bold mb-3'>Пригласите в сделку <span
                         className='text-success'>{whoToInvite}</span>.
                         Введите его почту:</p>
-                    <Field component={'input'} type="text" className="form-control mb-4" name="participantEmail"
+                    <Field component={renderField} type="email" className="form-control mb-4" name="participantEmail"
                            placeholder={"E-mail " + whoToInvite}
                            aria-label="E-mail"/>
 
@@ -108,9 +118,10 @@ const Step1 = ({setStep, userRole, dealType}) => {
             </div>
             <div className='col-md-6'>
                 <div className='card shadow-none'>
-                    <div className='card-body rounded mb-3 border' style={{background: '#f6f6f6', borderColor: 'rgb(222, 226, 230)'}}>
+                    <div className='card-body rounded mb-3 border'
+                         style={{background: '#f6f6f6', borderColor: 'rgb(222, 226, 230)'}}>
                         <p className='font-weight-bold mb-3'>Название сделки:</p>
-                        <Field component={'input'} type="text" name='subject' className="form-control mb-3"
+                        <Field component={renderField} type="text" name='subject' className="form-control mb-3"
                                placeholder="Введите название сделки"/>
 
                         <p className='font-weight-bold mb-3'>Описание сделки:</p>

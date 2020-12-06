@@ -184,6 +184,7 @@ const mapStateToProps = (state) => {
         alertSuccessShow: state.infoUser.alertSuccessShow,
         alertErrorShow: state.infoUser.alertErrorShow,
     };
+
 };
 
-export default compose(connect(mapStateToProps, {getUserData, changeUserData}),withAuthRedirect)(InfoUserArea);
+export default compose(connect(mapStateToProps , {getUserData, changeUserData}),withAuthRedirect)(InfoUserArea);
