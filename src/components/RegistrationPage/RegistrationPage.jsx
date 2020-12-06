@@ -116,24 +116,26 @@ const AuthForm = (props) => {
 const AuthReduxForm = reduxForm({form: "auth", validate, warn})(AuthForm);
 
 const RegistrationPage = (props) => {
+
     console.log(props)
-    const timeoutAlert = (action) => {
-        setTimeout(() => {
-            props.dispatch(action)
-        }, 1500)
-    }
 
-    if(props.alertSuccessShow) {
-        timeoutAlert(hideSuccessAlert(false))
-    }
-
-    if(props.alertErrorShow) {
-        timeoutAlert(hideErrorAlert(false))
-    }
-
-    useEffect(() => {
+    useEffect( () => {
+        let timeoutAlert;
+        if(props.alertErrorShow) {
+            timeoutAlert = setTimeout(props.hideErrorAlert(false), 1500)
+            // setTimeout(() => props.hideErrorAlert(false), 1500)
+        }
         return clearTimeout(timeoutAlert);
-    }, []);
+    }, [props.alertErrorShow])
+
+    useEffect( () => {
+        let timeoutAlert;
+        if(props.alertSuccessShow) {
+            timeoutAlert = setTimeout(props.hideSuccessAlert(false), 1500)
+            // setTimeout(() => props.hideSuccessAlert(false), 1500)
+        }
+        return clearTimeout(timeoutAlert);
+    }, [props.alertSuccessShow])
 
     if (props.isAuth) return <Redirect to={'/personal-info'}/>
 
@@ -190,4 +192,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, {regUser})(RegistrationPage);
+export default connect(mapStateToProps, {hideErrorAlert, hideSuccessAlert, regUser})(RegistrationPage);
