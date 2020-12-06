@@ -10,6 +10,7 @@ import DealsPage from "../DealsList/DealsPage/DealsPage";
 import DealsPageCompleted from "../DealsList/DealsPageCompleted/DealsPageCompleted";
 import DealsPageClaim from "../DealsList/DealsPageClaim/DealsPageClaim";
 import DealsPageAction from "../DealsList/DealsPageAction/DealsPageAction";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 const Profile = () => {
     return (
@@ -27,6 +28,7 @@ const Profile = () => {
                 <Route path="/profile/deals/deals-completed" component={() => <DealsPageCompleted />}/>
                 <Route path="/profile/deals/deals-claim" component={() => <DealsPageClaim />}/>
                 <Route path="/profile/deals/deals-action" component={() => <DealsPageAction />}/>
+                <Route path="/" component={() => <InfoUserArea/>}/>
                 </Switch>
             </div>
         </div>

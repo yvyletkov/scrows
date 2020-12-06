@@ -120,21 +120,15 @@ const RegistrationPage = (props) => {
     console.log(props)
 
     useEffect( () => {
-        let timeoutAlert;
         if(props.alertErrorShow) {
-            timeoutAlert = setTimeout(props.hideErrorAlert(false), 1500)
-            // setTimeout(() => props.hideErrorAlert(false), 1500)
+            setTimeout(() => props.hideErrorAlert(false), 1500)
         }
-        return clearTimeout(timeoutAlert);
     }, [props.alertErrorShow])
 
     useEffect( () => {
-        let timeoutAlert;
         if(props.alertSuccessShow) {
-            timeoutAlert = setTimeout(props.hideSuccessAlert(false), 1500)
-            // setTimeout(() => props.hideSuccessAlert(false), 1500)
+            setTimeout(() => props.hideSuccessAlert(false), 1500)
         }
-        return clearTimeout(timeoutAlert);
     }, [props.alertSuccessShow])
 
     if (props.isAuth) return <Redirect to={'/personal-info'}/>

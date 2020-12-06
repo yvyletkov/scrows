@@ -30,7 +30,6 @@ function App(props) {
                     <Route path="/auth" component={RegistrationPage}/>
                     <Route exact path="/deals/:id" component={withAuthRedirect(DealPage)}/>
                     <Route path="/profile" component={withAuthRedirect(Profile)}/>
-                    <Route path="/" component={withAuthRedirect(Profile)}/>
                 </div>
                 <Footer/>
             </Router>
