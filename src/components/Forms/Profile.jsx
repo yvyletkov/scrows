@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import PersonalAreaTabs from "../shared/PersonalAreaTabs/PersonalAreaTabs";
 import InfoUserArea from "./InfoUserForm/InfoUserForm";
 import SecureUserArea from "./SecureUserForm/SecureUserForm";
@@ -10,7 +10,6 @@ import DealsPage from "../DealsList/DealsPage/DealsPage";
 import DealsPageCompleted from "../DealsList/DealsPageCompleted/DealsPageCompleted";
 import DealsPageClaim from "../DealsList/DealsPageClaim/DealsPageClaim";
 import DealsPageAction from "../DealsList/DealsPageAction/DealsPageAction";
-import DealPage from "../DealPage/DealPage";
 
 const Profile = () => {
     return (

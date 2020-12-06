@@ -119,7 +119,7 @@ const RegistrationPage = (props) => {
     console.log(props)
     const timeoutAlert = (action) => {
         setTimeout(() => {
-            props.dispatch(action)
+            action()
         }, 1500)
     }
 
@@ -135,7 +135,7 @@ const RegistrationPage = (props) => {
         return clearTimeout(timeoutAlert);
     }, []);
 
-    if (props.isAuth) return <Redirect to={'/personal-info'}/>
+    if (props.isAuth) return <Redirect to={'/profile/personal-info'}/>
 
     const handleSubmit = (data) => {
         props.regUser(data.name,
@@ -190,4 +190,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, {regUser})(RegistrationPage);
+export default connect(mapStateToProps, {regUser, hideErrorAlert, hideSuccessAlert})(RegistrationPage);

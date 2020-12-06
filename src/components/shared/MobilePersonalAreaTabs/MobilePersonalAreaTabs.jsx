@@ -17,12 +17,12 @@ const MobilePersonalAreaTabs = (props) => {
 
     let userType = entity_type === "entity" ?
         <li className={`nav-item ${s.navLinkMob}`}>
-            <NavLink to="/entity-info"
+            <NavLink to="/profile/entity-info"
                      className={`nav-link ${s.navProfile}`}>Данные юр.лица
             </NavLink>
         </li> :
         <li className={`nav-item ${s.navLinkMob}`}>
-            <NavLink to="/individual-info"
+            <NavLink to="/profile/individual-info"
                      className={`nav-link mb-2 ${s.navProfile}`}>Данные физ.лица
             </NavLink>
         </li>;
@@ -31,17 +31,17 @@ const MobilePersonalAreaTabs = (props) => {
         <div className={`card-header ${s.cardHeaderMob}`}>
             <ul className="nav nav-tabs card-header-tabs">
                 <li className={`nav-item ${s.navLinkMob}`}>
-                    <NavLink to="/personal-info"
+                    <NavLink to="/profile/personal-info"
                              className={`nav-link ${s.navProfile}`}>Данные о пользователе
                     </NavLink>
                 </li>
                 <li className={`nav-item ${s.navLinkMob}`}>
-                    <NavLink to="/security" className={`nav-link ${s.navProfile}`}>
+                    <NavLink to="/profile/security" className={`nav-link ${s.navProfile}`}>
                         Безопасность
                     </NavLink>
                 </li>
                 <li className={`nav-item ${s.navLinkMob}`}>
-                    <NavLink to="/payment-info"
+                    <NavLink to="/profile/payment-info"
                              className={`nav-link ${s.navProfile}`}>Платежные данные
                     </NavLink>
                 </li>
@@ -53,16 +53,16 @@ const MobilePersonalAreaTabs = (props) => {
                             Сделки
                         </DropdownToggle>
                         <DropdownMenu className={s.dropMenu}>
-                            <NavLink to="/deals">
+                            <NavLink to="/profile/deals">
                                 <DropdownItem>Все сделки</DropdownItem>
                             </NavLink>
-                            <NavLink to="/deals-completed">
+                            <NavLink to="/profile/deals/deals-completed">
                                 <DropdownItem>Завершенные</DropdownItem>
                             </NavLink>
-                            <NavLink to="/deals-claim">
+                            <NavLink to="/profile/deals/deals-claim">
                                 <DropdownItem>Претензии</DropdownItem>
                             </NavLink>
-                            <NavLink to="/deals-action">
+                            <NavLink to="/profile/deals/deals-action">
                                 <DropdownItem>Ждут действия</DropdownItem>
                             </NavLink>
                         </DropdownMenu>
