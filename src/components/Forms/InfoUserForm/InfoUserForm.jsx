@@ -117,6 +117,7 @@ const InfoUserArea = (props) => {
         }, 1500)
     }
 
+
     if(alertSuccessShow) {
         timeoutAlert(hideSuccessAlert(false))
     }

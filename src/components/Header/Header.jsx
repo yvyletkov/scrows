@@ -70,11 +70,11 @@ const Header = (props) => {
                         {/*    </DropdownMenu>*/}
                         {/*</Dropdown>*/}
 
-                        <NavItem>
+                        {isAuth && <NavItem>
                             <NavLink href="/profile/personal-info">
                                 Личный кабинет
                             </NavLink>
-                        </NavItem>
+                        </NavItem>}
                         {/*{isAuth && <NavItem>*/}
                         {/*    <NavLink href="/profile/deals">*/}
                         {/*        Сделки*/}
