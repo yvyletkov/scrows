@@ -31,7 +31,7 @@ const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, getActions, n
     if (props.isFetching) return <div className='mt-5'><Preloader/></div>;
 
     return (
-        <div style={{marginTop: "4rem"}} className='container mb-4'>
+        <div style={{marginTop: "2rem"}} className='container mb-4'>
 
             <div className='card shadow-none'>
                 <div className="card-header">

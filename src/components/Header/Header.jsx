@@ -75,16 +75,16 @@ const Header = (props) => {
                                 Личный кабинет
                             </NavLink>
                         </NavItem>
-                        {isAuth && <NavItem>
-                            <NavLink href="/profile/deals">
-                                Сделки
-                            </NavLink>
-                        </NavItem>}
+                        {/*{isAuth && <NavItem>*/}
+                        {/*    <NavLink href="/profile/deals">*/}
+                        {/*        Сделки*/}
+                        {/*    </NavLink>*/}
+                        {/*</NavItem>}*/}
                         <NavItem>
                             <ButtonToolbar>
                                 <ButtonGroup>
                                     {isAuth ?
-                                        <Button theme="light ml-4" onClick={logout}>
+                                        <Button theme="light ml-0 ml-md-4" onClick={logout}>
                                             Выйти
                                         </Button> :
                                     <NavLink active href="/login">
