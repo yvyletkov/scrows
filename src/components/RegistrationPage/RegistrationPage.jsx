@@ -141,14 +141,14 @@ const RegistrationPage = (props) => {
 
     const handleSubmit = (data) => {
         props.regUser(data.name,
-                      data.last_name,
-                      data.middle_name,
-                      data.gender,
-                      data.entity_type,
-                      data.date_of_birth,
-                      data.email,
-                      data.phone,
-                      data.password)
+            data.last_name,
+            data.middle_name,
+            data.gender,
+            data.entity_type,
+            data.date_of_birth,
+            data.email,
+            data.phone,
+            data.password)
         console.log(data);
     };
     return (

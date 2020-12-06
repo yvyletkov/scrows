@@ -72,7 +72,7 @@ const InfoUserForm = (props) => {
                                 Выберите тип лица
                             </option>
                             <option value="single">Физическое лицо</option>
-                            <option value="entity">Юридическое лицо</option>
+                            <option value="entity">Юридическое лицо/ИП</option>
                         </Field>
                     </div>
                 </div>

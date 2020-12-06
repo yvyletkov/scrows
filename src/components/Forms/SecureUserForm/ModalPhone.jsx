@@ -6,8 +6,8 @@ import {Field, reduxForm} from "redux-form";
 import {renderCardNumberInput} from "../../shared/FormContols/FormControls";
 import {validate, warn} from "../../../utils/validators/validators";
 import {connect} from "react-redux";
-import phoneIcon from "../../../img/icons/phone.svg";
 import CodeReduxForm from "./CodeForm";
+import iconClose from "../../../img/icons/close.svg";
 
 
 const ModalPhone = (props) => {
@@ -22,12 +22,11 @@ const ModalPhone = (props) => {
         verifyPhone
     } = props;
 
-    // const showCodeForm = true;
-
     return (
             <Modal className={s.modalWindow}
                    open={modalPhone}
                    toggle={() => openModalPhone(!modalPhone)}>
+                <img onClick={() => openModalPhone(!modalPhone)} src={iconClose} alt="Закрыть" className={s.iconClose} />
                 <ModalHeader className={s.modalHeader}>
                     <p>Изменить номер</p>
                 </ModalHeader>

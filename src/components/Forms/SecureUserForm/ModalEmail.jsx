@@ -7,6 +7,7 @@ import {renderCardNumberInput} from "../../shared/FormContols/FormControls";
 import {validate, warn} from "../../../utils/validators/validators";
 import {connect} from "react-redux";
 import emailIcon from "../../../img/icons/email.svg";
+import iconClose from "../../../img/icons/close.svg";
 
 
 const ModalEmail = (props) => {
@@ -24,6 +25,7 @@ const ModalEmail = (props) => {
             <Modal className={s.modalWindow}
                    open={modalEmail}
                    toggle={() => openModalEmail(!modalEmail)}>
+                <img onClick={() => openModalEmail(!modalEmail)} src={iconClose} alt="Закрыть" className={s.iconClose} />
                 <ModalHeader className={s.modalHeader}>
                     <p>Изменить email</p>
                 </ModalHeader>
