@@ -23,8 +23,11 @@ const validate = (values) => {
         "entity_name",
         "card_number",
         "participantEmail",
+        "description",
         'subject',
-        "code"
+        "price",
+        "code",
+        'messageText',
     ];
 
     fields.forEach((field) => {

@@ -39,6 +39,20 @@ export const postNewDeal = (data) => (dispatch) => {
         });
 };
 
+export const postDealFiles = (id, files) => (dispatch) => {
+    dispatch(toggleIsFetching(true));
+    api
+        .postDealFiles(id, files)
+        .then((response) => {
+            dispatch(setAddSuccess());
+            dispatch(toggleIsFetching(false));
+        })
+        .catch((err) => {
+            console.log(err);
+            dispatch(toggleIsFetching(false));
+        });
+}
+
 export const toggleIsFetching = status => ({type: "ADD-DEAL:TOGGLE-IS-FETCHING", status: status});
 export const setAddSuccess = () => ({type: "ADD-DEAL:SET-ADD-SUCCESS"});
 

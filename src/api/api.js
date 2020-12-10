@@ -222,6 +222,26 @@ const dealApi = {
         });
     },
 
+    async getDealHistory(id) {
+        this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+        return await this.request(`/events/type/s.deal.history/entity_id/${id}/`, {
+            method: "GET",
+            headers: this.headers,
+        });
+    },
+
+    // async postNewHistoryEvent(id, eventName) {
+    //     this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+    //     return await this.request(`/events/type/s.deal.message/entity_id/${id}/`, {
+    //         method: "POST",
+    //         headers: this.headers,
+    //         body: JSON.stringify({
+    //             historyEvent: eventName,
+    //         }),
+    //     })
+    // },
+
+
     async getPossibleStatuses() {
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
         return await this.request(`/common/statuses/`, {
@@ -251,7 +271,7 @@ const dealApi = {
 
     async postNewDeal(data) {
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
-        return this.request(`/deals/`, {
+        return await this.request(`/deals/`, {
             method: "POST",
             headers: this.headers,
             body: JSON.stringify({
@@ -263,6 +283,23 @@ const dealApi = {
                 deal_type_id: +data.dealType
             }),
         })
+    },
+
+    async postDealFiles(id, files) {
+        this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+
+        console.log('FILEEES:', files)
+
+        const data = new FormData();
+        for (const file of files) {
+            data.append('files', file, file.name)
+        }
+
+        return await this.request(`/media/files/deal/${id}/attachments/`, {
+            method: "POST",
+            headers: {...this.headers, 'Content-Type': 'multipart/form-data'},
+            body: data,
+        });
     },
 
     async getDealsData() {
@@ -302,11 +339,33 @@ const dealApi = {
     },
 };
 
+const chatApi = {
+    async getMessages(id) {
+        this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+        return await this.request(`/events/type/s.deal.message/entity_id/${id}/`, {
+            method: "GET",
+            headers: this.headers,
+        });
+    },
+
+    async postNewMessage(id, messageText) {
+        this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+        return await this.request(`/events/type/s.deal.message/entity_id/${id}/`, {
+            method: "POST",
+            headers: this.headers,
+            body: JSON.stringify({
+                message: messageText,
+            }),
+        })
+    },
+}
+
 
 export const api = {
     ...baseApi,
     ...authApi,
     ...dealApi,
+    ...chatApi,
 };
 
 window.apiObj = api;
