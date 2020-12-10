@@ -2,7 +2,15 @@ import React from "react";
 import s from "./DealPage.module.css";
 import './DealPage.module.css'
 import {connect} from "react-redux";
-import {getActions, getDealInfo, getPossibleStatuses, sendAction} from "../../redux/DealPageReducer";
+import {
+    getActions,
+    getDealInfo,
+    getMessages,
+    getHistory,
+    getPossibleStatuses,
+    postNewMessage,
+    sendAction
+} from "../../redux/DealPageReducer";
 import Sidebar from "./parts/Sidebar";
 import StatusTimeline from "./parts/StatusTimeline";
 import Chat from "./parts/Chat";
@@ -10,10 +18,11 @@ import DealHistory from "./parts/DealHistory";
 import DealFiles from "./parts/DealFiles";
 import Preloader from "../shared/Preloader/Preloader";
 import {NavLink} from "react-router-dom";
+import {getChatMessages, getDealHistory} from "../../redux/reselect";
 
-const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, getActions, notFound, ...props}) => {
+const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, getActions, getMessages, postNewMessage, getHistory, notFound, ...props}) => {
 
-    console.log(props.possibleStatuses);
+    console.log('HISTORY', props.history);
 
     const idForRequest = props.match.params.id;
     const priceString = props.price && props.price.toString().replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ');
@@ -22,10 +31,13 @@ const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, getActions, n
         getDealInfo(idForRequest);
         getPossibleStatuses();
         getActions(idForRequest);
-    }, [getDealInfo, idForRequest, getPossibleStatuses]);
+        getMessages(idForRequest);
+        getHistory(idForRequest)
+    }, [idForRequest]);
 
     const onChatFormSubmit = values => {
-        console.log(values);
+        console.log('chatFormValues', values)
+        postNewMessage(props.dealId, values.messageText);
     };
 
     if (props.isFetching) return <div className='mt-5'><Preloader/></div>;
@@ -81,8 +93,8 @@ const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, getActions, n
 
                         </div>
 
-                        <DealHistory/>
-                        <Chat onChatFormSubmit={onChatFormSubmit} chatMessages={chatMessages}/>
+                        <DealHistory history={props.history} />
+                        <Chat onChatFormSubmit={onChatFormSubmit} chatMessages={chatMessages} participants={props.participants}/>
 
                     </div>
 
@@ -112,9 +124,11 @@ let mapStateToProps = (state) => {
         dealType: state.deal.dealType,
         price: state.deal.price,
         possibleStatuses: state.deal.possibleStatuses,
-        chatMessages: state.deal.chatMessages,
+        chatMessages: getChatMessages(state),
+        history: getDealHistory(state),
         isFetching: state.deal.isFetching,
+        chatIsFetching: state.deal.chatIsFetching,
     }
 }
 
-export default connect(mapStateToProps, {getDealInfo, getPossibleStatuses, getActions, sendAction})(DealPage);
+export default connect(mapStateToProps, {getDealInfo, getPossibleStatuses, getActions, sendAction, getMessages, getHistory, postNewMessage})(DealPage);

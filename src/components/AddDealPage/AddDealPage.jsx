@@ -9,6 +9,7 @@ const AddDealPage = ({postNewDeal}) => {
     let [step, setStep] = React.useState(1);
 
     const submit = (values) => {
+        console.log(values);
         postNewDeal(values);
     };
 
@@ -35,7 +36,7 @@ const AddDealPage = ({postNewDeal}) => {
                              aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">ШАГ 3</div>
                     </div>
 
-                    <AddDealReduxForm onSubmit={submit} step={step} setStep={setStep} initialValues={{userRole: "1", dealType: "1"}}/>
+                    <AddDealReduxForm onSubmit={submit} step={step} setStep={setStep} initialValues={{userRole: "1", dealType: "1", whoPays: "1"}}/>
 
                 </div>
             </div>

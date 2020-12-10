@@ -12,9 +12,11 @@ const ParticipantCard = ({participant, img}) => {
         </div>
         <div className='card-body'>
             <img className={s.cardImg} src={img} alt="Путин"/>
-            <p className='mb-2'><b>Имя: </b>{participant.user.name} {participant.user.last_name}</p>
-            <p className='mb-2'><b>E-mail: </b>{participant.user.email}</p>
-            <span className='badge badge-outline-dark mt-2'>{participant.invite.type}</span>
+            <div style={{width: window.matchMedia('(min-width: 993px)').matches ? '63%' : '100%'}}>
+                <p className='mb-2'><b>Имя: </b>{participant.user.name} {participant.user.last_name}</p>
+                <p className='mb-2'><b>E-mail: </b>{participant.user.email}</p>
+                <span className='badge badge-outline-dark mt-2'>{participant.invite.type}</span>
+            </div>
         </div>
     </div>
 }
@@ -36,17 +38,16 @@ const Sidebar = (props) => {
         }
     }
     let commission_label;
-    for (let i = 0; i<=1; i++) {
+    for (let i = 0; i <= 1; i++) {
         if (props.participants[i].me) {
             currentUserID = i;
             currentUser = props.participants[i];
         }
     }
     const priceWithCommission = props.participants[0].user_commission_amount && props.participants[currentUserID].user_commission_amount + props.price;
-    if (currentUser.role.title === "Продавец"){
+    if (currentUser.role.title === "Продавец") {
         commission_label = "Сумма, которая будет перечислена вам на счет"
-    }
-    else {
+    } else {
         commission_label = "Сумма к оплате"
     }
 
@@ -56,8 +57,9 @@ const Sidebar = (props) => {
 
     return (<>
 
-        {props.actions ? props.actions.map( item => {
-            return <div onClick={ () => goToNextStatus(item.payload)} className='btn w-100 mb-3 btn-success'>{item.text}</div>
+        {props.actions ? props.actions.map(item => {
+            return <div onClick={() => goToNextStatus(item.payload)}
+                        className='btn w-100 mb-3 btn-success'>{item.text}</div>
         }) : null}
 
         <ParticipantCard participant={props.participants[0]} img={vvpImg}/>

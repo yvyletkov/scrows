@@ -7,12 +7,16 @@ import cx from "classnames"
 const AddDealReduxForm = ({step, setStep, handleSubmit, dealType, userRole, price, whoPays, ...props}) => {
     return (
         <form onSubmit={handleSubmit}>
-            {step === 1 &&
-            <Step1 setStep={setStep} dealType={dealType}
-                   userRole={userRole}/>}
-            {step === 2 &&
-            <Step2 setStep={setStep} dealType={dealType} userRole={userRole} whoPays={whoPays} price={price}/>}
-            {step === 3 && <Step3 dealType={dealType} userRole={userRole}/>}
+
+            <Step1 active={step === 1} setStep={setStep} dealType={dealType}
+                   userRole={userRole}/>
+
+            <Step2 active={step === 2} setStep={setStep} dealType={dealType}
+                   userRole={userRole} whoPays={whoPays} price={price}/>
+
+            <Step3 active={step === 3} dealType={dealType}
+                   userRole={userRole}/>
+
         </form>
     )
 };
@@ -28,23 +32,47 @@ let mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {})(reduxForm({form: 'addDeal', validate})(AddDealReduxForm));
 
-const renderField = ({input, id, value, placeholder, className, name, type, meta: {touched, error, warning}}) => {
+const renderField = ({textarea, input, id, value, placeholder, className, name, type, meta: {touched, error, warning}}) => {
     let classNames = cx(className, {'is-invalid': touched && error, 'is-valid': touched && !error})
 
-    return <input {...input} className={classNames} value={value} name={name} id={id} placeholder={placeholder} type={type}/>
-    // {
-    //     touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))
-    // }
+    if(textarea) return <textarea {...input} className={classNames} value={value} name={name} id={id} placeholder={placeholder}/>
 
+    return <input {...input} className={classNames} value={value} name={name} id={id} placeholder={placeholder}
+                  type={type}/>
 }
 
-const Step1 = ({setStep, userRole, dealType}) => {
+class renderFileInputField extends React.Component {
+    constructor(props) {
+        super(props)
+        this.onChange = this.onChange.bind(this)
+    }
+
+    onChange(e) {
+        const {input: {onChange}} = this.props
+        onChange(e.target.files[0])
+    }
+
+    render() {
+        const {id, name} = this.props
+        return (
+            <input style={{visibility: 'hidden'}}
+                id={id}
+                type='file'
+                   name={name}
+                accept='.jpg, .png, .jpeg'
+                onChange={this.onChange}
+            />
+        )
+    }
+}
+
+const Step1 = ({setStep, userRole, dealType, active}) => {
 
     const whoToInvite = dealType === "1" && userRole === '1' ? 'покупателя' : dealType === "1" && userRole === '2' ? "продавца"
         : dealType === "2" && userRole === '1' ? 'заказчика' : dealType === "2" && userRole === '2' ? "исполнителя" : "FEWGVGFVFWVFWVVEF";
 
     return (
-        <div className='row'>
+        <div hidden={!active} className='row'>
             <div className='col-md-6 mb-4 mb-md-0'>
                 <div className='pt-0'>
 
@@ -106,7 +134,7 @@ const Step1 = ({setStep, userRole, dealType}) => {
                     <p className='mb-3'>Вы можете прикрепить к сделки техническое задание и/или другие
                         файлы: </p>
                     <div className="custom-file mb-3">
-                        <Field component={'input'} type="file" className="custom-file-input" id="customFile"/>
+                        <Field component={renderFileInputField} name='files' type="file" className="custom-file-input" id="customFile"/>
                         <label className="custom-file-label" htmlFor="customFile">Нажмите, чтобы выбрать
                             файлы</label>
                     </div>
@@ -125,7 +153,7 @@ const Step1 = ({setStep, userRole, dealType}) => {
                                placeholder="Введите название сделки"/>
 
                         <p className='font-weight-bold mb-3'>Описание сделки:</p>
-                        <Field component={'textarea'} type="text" name='description' className="form-control"
+                        <Field component={renderField} textarea name='description' className="form-control"
                                placeholder="Введите описание сделки"/>
                     </div>
 
@@ -135,7 +163,7 @@ const Step1 = ({setStep, userRole, dealType}) => {
     )
 };
 
-const Step2 = ({setStep, userRole, dealType, whoPays, price}) => {
+const Step2 = ({setStep, userRole, dealType, whoPays, price, active}) => {
     price = +price;
     let commission = price ? (price / 100 * 5.5) : 0;
     let amount = price ? Math.round(userRole === whoPays
@@ -145,13 +173,13 @@ const Step2 = ({setStep, userRole, dealType, whoPays, price}) => {
     let amountString = amount.toString().replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ');
 
     return (
-        <div className='row'>
+        <div hidden={!active} className='row'>
             <div className='col-md-6 mb-4 mb-md-0'>
                 <div className='pt-0'>
 
                     <p className='font-weight-bold mb-3'>Стоимость сделки (в рублях)</p>
 
-                    <Field component={'input'} type="number" className="form-control mb-2" name="price"
+                    <Field component={renderField} type="number" className="form-control mb-2" name="price"
                            placeholder={"Введите стоимость сделки"}
                            aria-label="price"/>
 
@@ -212,10 +240,10 @@ const Step2 = ({setStep, userRole, dealType, whoPays, price}) => {
     )
 };
 
-const Step3 = ({dealType}) => {
+const Step3 = ({dealType, active}) => {
 
     return (
-        <div className='row'>
+        <div hidden={!active} className='row'>
             <div className='col-md-7 mb-4 mb-md-0'>
                 <div className='pt-0'>
 

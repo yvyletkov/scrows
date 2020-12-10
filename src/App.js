@@ -18,11 +18,6 @@ function App(props) {
         <Provider store={props.store}>
             <Router>
                 <div style={{minHeight: "calc(100vh - 86px - 3rem)"}}>
-                    {/*<HeaderContainer/>*/}
-                    {/*<Route path="/new-deal" component={withAuthRedirect(DealPage)} exact/>*/}
-                    {/*<Route path="/login" component={LoginPage}/>*/}
-                    {/*<Route path="/auth" component={RegistrationPage}/>*/}
-                    {/*<Route exact path="profile/deals/:id" component={withAuthRedirect(DealPage)}/>*/}
 
                     <HeaderContainer/>
                     <Route path="/new-deal" component={withAuthRedirect(AddDealPage)} exact/>
@@ -30,7 +25,7 @@ function App(props) {
                     <Route path="/auth" component={RegistrationPage}/>
                     <Route exact path="/deals/:id" component={withAuthRedirect(DealPage)}/>
                     <Route path="/profile" component={withAuthRedirect(Profile)}/>
-                    {/*<Route path="/" render={() => <Redirect to='/profile'/>}/>*/}
+                    <Route exact path="/" render={() => <Redirect to='/profile'/>}/>
                 </div>
                 <Footer/>
             </Router>
