@@ -88,12 +88,11 @@ export const getDealInfo = (id) => (dispatch) => {
     dispatch(toggleIsFetching(true));
     api
         .getDealInfo(id)
-        .then(response => response.json())
-        .then(data => {
-            if (data.detail === 'Not found.') dispatch(setNotFound(true));
+        .then(response => {
+            if (response.detail === 'Not found.') dispatch(setNotFound(true));
             else {
                 dispatch(setNotFound(false));
-                dispatch(setDealInfo(data));
+                dispatch(setDealInfo(response));
                 dispatch(toggleIsFetching(false));
             }}
         )
