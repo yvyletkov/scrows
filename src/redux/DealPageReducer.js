@@ -74,7 +74,7 @@ const dealPageReducer = (state = initialState, action) => {
         case "DEAL:TOGGLE-IS-FETCHING": {
             return {...state, isFetching: action.status};
         }
-         case "DEAL:TOGGLE-CHAT-IS-FETCHING": {
+        case "DEAL:TOGGLE-CHAT-IS-FETCHING": {
             return {...state, chatIsFetching: action.status};
         }
 
@@ -88,14 +88,15 @@ export const getDealInfo = (id) => (dispatch) => {
     dispatch(toggleIsFetching(true));
     api
         .getDealInfo(id)
-        .then((response) => {
-            if (response.detail === 'Not found.') dispatch(setNotFound(true));
+        .then(response => response.json())
+        .then(data => {
+            if (data.detail === 'Not found.') dispatch(setNotFound(true));
             else {
                 dispatch(setNotFound(false));
-                dispatch(setDealInfo(response));
+                dispatch(setDealInfo(data));
                 dispatch(toggleIsFetching(false));
-            }
-        })
+            }}
+        )
         .catch((err) => {
             console.log(err);
             dispatch(toggleIsFetching(false));
@@ -110,8 +111,8 @@ export const getMessages = (id) => (dispatch) => {
             console.log('messages response', response);
             // if (response.detail === 'Not found.') dispatch(setNotFound(true));
             // else {
-                dispatch(setMessages(response));
-                dispatch(toggleIsFetching(false));
+            dispatch(setMessages(response));
+            dispatch(toggleIsFetching(false));
             // }
         })
         .catch((err) => {
@@ -128,8 +129,8 @@ export const getHistory = (id) => (dispatch) => {
             console.log('history response', response);
             // if (response.detail === 'Not found.') dispatch(setNotFound(true));
             // else {
-                dispatch(setDealHistory(response));
-                dispatch(toggleIsFetching(false));
+            dispatch(setDealHistory(response));
+            dispatch(toggleIsFetching(false));
             // }
         })
         .catch((err) => {
@@ -155,7 +156,6 @@ export const postNewMessage = (id, messageText) => (dispatch) => {
             dispatch(toggleChatIsFetching(false));
         });
 };
-
 
 
 export const getPossibleStatuses = () => (dispatch) => {
@@ -206,8 +206,8 @@ export const sendAction = (payload) => (dispatch) => {
 export const toggleIsFetching = status => ({type: "DEAL:TOGGLE-IS-FETCHING", status: status});
 export const toggleChatIsFetching = status => ({type: "DEAL:TOGGLE-CHAT-IS-FETCHING", status: status});
 export const setNotFound = status => ({type: "DEAL:SET-NOT-FOUND", status: status});
-export const setMessages = data => ({ type: "DEAL:SET-MESSAGES", payload: data });
-export const setDealHistory = data => ({ type: "DEAL:SET-DEAL-HISTORY", payload: data });
+export const setMessages = data => ({type: "DEAL:SET-MESSAGES", payload: data});
+export const setDealHistory = data => ({type: "DEAL:SET-DEAL-HISTORY", payload: data});
 export const setDealInfo = data => ({type: "DEAL:SET-DEAL-INFO", payload: data});
 export const setPossibleStatuses = data => ({type: "DEAL:SET-POSSIBLE-STATUSES", payload: data});
 export const setActions = data => ({type: "DEAL:SET-ACTIONS", payload: data});

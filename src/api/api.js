@@ -8,34 +8,43 @@ const baseApi = {
     async request(endpoint, params) {
         const res = await fetch(`${this.baseUrl}${endpoint}`, params);
         if (!res.ok) {
-             // throw new Error(`Запрос не удался на ${endpoint}, ошибка ${res.status}`);
+            return res;
         }
         return await res.json();
     },
 };
 
 const authApi = {
-  async login(email, password) {
-    return this.request(`/users/auth/`, {
-      method: "POST",
-      headers: this.headers,
-      body: JSON.stringify({
-        email: `${email}`,
-        password: `${password}`,
-      }),
-    })
-  },
 
-  async logout() {
-    return await new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve("result");
-      }, 300);
-    })
-        .then((response) => {
-          localStorage.removeItem('jwt');
-          return response
+    async me() { // same as /user/personal/
+        this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+        return await this.request(`/users/profile/personal/`, {
+            method: "GET",
+            headers: this.headers,
+        });
+    },
+
+    async login(email, password) {
+        return this.request(`/users/auth/`, {
+            method: "POST",
+            headers: this.headers,
+            body: JSON.stringify({
+                email: `${email}`,
+                password: `${password}`,
+            }),
         })
+    },
+
+    async logout() {
+        return await new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve("result");
+            }, 300);
+        })
+            .then((response) => {
+                localStorage.removeItem('jwt');
+                return response
+            })
             .then((response) => {
                 localStorage.removeItem('jwt');
                 return response
@@ -137,20 +146,20 @@ const authApi = {
                 entity_tin: `${entity_tin}`,
                 entity_bank_account_data: `${entity_bank_account_data}`,
                 entity_name: `${entity_name}`,
-        }));
-    this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
-    // this.headers.Authorization = `Bearer token`;
-    return await this.request(`/users/profile/judical/entity/`, {
-      method: "PATCH",
-      headers: this.headers,
-      body: JSON.stringify({
-        judical_type: `${judical_type}`,
-        entity_id: `${entity_id}`,
-        entity_tin: `${entity_tin}`,
-        entity_bank_account_data: `${entity_bank_account_data}`,
-        entity_name: `${entity_name}`,
-      }),
-    });
+            }));
+        this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+        // this.headers.Authorization = `Bearer token`;
+        return await this.request(`/users/profile/judical/entity/`, {
+            method: "PATCH",
+            headers: this.headers,
+            body: JSON.stringify({
+                judical_type: `${judical_type}`,
+                entity_id: `${entity_id}`,
+                entity_tin: `${entity_tin}`,
+                entity_bank_account_data: `${entity_bank_account_data}`,
+                entity_name: `${entity_name}`,
+            }),
+        });
     },
 
     async getPaymentData() {
@@ -179,7 +188,7 @@ const authApi = {
             method: "POST",
             headers: this.headers,
             body: JSON.stringify({
-                verification_id:`${id}`,
+                verification_id: `${id}`,
                 code: `${code}`,
             }),
         });
@@ -198,15 +207,15 @@ const authApi = {
             method: "POST",
             headers: this.headers,
             body: JSON.stringify({
-                name:`${name}`,
-                last_name:`${lastName}`,
-                middle_name:`${middleName}`,
-                gender:`${gender}`,
-                entity_type:`${entity_type}`,
-                date_of_birth:`${date_of_birth}`,
-                email:`${email}`,
-                phone:`${phone}`,
-                password:`${password}`
+                name: `${name}`,
+                last_name: `${lastName}`,
+                middle_name: `${middleName}`,
+                gender: `${gender}`,
+                entity_type: `${entity_type}`,
+                date_of_birth: `${date_of_birth}`,
+                email: `${email}`,
+                phone: `${phone}`,
+                password: `${password}`
             }),
         });
     },

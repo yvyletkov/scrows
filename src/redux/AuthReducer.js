@@ -2,26 +2,26 @@ import {api} from "../api/api";
 import {reset} from 'redux-form';
 
 let initialState = {
-    isAuth: !!localStorage.getItem('jwt'),
+    isAuth: false,
     alertSuccessShow:false,
     alertErrorShow:false,
 };
 
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
-        case "SET_AUTH_USER_DATA": {
+        case "AUTH:SET-IS-AUTH": {
             return {...state, isAuth: action.status,};
         }
-        case "SHOW_SUCCESS_ALERT": {
+        case "AUTH:SHOW-SUCCESS-ALERT": {
             return { ...state, alertSuccessShow: action.status };
         }
-        case "SHOW_ERROR_ALERT": {
+        case "AUTH:SHOW-ERROR-ALERT": {
             return { ...state, alertErrorShow: action.status };
         }
-        case "HIDE_SUCCESS_ALERT": {
+        case "AUTH:HIDE-SUCCESS-ALERT": {
             return { ...state, alertSuccessShow: action.status };
         }
-        case "HIDE_ERROR_ALERT": {
+        case "AUTH:HIDE-ERROR-ALERT": {
             return { ...state, alertErrorShow: action.status };
         }
         default:
@@ -29,12 +29,26 @@ const authReducer = (state = initialState, action) => {
     }
 };
 
+export const checkIsAuth = () => dispatch => {
+    api.me()
+        .then((response) => {
+            console.log('check is auth response:', response)
+            if (response.email)
+            dispatch(setIsAuth(true))
+            else dispatch(setIsAuth(false))
+        })
+        .catch((err) => {
+            console.log(err);
+            dispatch(setIsAuth(false))
+        })
+}
+
 export const login = (email, password, rememberMe) => dispatch => {
     api.login(email, password, rememberMe)
         .then((response) => {
             console.log(response)
             localStorage.setItem('jwt', response.token);
-            dispatch(setAuthUserData(true));
+            dispatch(setIsAuth(true));
             dispatch(showSuccessAlert(true))
         })
         .catch((err) => {
@@ -46,7 +60,7 @@ export const login = (email, password, rememberMe) => dispatch => {
 export const logout = () => dispatch => {
     api.logout()
         .then((response) => {
-            dispatch(setAuthUserData(false))
+            dispatch(setIsAuth(false))
         })
         .catch((err) => {
             console.log(err)
@@ -82,25 +96,25 @@ export const regUser = (name,
         })
 }
 
-export const setAuthUserData = (status) => ({type: "SET_AUTH_USER_DATA", status: status});
+export const setIsAuth = (status) => ({type: "AUTH:SET-IS-AUTH", status: status});
 
 export const showSuccessAlert = (status) => ({
-    type: "SHOW_SUCCESS_ALERT",
+    type: "AUTH:SHOW-SUCCESS-ALERT",
     status: status,
 });
 
 export const showErrorAlert = (status) => ({
-    type: "SHOW_ERROR_ALERT",
+    type: "AUTH:SHOW-ERROR-ALERT",
     status: status,
 });
 
 export const hideSuccessAlert = (status) => ({
-    type:"HIDE_SUCCESS_ALERT",
+    type:"AUTH:HIDE-SUCCESS-ALERT",
     status: status,
 })
 
 export const hideErrorAlert = (status) => ({
-    type:"HIDE_ERROR_ALERT",
+    type:"AUTH:HIDE-ERROR-ALERT",
     status: status,
 })
 
