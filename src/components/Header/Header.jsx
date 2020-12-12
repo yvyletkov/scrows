@@ -40,7 +40,12 @@ const Header = (props) => {
     return (
         <Navbar className={'themeColor'} type="light" expand="md">
             <div className='container'>
-                <NavbarBrand><img src={logo} style={{maxWidth: "200px", filter: "brightness(8%)"}} alt="Scrows.ru - Сервис безопасных сделок"/></NavbarBrand>
+                <NavbarBrand><img src={logo} style={{
+                    maxWidth: "200px",
+                    background: '#fff',
+                    borderRadius: '100px',
+                    padding: '5px'
+                }} alt="Scrows.ru - Сервис безопасных сделок"/></NavbarBrand>
                 <NavbarToggler onClick={toggleNavbar}/>
                 <Collapse className={'justify-content-end'} open={collapseOpen} navbar>
                     <Nav navbar>
@@ -87,9 +92,9 @@ const Header = (props) => {
                                         <Button theme="light ml-0 ml-md-4" onClick={logout}>
                                             Выйти
                                         </Button> :
-                                    <NavLink active href="/login">
-                                        Войти
-                                    </NavLink>}
+                                        <NavLink active href="/login">
+                                            Войти
+                                        </NavLink>}
                                 </ButtonGroup>
                             </ButtonToolbar>
                         </NavItem>

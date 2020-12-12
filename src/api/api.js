@@ -7,9 +7,6 @@ const baseApi = {
 
     async request(endpoint, params) {
         const res = await fetch(`${this.baseUrl}${endpoint}`, params);
-        if (!res.ok) {
-            return res;
-        }
         return await res.json();
     },
 };
