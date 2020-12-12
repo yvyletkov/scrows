@@ -22,8 +22,8 @@ function App(props) {
 
                     <HeaderContainer/>
                     <Route path="/new-deal" component={withAuthRedirect(AddDealPage)} exact/>
-                    <Route path="/login" component={LoginPage}/>
-                    <Route path="/auth" component={RegistrationPage}/>
+                    <Route path="/login" component={withAuthRedirect(LoginPage)}/>
+                    <Route path="/auth" component={withAuthRedirect(RegistrationPage)}/>
                     <Route exact path="/deals/:id" component={withAuthRedirect(DealPage)}/>
                     <Route path="/profile" component={withAuthRedirect(Profile)}/>
                     <Route exact path="/" render={() => <Redirect to='/profile'/>}/>
