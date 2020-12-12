@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "shards-ui/dist/css/shards.min.css";
 import "./App.css";
@@ -6,7 +6,7 @@ import LoginPage from "./components/LoginPage/LoginPage";
 import {Redirect, BrowserRouter as Router, Route} from 'react-router-dom';
 import RegistrationPage from './components/RegistrationPage/RegistrationPage';
 import DealPage from "./components/DealPage/DealPage";
-import {Provider} from "react-redux";
+import {connect, Provider} from "react-redux";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import AddDealPage from "./components/AddDealPage/AddDealPage";
 import Footer from "./components/Footer/Footer";
@@ -14,6 +14,7 @@ import {withAuthRedirect} from "./hoc/withAuthRedirect";
 import Profile from "./components/Forms/Profile";
 
 function App(props) {
+
     return <>
         <Provider store={props.store}>
             <Router>

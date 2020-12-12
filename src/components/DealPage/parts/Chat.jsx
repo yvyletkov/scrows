@@ -22,7 +22,7 @@ const Chat = ({onChatFormSubmit, chatMessages}) => {
     return <div className={'card shadow-none'}>
         <div className="card-header">
             <div className={'font-weight-bold mb-4'}>Чат</div>
-            <div ref={chatBlockRef} style={{height: '200px', overflowY: "scroll"}}>
+            <div ref={chatBlockRef} style={{maxHeight: '200px', overflowY: "scroll"}}>
 
                 {chatMessages.map((item, index) => <div key={index} className={'mb-2 ' + s.message + ' ' + (item.userName === userNames[0]
                     ? s.firstColor : item.userName === userNames[1] ? s.secondColor : s.thirdColor)}>

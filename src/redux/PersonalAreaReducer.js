@@ -96,6 +96,7 @@ export const getUserData = () => (dispatch) => {
   api
     .getUserData()
     .then((response) => {
+      console.log('getUserData res:', response)
       dispatch(setUserData(response));
       dispatch(toggleIsFetching(false));
     })

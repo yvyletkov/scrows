@@ -35,6 +35,11 @@ const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, getActions, g
         getHistory(idForRequest)
     }, [idForRequest]);
 
+    React.useEffect(() => {
+        const interval = setInterval( () => getMessages(idForRequest), 4000);
+        return clearInterval(interval);
+    }, []);
+
     const onChatFormSubmit = values => {
         console.log('chatFormValues', values)
         postNewMessage(props.dealId, values.messageText);
