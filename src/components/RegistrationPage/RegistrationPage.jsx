@@ -131,7 +131,7 @@ const RegistrationPage = (props) => {
         }
     }, [props.alertSuccessShow])
 
-    if (props.isAuth) return <Redirect to={'/personal-info'}/>
+    if (props.isAuth) return <Redirect to={'/profile/'}/>
 
     const handleSubmit = (data) => {
         props.regUser(data.name,
@@ -162,7 +162,7 @@ const RegistrationPage = (props) => {
                             </NavLink>
                         </li>
                         <li className="nav-item active">
-                            <NavLink className="nav-link" to="/auth">
+                            <NavLink className="nav-link" to="/registration">
                                 Регистрация
                             </NavLink>
                         </li>

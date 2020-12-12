@@ -2,7 +2,7 @@ import {api} from "../api/api";
 import {reset} from 'redux-form';
 
 let initialState = {
-    isAuth: false,
+    isAuth: null,
     alertSuccessShow:false,
     alertErrorShow:false,
 };
