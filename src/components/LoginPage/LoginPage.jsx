@@ -58,7 +58,7 @@ const LoginPage = (props) => {
         return clearTimeout(timeoutAlert);
     }, []);
 
-    if (props.isAuth) return <Redirect to={'/profile/personal-info'}/>
+    if (props.isAuth === true) return <Redirect to={'/profile/'}/>
 
     console.log(props)
 
@@ -79,7 +79,7 @@ const LoginPage = (props) => {
                             </NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/auth">
+                            <NavLink className="nav-link" to="/registration">
                                 Регистрация
                             </NavLink>
                         </li>
