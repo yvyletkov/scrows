@@ -11,7 +11,9 @@ import {getUserData} from "../../../redux/PersonalAreaReducer";
 import EmailUserReduxForm from "./ModalEmail";
 import emailIcon from "../../../img/icons/email.svg";
 import phoneIcon from "../../../img/icons/phone.svg";
+import filesIcon from "../../../img/icons/files.svg";
 import {takeCodeForPhone, sendPhoneCode} from "../../../redux/PersonalAreaReducer";
+import ModalUserFiles from "./ModalFiles";
 
 const SecureUserArea = (props) => {
     const {
@@ -29,6 +31,7 @@ const SecureUserArea = (props) => {
 
     const [modalEmail, openModalEmail] = useState(false);
     const [modalPhone, openModalPhone] = useState(false);
+    const [modalFiles, openModalFiles] = useState(false);
 
     const submitEmail = (data) => {
         console.log(data)
@@ -66,6 +69,10 @@ const SecureUserArea = (props) => {
                                     <span className={s.fieldName}>Пароль</span>
                                     <p className={s.fieldDesc}>Последнее изменение месяц назад</p>
                                 </div>
+                                <div className={s.securityField} onClick={() => openModalFiles(!modalFiles)}>
+                                    <img className={s.securityIcon} src={filesIcon} alt="files"/>
+                                    <span className={s.fieldName}>Добавьте сканы личных данных</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -75,6 +82,10 @@ const SecureUserArea = (props) => {
                 openModalPhone={openModalPhone}
                 onSubmit={submitPhone}
                 verifyPhone={verifyPhone}/>
+            <ModalUserFiles
+                modalFiles={modalFiles}
+                openModalFiles={openModalFiles}
+                onSubmit={submitEmail}/>
         </div>
     );
 };
