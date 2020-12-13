@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {validate} from "../../utils/validators/validators";
 import cx from "classnames"
 
-const AddDealReduxForm = ({step, setStep, handleSubmit, dealType, userRole, price, whoPays, ...props}) => {
+const AddDealReduxForm = ({step, setStep, handleSubmit, dealType, userRole, price, whoPays, isFetching, ...props}) => {
     return (
         <form onSubmit={handleSubmit}>
 
@@ -14,7 +14,7 @@ const AddDealReduxForm = ({step, setStep, handleSubmit, dealType, userRole, pric
             <Step2 active={step === 2} setStep={setStep} dealType={dealType}
                    userRole={userRole} whoPays={whoPays} price={price}/>
 
-            <Step3 active={step === 3} dealType={dealType}
+            <Step3 isFetching={isFetching} active={step === 3} dealType={dealType}
                    userRole={userRole}/>
 
         </form>
@@ -243,7 +243,7 @@ const Step2 = ({setStep, userRole, dealType, whoPays, price, active}) => {
     )
 };
 
-const Step3 = ({dealType, active}) => {
+const Step3 = ({dealType, active, isFetching}) => {
 
     return (
         <div hidden={!active} className='row'>
@@ -263,7 +263,7 @@ const Step3 = ({dealType, active}) => {
                         aria-label="Description"/>
 
 
-                    <button type='submit' className='btn btn-success w-100 mt-4 text-white'>Создать сделку</button>
+                    <button type='submit' disabled={isFetching} className='btn btn-success w-100 mt-4 text-white'>Создать сделку</button>
 
 
                 </div>

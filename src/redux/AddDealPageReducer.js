@@ -2,21 +2,26 @@ import {api} from "../api/api";
 import React from "react";
 
 let initialState = {
-    addSuccess: false,
+    success: false,
     isFetching: false,
+    newDealId: null,
 };
 
 const addDealPageReducer = (state = initialState, action) => {
     switch (action.type) {
 
-        case "ADD-DEAL:SET-ADD-SUCCESS":
+        case "ADD-DEAL:SET-SUCCESS":
             return {
                 ...state,
-                addSuccess: true
+                success: true
             };
 
         case "ADD-DEAL:TOGGLE-IS-FETCHING": {
             return {...state, isFetching: action.status};
+        }
+
+        case "ADD-DEAL:SET-NEW-DEAL-ID": {
+            return {...state, newDealId: action.id};
         }
 
         default:
@@ -30,9 +35,9 @@ export const postNewDeal = (data) => (dispatch) => {
     api
         .postNewDeal(data)
         .then((response) => {
-            console.log('ДАННЫЕ', response)
-            dispatch(postDealFiles(response.id, data.files))
-            dispatch(toggleIsFetching(false));
+            dispatch(setNewDealId(response.id))
+            if (data.files) dispatch(postDealFiles(response.id, data.files))
+            else dispatch(setSuccess())
         })
         .catch((err) => {
             console.log(err);
@@ -42,20 +47,32 @@ export const postNewDeal = (data) => (dispatch) => {
 
 export const postDealFiles = (id, files) => (dispatch) => {
     dispatch(toggleIsFetching(true));
-    api
-        .postDealFiles(id, files)
-        .then((response) => {
-            if (response[0].file_type) dispatch(setAddSuccess())
-            dispatch(toggleIsFetching(false));
-        })
-        .catch((err) => {
-            console.log(err);
-            dispatch(toggleIsFetching(false));
-        });
+    for (let i = 0; i <= files.length; i++) {
+        api
+            .postDealFile(id, files[i])
+            .then((response) => {
+                debugger
+                if (response[0].file_type) {
+                    if (i === files.length - 1) {
+                        dispatch(setSuccess())
+                        dispatch(toggleIsFetching(false))
+                    }
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                dispatch(toggleIsFetching(false));
+            })
+    }
+    // .catch((err) => {
+    //     console.log(err);
+    //     dispatch(toggleIsFetching(false));
+    // });
 }
 
 export const toggleIsFetching = status => ({type: "ADD-DEAL:TOGGLE-IS-FETCHING", status: status});
-export const setAddSuccess = () => ({type: "ADD-DEAL:SET-ADD-SUCCESS"});
+export const setSuccess = () => ({type: "ADD-DEAL:SET-SUCCESS"});
+export const setNewDealId = id => ({type: "ADD-DEAL:SET-NEW-DEAL-ID", id: id});
 
 
 export default addDealPageReducer;

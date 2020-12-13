@@ -2,9 +2,12 @@ import React from "react";
 import AddDealReduxForm from "./AddDealReduxForm";
 import {postNewDeal} from "../../redux/AddDealPageReducer";
 import {connect} from "react-redux";
+import Preloader from "../shared/Preloader/Preloader";
+import {NavLink} from "react-router-dom";
 
 
-const AddDealPage = ({postNewDeal}) => {
+
+const AddDealPage = ({postNewDeal, isFetching, newDealId, success}) => {
 
     let [step, setStep] = React.useState(1);
 
@@ -15,6 +18,14 @@ const AddDealPage = ({postNewDeal}) => {
 
     return (
         <div className='container'>
+            { isFetching && <Preloader/> }
+
+            { success ? <div className='card shadow-none mt-4'>
+                <div className='card-body'>
+                    <p className='mb-2'>Сделка успешно создана!</p>
+                    <NavLink to={`/deals/${newDealId}`} className='btn btn-outline-dark'>Перейти</NavLink>
+                </div>
+            </div> :
             <div className='card shadow-none mt-4'>
                 <div className='card-header font-weight-bold'>Создание новой безопасной сделки (ШАГ {step})</div>
                 <div className='card-body'>
@@ -36,13 +47,20 @@ const AddDealPage = ({postNewDeal}) => {
                              aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">ШАГ 3</div>
                     </div>
 
-                    <AddDealReduxForm onSubmit={submit} step={step} setStep={setStep} initialValues={{userRole: "1", dealType: "1", whoPays: "1"}}/>
+                    <AddDealReduxForm isFetching={isFetching} onSubmit={submit} step={step} setStep={setStep} initialValues={{userRole: "1", dealType: "1", whoPays: "1"}}/>
 
                 </div>
-            </div>
+            </div> }
         </div>
     )
 };
 
+const mstp = (state) => ({
+    isFetching: state.addDeal.isFetching,
+    success: state.addDeal.success,
+    newDealId: state.addDeal.newDealId,
+})
 
-export default connect(null, {postNewDeal})(AddDealPage);
+
+export default connect(mstp, {postNewDeal})(AddDealPage);
+
