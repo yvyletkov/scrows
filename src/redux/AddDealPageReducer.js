@@ -2,21 +2,26 @@ import {api} from "../api/api";
 import React from "react";
 
 let initialState = {
-    addSuccess: false,
+    success: false,
     isFetching: false,
+    newDealId: null,
 };
 
 const addDealPageReducer = (state = initialState, action) => {
     switch (action.type) {
 
-        case "ADD-DEAL:SET-ADD-SUCCESS":
+        case "ADD-DEAL:SET-SUCCESS":
             return {
                 ...state,
-                addSuccess: true
+                success: true
             };
 
         case "ADD-DEAL:TOGGLE-IS-FETCHING": {
             return {...state, isFetching: action.status};
+        }
+
+        case "ADD-DEAL:SET-NEW-DEAL-ID": {
+            return {...state, newDealId: action.id};
         }
 
         default:
@@ -30,9 +35,12 @@ export const postNewDeal = (data) => (dispatch) => {
     api
         .postNewDeal(data)
         .then((response) => {
-            console.log('ДАННЫЕ', response)
-            dispatch(postDealFiles(response.id, data.files))
-            dispatch(toggleIsFetching(false));
+            dispatch(setNewDealId(response.id))
+            if (data.files)
+                for (const file of data.files) {
+                    dispatch(postDealFiles(response.id, file))
+                }
+            else dispatch(setSuccess())
         })
         .catch((err) => {
             console.log(err);
@@ -45,7 +53,8 @@ export const postDealFiles = (id, files) => (dispatch) => {
     api
         .postDealFiles(id, files)
         .then((response) => {
-            if (response[0].file_type) dispatch(setAddSuccess())
+            debugger
+            if (response[0].file_type) dispatch(setSuccess())
             dispatch(toggleIsFetching(false));
         })
         .catch((err) => {
@@ -55,7 +64,8 @@ export const postDealFiles = (id, files) => (dispatch) => {
 }
 
 export const toggleIsFetching = status => ({type: "ADD-DEAL:TOGGLE-IS-FETCHING", status: status});
-export const setAddSuccess = () => ({type: "ADD-DEAL:SET-ADD-SUCCESS"});
+export const setSuccess = () => ({type: "ADD-DEAL:SET-SUCCESS"});
+export const setNewDealId = id => ({type: "ADD-DEAL:SET-NEW-DEAL-ID", id: id});
 
 
 export default addDealPageReducer;

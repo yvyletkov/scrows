@@ -297,6 +297,7 @@ const dealApi = {
         console.log('FILEEES:', files)
 
         const data = new FormData();
+
         for (const file of files) {
             data.append('file', file, file.name)
         }
