@@ -63,3 +63,4 @@ const mstp = (state) => ({
 
 
 export default connect(mstp, {postNewDeal})(AddDealPage);
+
