@@ -291,16 +291,11 @@ const dealApi = {
         })
     },
 
-    async postDealFiles(id, files) {
+    async postDealFile(id, file) {
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
 
-        console.log('FILEEES:', files)
-
         const data = new FormData();
-
-        for (const file of files) {
-            data.append('file', file, file.name)
-        }
+        data.append('file', file, file.name)
 
         return await this.request(`/media/files/deal/${id}/attachments/`, {
             method: "POST",

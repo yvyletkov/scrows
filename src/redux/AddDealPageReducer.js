@@ -36,10 +36,7 @@ export const postNewDeal = (data) => (dispatch) => {
         .postNewDeal(data)
         .then((response) => {
             dispatch(setNewDealId(response.id))
-            if (data.files)
-                for (const file of data.files) {
-                    dispatch(postDealFiles(response.id, file))
-                }
+            if (data.files) dispatch(postDealFiles(response.id, data.files))
             else dispatch(setSuccess())
         })
         .catch((err) => {
@@ -50,17 +47,27 @@ export const postNewDeal = (data) => (dispatch) => {
 
 export const postDealFiles = (id, files) => (dispatch) => {
     dispatch(toggleIsFetching(true));
-    api
-        .postDealFiles(id, files)
-        .then((response) => {
-            debugger
-            if (response[0].file_type) dispatch(setSuccess())
-            dispatch(toggleIsFetching(false));
-        })
-        .catch((err) => {
-            console.log(err);
-            dispatch(toggleIsFetching(false));
-        });
+    for (let i = 0; i <= files.length; i++) {
+        api
+            .postDealFile(id, files[i])
+            .then((response) => {
+                debugger
+                if (response[0].file_type) {
+                    if (i === files.length - 1) {
+                        dispatch(setSuccess())
+                        dispatch(toggleIsFetching(false))
+                    }
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                dispatch(toggleIsFetching(false));
+            })
+    }
+    // .catch((err) => {
+    //     console.log(err);
+    //     dispatch(toggleIsFetching(false));
+    // });
 }
 
 export const toggleIsFetching = status => ({type: "ADD-DEAL:TOGGLE-IS-FETCHING", status: status});
