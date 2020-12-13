@@ -254,6 +254,20 @@ export const sendPhoneCode = (id, code) => (dispatch) => {
       });
 };
 
+export const postUserFiles = (files) => (dispatch) => {
+  // dispatch(toggleIsFetching(true));
+  api.postUserFiles(files)
+      .then((response) => {
+        console.log(response)
+        // dispatch(setVerificationId(response));
+        // dispatch(showCodePhoneForm(true))
+        // dispatch(toggleIsFetching(false));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+};
+
 export const setUserData = (data) => ({ type: "SET_USER_DATA", payload: data });
 export const setSecureData = (data) => ({
   type: "SET_SECURE_DATA",

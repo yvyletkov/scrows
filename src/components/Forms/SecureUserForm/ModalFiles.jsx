@@ -16,19 +16,30 @@ class renderFileInputField extends React.Component {
 
     onChange(e) {
         const {input: {onChange}} = this.props
-        onChange(e.target.files[0])
+        onChange(e.target.files)
     }
 
     render() {
         const {id, name} = this.props
+        let nameFile;
+        if(this.props.input.value){
+            for( let file of this.props.input.value) {
+                nameFile = file.name;
+            }
+        }
+
         return (
-            <input style={{visibility: 'hidden'}}
+            <>
+                <input style={{visibility: 'hidden'}}
                    id={id}
                    type='file'
                    name={name}
                    accept='.jpg, .png, .jpeg'
-                   onChange={this.onChange}
-            />
+                   onChange={this.onChange}/>
+                <label className="custom-file-label" htmlFor="customFile">
+                    {this.props.input.value ? nameFile : 'Выберите файл'}
+                </label>
+            </>
         )
     }
 }
@@ -58,8 +69,8 @@ const ModalFiles = (props) => {
                         <form className={s.formModal} onSubmit={handleSubmit}>
                             <div className="custom-file mb-3">
                                 <Field component={renderFileInputField} name='files' type="file" className="custom-file-input" id="customFile"/>
-                                <label className="custom-file-label" htmlFor="customFile">
-                                    Нажмите, чтобы выбрать файлы</label>
+                                {/*<label className="custom-file-label" htmlFor="customFile">*/}
+                                {/*    Нажмите, чтобы выбрать файлы</label>*/}
                             </div>
                             <button
                                 type="submit"

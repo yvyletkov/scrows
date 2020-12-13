@@ -12,7 +12,7 @@ import EmailUserReduxForm from "./ModalEmail";
 import emailIcon from "../../../img/icons/email.svg";
 import phoneIcon from "../../../img/icons/phone.svg";
 import filesIcon from "../../../img/icons/files.svg";
-import {takeCodeForPhone, sendPhoneCode} from "../../../redux/PersonalAreaReducer";
+import {takeCodeForPhone, sendPhoneCode, postUserFiles} from "../../../redux/PersonalAreaReducer";
 import ModalUserFiles from "./ModalFiles";
 
 const SecureUserArea = (props) => {
@@ -23,7 +23,8 @@ const SecureUserArea = (props) => {
         phone,
         takeCodeForPhone,
         verification_id,
-        sendPhoneCode } = props;
+        sendPhoneCode,
+        postUserFiles } = props;
 
     useEffect(() => {
         getUserData()
@@ -43,6 +44,11 @@ const SecureUserArea = (props) => {
 
     const verifyPhone = (code) => {
         sendPhoneCode(verification_id, code.code)
+    }
+
+    const postUserInfoFiles = (files) => {
+        console.log(files.files);
+        postUserFiles(files.files);
     }
 
     return (
@@ -85,7 +91,7 @@ const SecureUserArea = (props) => {
             <ModalUserFiles
                 modalFiles={modalFiles}
                 openModalFiles={openModalFiles}
-                onSubmit={submitEmail}/>
+                onSubmit={postUserInfoFiles}/>
         </div>
     );
 };
@@ -99,4 +105,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default compose(connect(mapStateToProps, {getUserData, takeCodeForPhone, sendPhoneCode}), withAuthRedirect)(SecureUserArea);
+export default compose(connect(mapStateToProps, {getUserData, takeCodeForPhone, sendPhoneCode, postUserFiles}), withAuthRedirect)(SecureUserArea);
