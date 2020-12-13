@@ -216,6 +216,21 @@ const authApi = {
             }),
         });
     },
+
+    async postUserFiles(files) {
+        console.log('FILEEES:', files)
+
+        const data = new FormData();
+        for (const file of files) {
+            data.append('file', file, file.name)
+        }
+
+        return await this.request(`/media/files/user/passport/`, {
+            method: "POST",
+            headers: {'Authorization': `Bearer ${localStorage.getItem('jwt')}`},
+            body: data,
+        });
+    },
 };
 
 const dealApi = {
