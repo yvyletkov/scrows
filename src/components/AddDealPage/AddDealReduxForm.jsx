@@ -35,7 +35,8 @@ export default connect(mapStateToProps, {})(reduxForm({form: 'addDeal', validate
 const renderField = ({textarea, input, id, value, placeholder, className, name, type, meta: {touched, error, warning}}) => {
     let classNames = cx(className, {'is-invalid': touched && error, 'is-valid': touched && !error})
 
-    if(textarea) return <textarea {...input} className={classNames} value={value} name={name} id={id} placeholder={placeholder}/>
+    if (textarea) return <textarea {...input} className={classNames} value={value} name={name} id={id}
+                                   placeholder={placeholder}/>
 
     return <input {...input} className={classNames} value={value} name={name} id={id} placeholder={placeholder}
                   type={type}/>
@@ -49,18 +50,19 @@ class renderFileInputField extends React.Component {
 
     onChange(e) {
         const {input: {onChange}} = this.props
-        onChange(e.target.files[0])
+        onChange(e.target.files)
     }
 
     render() {
         const {id, name} = this.props
         return (
             <input style={{visibility: 'hidden'}}
-                id={id}
-                type='file'
+                   id={id}
+                   type='file'
                    name={name}
-                accept='.jpg, .png, .jpeg'
-                onChange={this.onChange}
+                   multiple
+                   accept='.jpg, .png, .jpeg'
+                   onChange={this.onChange}
             />
         )
     }
@@ -134,7 +136,8 @@ const Step1 = ({setStep, userRole, dealType, active}) => {
                     <p className='mb-3'>Вы можете прикрепить к сделки техническое задание и/или другие
                         файлы: </p>
                     <div className="custom-file mb-3">
-                        <Field component={renderFileInputField} name='files' type="file" className="custom-file-input" id="customFile"/>
+                        <Field component={renderFileInputField} name='files' type="file" className="custom-file-input"
+                               id="customFile"/>
                         <label className="custom-file-label" htmlFor="customFile">Нажмите, чтобы выбрать
                             файлы</label>
                     </div>

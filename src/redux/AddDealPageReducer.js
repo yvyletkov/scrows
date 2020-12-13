@@ -30,7 +30,8 @@ export const postNewDeal = (data) => (dispatch) => {
     api
         .postNewDeal(data)
         .then((response) => {
-            dispatch(setAddSuccess());
+            console.log('ДАННЫЕ', response)
+            dispatch(postDealFiles(response.id, data.files))
             dispatch(toggleIsFetching(false));
         })
         .catch((err) => {
@@ -44,7 +45,7 @@ export const postDealFiles = (id, files) => (dispatch) => {
     api
         .postDealFiles(id, files)
         .then((response) => {
-            dispatch(setAddSuccess());
+            if (response[0].file_type) dispatch(setAddSuccess())
             dispatch(toggleIsFetching(false));
         })
         .catch((err) => {

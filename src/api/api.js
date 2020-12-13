@@ -298,12 +298,12 @@ const dealApi = {
 
         const data = new FormData();
         for (const file of files) {
-            data.append('files', file, file.name)
+            data.append('file', file, file.name)
         }
 
         return await this.request(`/media/files/deal/${id}/attachments/`, {
             method: "POST",
-            headers: {...this.headers, 'Content-Type': 'multipart/form-data'},
+            headers: {'Authorization': `Bearer ${localStorage.getItem('jwt')}`},
             body: data,
         });
     },
