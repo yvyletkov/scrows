@@ -21,23 +21,24 @@ class renderFileInputField extends React.Component {
 
     render() {
         const {id, name} = this.props
-        let nameFile;
+        let nameFile = [];
         if(this.props.input.value){
             for( let file of this.props.input.value) {
-                nameFile = file.name;
+                nameFile.push(file.name);
             }
         }
 
         return (
             <>
                 <input style={{visibility: 'hidden'}}
-                   id={id}
-                   type='file'
-                   name={name}
-                   accept='.jpg, .png, .jpeg'
-                   onChange={this.onChange}/>
+                       id={id}
+                       type='file'
+                       name={name}
+                       accept='.jpg, .png, .jpeg'
+                       multiple
+                       onChange={this.onChange}/>
                 <label className="custom-file-label" htmlFor="customFile">
-                    {this.props.input.value ? nameFile : 'Выберите файл'}
+                    {this.props.input.value ? nameFile.join(" ").slice(0, 40) : 'Выберите файл'}
                 </label>
             </>
         )
@@ -53,6 +54,7 @@ const ModalFiles = (props) => {
         submitting,
         openModalFiles,
         modalFiles,
+        entity_type
     } = props;
 
     return (
@@ -66,18 +68,25 @@ const ModalFiles = (props) => {
                 <AlertSuccess show={false} text={"Информация сохранена"}/>
                 <AlertDanger show={false} text={"Не удалось сохранить данные"}/>
                 <ModalBody>
-                        <form className={s.formModal} onSubmit={handleSubmit}>
-                            <div className="custom-file mb-3">
-                                <Field component={renderFileInputField} name='files' type="file" className="custom-file-input" id="customFile"/>
-                                {/*<label className="custom-file-label" htmlFor="customFile">*/}
-                                {/*    Нажмите, чтобы выбрать файлы</label>*/}
-                            </div>
-                            <button
-                                type="submit"
-                                className="btn btn-success mt-3"
-                                disabled={submitting || pristine}>
-                                Отправить файлы на проверку
-                            </button>
+                    <h5 style={{textAlign:'center'}}>Загрузите следующие документы:</h5>
+                    <ul>
+                        {entity_type==="entity" ?
+                            <>
+                                <li className={s.typeDocuments}>Свидетельство о регистрации ЮЛ/ИП</li>
+                                <li className={s.typeDocuments}>Паспорт директора или лица исполняющие его обязанности ( в таком случае еще и доверенность от руководителя)</li>
+                            </> :
+                            <li className={s.typeDocuments}>- Паспорт (страница с фото, страница с регистрацией)</li>
+                        }
+                    </ul>
+                    <form className={s.formModal} onSubmit={handleSubmit}>
+                        <div className="custom-file mb-3">
+                            <Field component={renderFileInputField} name='files' type="file" className="custom-file-input" id="customFile"/>
+                        </div>
+                        <button
+                            type="submit"
+                            className="btn btn-success mt-3"
+                            disabled={submitting || pristine}>Отправить файлы на проверку
+                        </button>
                         </form>
                 </ModalBody>
             </Modal>
@@ -95,6 +104,7 @@ const ModalUserFiles = reduxForm({
 const mapStateToProps = (state) => {
     return {
         files: state.infoUser.files,
+        entity_type: state.infoUser.entity_type,
     };
 };
 
