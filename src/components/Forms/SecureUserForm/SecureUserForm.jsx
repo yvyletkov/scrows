@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
-import PersonalAreaCard from "../../shared/PersonalAreaTabs/PersonalAreaTabs";
 import s from "./SecureUserForm.module.css";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
@@ -8,7 +7,6 @@ import MobilePersonalAreaTabs from "../../shared/MobilePersonalAreaTabs/MobilePe
 import keyIcon from "../../../img/icons/key.svg";
 import PhoneUserReduxForm from "./ModalPhone";
 import {getUserData} from "../../../redux/PersonalAreaReducer";
-import EmailUserReduxForm from "./ModalEmail";
 import emailIcon from "../../../img/icons/email.svg";
 import phoneIcon from "../../../img/icons/phone.svg";
 import filesIcon from "../../../img/icons/files.svg";
@@ -47,8 +45,8 @@ const SecureUserArea = (props) => {
     }
 
     const postUserInfoFiles = (files) => {
-        console.log(files.files);
         postUserFiles(files.files);
+        openModalFiles(!modalFiles);
     }
 
     return (
@@ -60,15 +58,15 @@ const SecureUserArea = (props) => {
                     <div className="card-body">
                         <div className="row">
                             <div className="col-12">
+                                <div className={s.securityFieldEmail}>
+                                    <img className={s.securityIcon} src={emailIcon} alt="Email"/>
+                                    <span className={s.fieldName}>Email</span>
+                                    <p className={s.fieldDesc}>{email}</p>
+                                </div>
                                 <div className={s.securityField} onClick={() => openModalPhone(!modalPhone)}>
                                     <img className={s.securityIcon} src={phoneIcon} alt="Телефон"/>
                                     <span className={s.fieldName}>Номер телефона</span>
                                     <p className={s.fieldDesc}>{phone}</p>
-                                </div>
-                                <div className={s.securityField} onClick={() => openModalEmail(!modalEmail)}>
-                                    <img className={s.securityIcon} src={emailIcon} alt="Email"/>
-                                    <span className={s.fieldName}>Email</span>
-                                    <p className={s.fieldDesc}>{email}</p>
                                 </div>
                                 <div className={s.securityField}>
                                     <img className={s.securityIcon} src={keyIcon} alt="Пароль"/>
@@ -77,12 +75,11 @@ const SecureUserArea = (props) => {
                                 </div>
                                 <div className={s.securityField} onClick={() => openModalFiles(!modalFiles)}>
                                     <img className={s.securityIcon} src={filesIcon} alt="files"/>
-                                    <span className={s.fieldName}>Добавьте сканы личных данных</span>
+                                    <span className={s.fieldName}>Загрузить документы</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-            <EmailUserReduxForm openModalEmail={openModalEmail} modalEmail={modalEmail} onSubmit={submitEmail}/>
             <PhoneUserReduxForm
                 modalPhone={modalPhone}
                 openModalPhone={openModalPhone}

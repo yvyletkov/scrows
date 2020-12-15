@@ -1,4 +1,5 @@
 import {api} from "../api/api";
+import {setSuccess} from "./AddDealPageReducer";
 
 let initialState = {
   last_name: null,
@@ -256,16 +257,24 @@ export const sendPhoneCode = (id, code) => (dispatch) => {
 
 export const postUserFiles = (files) => (dispatch) => {
   // dispatch(toggleIsFetching(true));
-  api.postUserFiles(files)
-      .then((response) => {
-        console.log(response)
-        // dispatch(setVerificationId(response));
-        // dispatch(showCodePhoneForm(true))
-        // dispatch(toggleIsFetching(false));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  for (let i = 0; i <= files.length; i++) {
+    api.postUserFiles(files[i])
+        .then((response) => {
+          if (response[0].file_type) {
+            if (i === files.length - 1) {
+              // dispatch(setSuccess())
+              // dispatch(toggleIsFetching(false))
+              console.log(response)
+            }
+          }
+          // dispatch(setVerificationId(response));
+          // dispatch(showCodePhoneForm(true))
+          // dispatch(toggleIsFetching(false));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
 };
 
 export const setUserData = (data) => ({ type: "SET_USER_DATA", payload: data });

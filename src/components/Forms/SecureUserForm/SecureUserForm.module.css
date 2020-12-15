@@ -33,6 +33,18 @@
     align-items: center;
 }
 
+.securityFieldEmail {
+    display: flex;
+    height:50px;
+    border-radius: 20px;
+    align-items: center;
+    cursor: no-drop;
+}
+
+.typeDocuments {
+    font-size: 13px;
+}
+
 .formModal {
     display: flex;
     flex-direction: column;
