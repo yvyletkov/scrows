@@ -1,4 +1,6 @@
 import {api} from "../api/api";
+import Swal from 'sweetalert2'
+
 
 let initialState = {
     notFound: false,
@@ -193,6 +195,12 @@ export const makeTransition = (dealId, keyword) => (dispatch) => {
         .then((response) => {
             dispatch(setDealInfo(response));
             dispatch(toggleIsFetching(false));
+            Swal.fire({
+                icon: 'success',
+                title: 'Сделка успешно переведена на следующий этап',
+                showConfirmButton: false,
+                timer: 2000
+            })
         })
         .catch((err) => {
             console.log(err);
