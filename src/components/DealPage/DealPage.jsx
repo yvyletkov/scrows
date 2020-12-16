@@ -3,13 +3,13 @@ import s from "./DealPage.module.css";
 import './DealPage.module.css'
 import {connect} from "react-redux";
 import {
-    getActions,
+    getTransitions,
     getDealInfo,
     getMessages,
     getHistory,
     getPossibleStatuses,
     postNewMessage,
-    sendAction
+    makeTransition
 } from "../../redux/DealPageReducer";
 import Sidebar from "./parts/Sidebar";
 import StatusTimeline from "./parts/StatusTimeline";
@@ -20,9 +20,23 @@ import Preloader from "../shared/Preloader/Preloader";
 import {NavLink} from "react-router-dom";
 import {getChatMessages, getDealHistory} from "../../redux/reselect";
 
-const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, getActions, getMessages, postNewMessage, getHistory, notFound, ...props}) => {
+export const TransitionButtons = ({makeTransition, dealId, transitions, mediaQuery}) => {
 
-    console.log('HISTORY', props.history);
+    console.log('TRANSIRIONS PROPS', dealId)
+
+    const handleClick = (keyword) => {
+        makeTransition(dealId, keyword)
+    }
+    if (window.matchMedia(mediaQuery).matches) {
+        if (transitions.length)
+            return transitions.map(item => <div onClick={() => handleClick(item.keyword)}
+                                                className='btn w-100 mb-3 btn-success'>{item.transition_description}</div>)
+        else return <div className='btn disabled w-100 mb-3 btn-success'>Сейчас Вам недоступен переход<br/>к следующему статусу сделки</div>
+    }
+    else return null
+}
+
+const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, getTransitions, getMessages, postNewMessage, getHistory, notFound, ...props}) => {
 
     const idForRequest = props.match.params.id;
     const priceString = props.price && props.price.toString().replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ');
@@ -30,13 +44,13 @@ const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, getActions, g
     React.useEffect(() => {
         getDealInfo(idForRequest);
         getPossibleStatuses();
-        getActions(idForRequest);
+        getTransitions(idForRequest);
         getMessages(idForRequest);
         getHistory(idForRequest)
     }, [idForRequest]);
 
     React.useEffect(() => {
-        const interval = setInterval( () => getMessages(idForRequest), 4000);
+        const interval = setInterval(() => getMessages(idForRequest), 4000);
         return clearInterval(interval);
     }, []);
 
@@ -67,7 +81,7 @@ const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, getActions, g
                 </div>
                 {notFound ? <div className="card-body">
                     <NavLink className='btn btn-light' to={'/deals'}>Вернуться к списку сделок</NavLink>
-                </div> : null }
+                </div> : null}
             </div>
 
 
@@ -75,9 +89,12 @@ const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, getActions, g
             <StatusTimeline currentStatusPriority={props.status.priority} possibleStatuses={props.possibleStatuses}/>}
 
             {!notFound && <div className='row mt-4'>
-                <div className='col-md-8 px-0 px-md-3'>
+                <div className='col-md-8 px-md-3'>
 
                     <div className={'p-0 ' + s.main}>
+
+                        <TransitionButtons makeTransition={props.makeTransition} dealId={props.dealId}
+                                           mediaQuery={'(max-width: 767px)'} transitions={props.transitions}/>
 
                         <div className='row mb-lg-0 m-0'>
 
@@ -98,14 +115,15 @@ const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, getActions, g
 
                         </div>
 
-                        <DealHistory history={props.history} />
-                        <Chat onChatFormSubmit={onChatFormSubmit} chatMessages={chatMessages} participants={props.participants}/>
+                        <DealHistory history={props.history}/>
+                        <Chat onChatFormSubmit={onChatFormSubmit} chatMessages={chatMessages}
+                              participants={props.participants}/>
 
                     </div>
 
                 </div>
 
-                <div className='col-md-4 pl-md-0 px-0 px-md-3'>
+                <div className='col-md-4 pl-md-0 px-md-3'>
 
                     <Sidebar {...props}/>
 
@@ -119,7 +137,7 @@ let mapStateToProps = (state) => {
     return {
         notFound: state.deal.notFound,
         dealId: state.deal.dealId,
-        actions: state.deal.actions,
+        transitions: state.deal.transitions,
         participants: state.deal.participants,
         createdAt: state.deal.createdAt,
         subject: state.deal.subject,
@@ -136,4 +154,12 @@ let mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {getDealInfo, getPossibleStatuses, getActions, sendAction, getMessages, getHistory, postNewMessage})(DealPage);
+export default connect(mapStateToProps, {
+    getDealInfo,
+    getPossibleStatuses,
+    getTransitions,
+    makeTransition,
+    getMessages,
+    getHistory,
+    postNewMessage
+})(DealPage);

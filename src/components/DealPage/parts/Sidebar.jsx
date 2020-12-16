@@ -2,12 +2,15 @@ import React from "react";
 import s from "../DealPage.module.css";
 import vvpImg from "../../../img/vvp.jpg";
 import damImg from "../../../img/dam.jpg";
+import {TransitionButtons} from "../DealPage";
 
 const ParticipantCard = ({participant, img}) => {
-    return <div className={`card shadow-none mt-3 mb-3 mt-md-0 ${s.sidebarCard}`}>
-        <div className='card-header'>
+    const [opened, setOpened] = React.useState(false)
+
+    return <div className={`card shadow-none mt-3 mb-3 mt-md-0 ${s.sidebarCard} ${opened && s.opened}`}>
+        <div style={{cursor: 'pointer'}} className='card-header' onClick={() => setOpened(!opened)}>
             <span className={'text-lg-left text-center font-weight-bold'}>
-                {participant.role.title} {participant.me && "(это Вы)"}
+                <span style={{marginRight: '5px'}}>{opened ? "–" : "+"}</span> {participant.role.title} {participant.me && "(это Вы)"}
             </span>
         </div>
         <div className='card-body'>
@@ -22,6 +25,8 @@ const ParticipantCard = ({participant, img}) => {
 }
 
 const Sidebar = (props) => {
+
+    console.log('PROPS', props)
 
     const createdAt = new Date(props.createdAt).toLocaleString('ru', {
         year: 'numeric',
@@ -51,21 +56,14 @@ const Sidebar = (props) => {
         commission_label = "Сумма к оплате"
     }
 
-    const goToNextStatus = (payload) => {
-        props.sendAction(payload)
-    };
-
     return (<>
 
-        {props.actions ? props.actions.map(item => {
-            return <div onClick={() => goToNextStatus(item.payload)}
-                        className='btn w-100 mb-3 btn-success'>{item.text}</div>
-        }) : null}
+        <TransitionButtons makeTransition={props.makeTransition} dealId={props.dealId} mediaQuery={'(min-width: 768px)'} transitions={props.transitions}/>
 
         <ParticipantCard participant={props.participants[0]} img={vvpImg}/>
         <ParticipantCard participant={props.participants[1]} img={damImg}/>
 
-        <div className={`card mt-3 shadow-none ${s.sidebarCard}`}>
+        <div style={{maxHeight: 'none'}} className={`card mt-3 shadow-none ${s.sidebarCard}`}>
             <div className='card-header'>
                 <div className={'text-lg-left text-center font-weight-bold'}>Описание сделки</div>
             </div>
@@ -93,7 +91,7 @@ const Sidebar = (props) => {
                     </tr>
 
                     <tr>
-                        <td>Комиссия пощадки</td>
+                        <td>Комиссия пощадки для Вас</td>
                         <td>{props.commissionAmount} руб.</td>
                     </tr>
 

@@ -194,7 +194,7 @@ const Step2 = ({setStep, userRole, dealType, whoPays, price, active}) => {
                     <div className="custom-controls-stacked">
                         <div className="custom-control custom-radio mr-3">
                             <Field component='input' type="radio" id="radioWhoPays1" name="whoPays"
-                                   value={'1'}
+                                   value={'2'}
                                    className="custom-control-input"/>
                             <label className="custom-control-label"
                                    htmlFor="radioWhoPays1">
@@ -207,13 +207,13 @@ const Step2 = ({setStep, userRole, dealType, whoPays, price, active}) => {
                                    className="custom-control-input" value={'2'}/>
                             <label className="custom-control-label"
                                    htmlFor="radioWhoPays2">
-                                {dealType === '1' ? 'Покупатель' : 'Заказчик'}
+                                {dealType === '3' ? 'Покупатель' : 'Заказчик'}
                             </label>
                         </div>
 
                         <div className="custom-control custom-radio">
                             <Field component='input' type="radio" id="radioWhoPays3" name="whoPays"
-                                   className="custom-control-input" value={'3'}/>
+                                   className="custom-control-input" value={'1'}/>
                             <label className="custom-control-label"
                                    htmlFor="radioWhoPays3">
                                 50% –{dealType === '1' ? ' Продавец' : ' Исполнитель'}, 50% –

@@ -269,22 +269,20 @@ const dealApi = {
         });
     },
 
-    async getActions(id) {
+    async getTransitions(id) {
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
-        return await this.request(`/actions/deals/${id}/`, {
+        return await this.request(`/deals/transitions/deal/${id}/`, {
             method: "GET",
             headers: this.headers,
         });
     },
 
-    async sendAction(payload) {
+    async makeTransition(dealId, keyword) {
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
 
-        const url = payload.request_url.slice(7);
-        return await this.request(url, {
+        return await this.request(`/deals/transitions/deal/${dealId}/provide/${keyword}/`, {
             method: "POST",
             headers: this.headers,
-            body: JSON.stringify(payload.content),
         });
     },
 

@@ -151,7 +151,14 @@
 
 .sidebarCard {
     position: relative;
+    max-height: calc(1.09375rem * 2 + 1.09375rem);
+    overflow: hidden;
+    border-radius: .625rem;
+    transition: all 400ms;
+}
 
+.sidebarCard.opened {
+    max-height: 20rem;
 }
 
 .sidebarCard .cardImg {
