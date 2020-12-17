@@ -277,6 +277,22 @@ export const postUserFiles = (files) => (dispatch) => {
     }
 };
 
+export const postUserAvatar = (file) => (dispatch) => {
+  // dispatch(toggleIsFetching(true));
+    api.postUserAvatar(file)
+        .then((response) => {
+              // dispatch(setSuccess())
+              // dispatch(toggleIsFetching(false))
+              console.log(response)
+          // dispatch(setVerificationId(response));
+          // dispatch(showCodePhoneForm(true))
+          // dispatch(toggleIsFetching(false));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+};
+
 export const setUserData = (data) => ({ type: "SET_USER_DATA", payload: data });
 export const setSecureData = (data) => ({
   type: "SET_SECURE_DATA",
