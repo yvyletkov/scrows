@@ -229,6 +229,18 @@ const authApi = {
             body: data,
         });
     },
+    async postUserAvatar(file) {
+        console.log('FILEEES:', file)
+
+        const data = new FormData();
+        data.append('file', file, file.name)
+
+        return await this.request(`/media/files/user/avatar/`, {
+            method: "POST",
+            headers: {'Authorization': `Bearer ${localStorage.getItem('jwt')}`},
+            body: data,
+        });
+    },
 };
 
 const dealApi = {

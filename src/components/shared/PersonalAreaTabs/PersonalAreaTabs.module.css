@@ -7,6 +7,31 @@
   color:#171717;
 }
 
+.iconClose {
+  width: 13px;
+  display: flex;
+  position: absolute;
+  right: 8px;
+  top: 10px;
+  cursor: pointer;
+  padding: 5px;
+  box-sizing: content-box;
+}
+
+.modalWindow {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%) !important;
+  width: 350px;
+  height: 200px;
+}
+
+.avatarForm {
+  display: flex;
+  flex-direction: column;
+}
+
 .navProfileTabs {
   color:#171717;
   border-bottom-right-radius: .375rem;
