@@ -7,23 +7,32 @@ import persIcon from "../../../img/icons/personal-data.svg";
 import personalDataIcon from "../../../img/icons/information.svg";
 import secureIcon from "../../../img/icons/secure.svg";
 import dealsIcon from "../../../img/icons/handshake-active.svg";
-import {getUserData, postUserAvatar} from "../../../redux/PersonalAreaReducer";
+import {getUserAvatar, getUserData, postUserAvatar} from "../../../redux/PersonalAreaReducer";
 import s from "./PersonalAreaTabs.module.css";
 import ModalAvatarForm from "./ModalAvatar";
+import noAvatarUser from "../../../img/noAvatarUser.png"
 
 const PersonalAreaTabs = (props) => {
-  const {avatar, name, last_name, getUserData, entity_type, postUserAvatar} = props;
+    const {
+        avatar,
+        name,
+        last_name,
+        getUserData,
+        entity_type,
+        postUserAvatar,
+        getUserAvatar,
+        userId
+    } = props;
 
-  const handleSubmit = (data) => {
-      postUserAvatar(data.avatar[0])
-    console.log(data.avatar[0])
-  }
+    const handleSubmit = (data) => {
+        postUserAvatar(data.avatar[0])
+    }
 
-  const userTypeTabs = entity_type === "entity" ?
-      (<li className="nav-item">
-        <NavLink to="/profile/entity-info" className={`nav-link ${s.navProfileTabs}`}>
-          <img className={s.navIcon} src={entityIcon} alt="entity-icon"/>Данные юр.лица
-        </NavLink>
+    const userTypeTabs = entity_type === "entity" ?
+        (<li className="nav-item">
+            <NavLink to="/profile/entity-info" className={`nav-link ${s.navProfileTabs}`}>
+                <img className={s.navIcon} src={entityIcon} alt="entity-icon"/>Данные юр.лица
+            </NavLink>
       </li>)
       :
       (<li className="nav-item">
@@ -32,11 +41,12 @@ const PersonalAreaTabs = (props) => {
         </NavLink>
       </li>);
   let userType = entity_type === "entity" ? "Юридическое" : "Физическое";
-  let imageAvatar = avatar ? avatar : 'https://www.shareicon.net/data/512x512/2017/01/06/868320_people_512x512.png';
+  let imageAvatar = avatar ? `https://api.scrows.ml/api/v1/media/get/${avatar.name}` : noAvatarUser;
 
   useEffect(() => {
     getUserData();
-  }, [last_name, avatar, name]);
+    getUserAvatar(userId);
+  }, [last_name, name]);
 
     const [modalAvatar, openModalAvatar] = useState(false);
 
@@ -98,11 +108,12 @@ const PersonalAreaTabs = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    name: state.infoUser.name,
-    last_name: state.infoUser.last_name,
-    avatar: state.infoUser.avatar,
-    entity_type: state.infoUser.entity_type,
+      name: state.infoUser.name,
+      last_name: state.infoUser.last_name,
+      avatar: state.infoUser.avatar,
+      entity_type: state.infoUser.entity_type,
+      userId: state.infoUser.id,
   };
 };
 
-export default connect(mapStateToProps, { getUserData, postUserAvatar })(PersonalAreaTabs);
+export default connect(mapStateToProps, {getUserData, postUserAvatar, getUserAvatar})(PersonalAreaTabs);

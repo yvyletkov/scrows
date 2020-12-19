@@ -1,32 +1,33 @@
 import {api} from "../api/api";
-import {setSuccess} from "./AddDealPageReducer";
 
 let initialState = {
-  last_name: null,
-  name: null,
-  middle_name: null,
-  date_of_birth: null,
-  gender: null,
-  avatar: null,
-  entity_type: null,
-  email: null,
-  phone: null,
-  isFetching: false,
-  document_type: null,
-  passport_data_created: null,
-  passport_data_number: null,
-  passport_data_code: null,
-  judical_type: null,
-  entity_id: null,
-  entity_tin: null,
-  entity_name:null,
-  entity_bank_account_data: null,
-  payment_data: [],
-  alertSuccessShow:false,
-  alertErrorShow:false,
-  urlRedirect:'',
-  showCodePhoneForm:false,
-  verification_id: null,
+    id: null,
+    last_name: null,
+    name: null,
+    middle_name: null,
+    date_of_birth: null,
+    gender: null,
+    avatar: [],
+    entity_type: null,
+    email: null,
+    phone: null,
+    isFetching: false,
+    document_type: null,
+    passport_data_created: null,
+    passport_data_number: null,
+    passport_data_code: null,
+    judical_type: null,
+    entity_id: null,
+    entity_tin: null,
+    entity_name: null,
+    entity_bank_account_data: null,
+    payment_data: [],
+    alertSuccessShow: false,
+    alertErrorShow: false,
+    urlRedirect: '',
+    showCodePhoneForm: false,
+    verification_id: null,
+    verified: true
 };
 
 const personalAreaReducer = (state = initialState, action) => {
@@ -76,6 +77,9 @@ const personalAreaReducer = (state = initialState, action) => {
     }
     case "SET_URL_REDIRECT": {
       return { ...state, urlRedirect: action.payload.redirect_url };
+    }
+    case "SET_USER_AVATAR": {
+        return { ...state, avatar: action.payload[0] };
     }
     case "SET_VERIFICATION_ID": {
       return { ...state, ...action.payload };
@@ -281,15 +285,21 @@ export const postUserAvatar = (file) => (dispatch) => {
   // dispatch(toggleIsFetching(true));
     api.postUserAvatar(file)
         .then((response) => {
-              // dispatch(setSuccess())
-              // dispatch(toggleIsFetching(false))
               console.log(response)
-          // dispatch(setVerificationId(response));
-          // dispatch(showCodePhoneForm(true))
-          // dispatch(toggleIsFetching(false));
         })
         .catch((err) => {
           console.log(err);
+        });
+};
+
+export const getUserAvatar = (userId) => (dispatch) => {
+    // dispatch(toggleIsFetching(true));
+    api.getUserAvatar(userId)
+        .then((response) => {
+            dispatch(setUserAvatar(response))
+        })
+        .catch((err) => {
+            console.log(err);
         });
 };
 
@@ -302,9 +312,15 @@ export const toggleIsFetching = (status) => ({
   type: "TOGGLE-IS-FETCHING",
   status: status,
 });
+
 export const setIndividualData = (data) => ({
   type: "SET_INDIVIDUAL_DATA",
   payload: data,
+});
+
+export const setUserAvatar = (data) => ({
+    type: "SET_USER_AVATAR",
+    payload: data,
 });
 
 export const setUrlRedirect = (data) => ({

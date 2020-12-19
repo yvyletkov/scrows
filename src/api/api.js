@@ -241,6 +241,12 @@ const authApi = {
             body: data,
         });
     },
+    async getUserAvatar(userId) {
+        return await this.request(`/media/files/user/${userId}/avatar`, {
+            method: "GET",
+            headers: {'Authorization': `Bearer ${localStorage.getItem('jwt')}`},
+        });
+    },
 };
 
 const dealApi = {

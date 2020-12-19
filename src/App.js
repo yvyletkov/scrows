@@ -1,9 +1,9 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "shards-ui/dist/css/shards.min.css";
 import "./App.css";
 import LoginPage from "./components/LoginPage/LoginPage";
-import {Redirect, BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
 import RegistrationPage from './components/RegistrationPage/RegistrationPage';
 import DealPage from "./components/DealPage/DealPage";
 import {connect, Provider} from "react-redux";

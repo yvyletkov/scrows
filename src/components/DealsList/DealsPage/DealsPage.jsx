@@ -10,7 +10,7 @@ import DealsListTabs from "../../shared/DealsListTabs/DealsListTabs";
 import MobilePersonalAreaTabs from "../../shared/MobilePersonalAreaTabs/MobilePersonalAreaTabs";
 
 const DealsPage = (props) => {
-    const {getDealsData, deals, isFetching} = props;
+    const {getDealsData, deals, isFetching, verified} = props;
     useEffect(() => {
         getDealsData()
     }, []);
@@ -48,26 +48,41 @@ const DealsPage = (props) => {
     })
 
     return (
-                    <div className="card shadow-none col-lg-8 p-0 col-12">
-                        <MobilePersonalAreaTabs/>
-                        <div className="card-header">
-                            <div className="col-12 d-flex my-3 align-items-center">
-                                <h5 className="m-0">Список сделок</h5>
-                                <NavLink className="btn btn-success ml-auto" to="/new-deal">Создать сделку</NavLink>
-                            </div>
-                            <DealsListTabs />
+            verified ?
+                <div className="card shadow-none col-lg-8 p-0 col-12">
+                    <div className="card-header">
+                        <div className="col-12 d-flex my-3 align-items-center">
+                            <h5 className="m-0">Список сделок</h5>
+                            <NavLink className="btn btn-success ml-auto" to="/new-deal">Создать сделку</NavLink>
                         </div>
-                        <div className="card-body pt-0">
-                            {isFetching ? <Preloader/> : dealsList}
+                        <DealsListTabs/>
+                    </div>
+                    <div className="card-body pt-0">
+                        {isFetching ? <Preloader/> : dealsList}
+                    </div>
+                </div>
+                :
+                <div className="card shadow-none col-lg-8 p-0 col-12">
+                    <MobilePersonalAreaTabs/>
+                    <div className="card-header">
+                        <div className="col-12 d-flex my-3 align-items-center">
+                            <h5 className="m-0">Список сделок</h5>
                         </div>
                     </div>
+                    <div className="card-body pt-0">
+                        {isFetching ? <Preloader/> :
+                            <h4 className="text-center">Ваш аккаунт не верифицирован, загрузите документы или подтвердите номер телефона во
+                                вкладке безопасность</h4>}
+                    </div>
+                </div>
     )
 }
 
 const mapStateToProps = (state) => {
     return {
         deals: state.deals.deals,
-        isFetching: state.deals.isFetching
+        isFetching: state.deals.isFetching,
+        verified: state.infoUser.verified
     };
 };
 

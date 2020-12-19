@@ -75,7 +75,7 @@ const SecureUserArea = (props) => {
                                 </div>
                                 <div className={s.securityField} onClick={() => openModalFiles(!modalFiles)}>
                                     <img className={s.securityIcon} src={filesIcon} alt="files"/>
-                                    <span className={s.fieldName}>Загрузить документы</span>
+                                    <span className={s.fieldName}>Подтвержение аккаунта</span>
                                 </div>
                             </div>
                         </div>

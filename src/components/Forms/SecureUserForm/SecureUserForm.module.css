@@ -71,6 +71,7 @@
 .fieldDesc {
     padding: 1rem;
     margin-left: auto;
+    text-align: right;
 }
 
 .securityField:hover {
@@ -103,5 +104,11 @@
 @media screen and (max-width: 425px) {
     .userInfo {
         margin-bottom: 1rem;
+    }
+    .securityField {
+        height:unset;
+    }
+    .securityFieldEmail {
+        height: unset;
     }
 }
