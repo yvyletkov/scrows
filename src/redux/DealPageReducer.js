@@ -16,7 +16,16 @@ let initialState = {
         {
             invite: {id: null, type: ""},
             role: {id: null, title: "", assigned: null},
-            user: {name: "", last_name: "", middle_name: "", gender: "", entity_type: "", date_of_birth: "", email: "", id: null},
+            user: {
+                name: "",
+                last_name: "",
+                middle_name: "",
+                gender: "",
+                entity_type: "",
+                date_of_birth: "",
+                email: "",
+                id: null
+            },
             user_commission_amount: null,
             me: false,
             avatar: null,
@@ -24,7 +33,16 @@ let initialState = {
         {
             invite: {id: null, type: ""},
             role: {id: null, title: "", assigned: null},
-            user: {name: "", last_name: "", middle_name: "", gender: "", entity_type: "", date_of_birth: "", email: "", id: null},
+            user: {
+                name: "",
+                last_name: "",
+                middle_name: "",
+                gender: "",
+                entity_type: "",
+                date_of_birth: "",
+                email: "",
+                id: null
+            },
             user_commission_amount: null,
             me: false,
             avatar: null,
@@ -61,6 +79,15 @@ const dealPageReducer = (state = initialState, action) => {
                 ...state,
                 participants: [...action.payload]
             }
+        case "DEAL:SET-PARTICIPANTS-AVATARS":
+            return {
+                ...state,
+                participants: [
+                    {...state.participants[0], avatar: action.payload[0]},
+                    {...state.participants[1], avatar: action.payload[1]},
+                ]
+            }
+
         case "DEAL:SET-POSSIBLE-STATUSES":
             return {
                 ...state,
@@ -109,15 +136,16 @@ export const getDealInfo = (id) => (dispatch) => {
         .getDealInfo(id)
         .then(response => {
 
-            console.log('DEAL INFO:', response)
-            if (response.detail === 'Not found.') dispatch(setNotFound(true));
-            else {
-                dispatch(setNotFound(false));
-                dispatch(setDealInfo(response));
-                dispatch(setParticipantsData(response.participants));
-                dispatch(getParticipantsAvatars(response.participants[0], response.participants[1]))
-                dispatch(toggleIsFetching(false));
-            }}
+                console.log('DEAL INFO:', response)
+                if (response.detail === 'Not found.') dispatch(setNotFound(true));
+                else {
+                    dispatch(setNotFound(false));
+                    dispatch(setDealInfo(response));
+                    dispatch(setParticipantsData(response.participants));
+                    dispatch(getParticipantsAvatars(response.participants[0], response.participants[1]))
+                    dispatch(toggleIsFetching(false));
+                }
+            }
         )
         .catch((err) => {
             console.log(err);
@@ -264,21 +292,25 @@ export const makeTransition = (dealId, keyword) => (dispatch) => {
         });
 };
 
-export const getParticipantsAvatars = (userId1, userId2) => (dispatch) => {
-    api.getUserAvatar(userId1)
+export const getParticipantsAvatars = (participant1, participant2) => (dispatch) => {
+    let data = [];
+    const req1 = api.getUserAvatar(participant1.user.id)
         .then((response) => {
-            dispatch(setUserAvatar(response, userId1))
+            data = [...data, response[response.length - 1].name]
         })
         .catch((err) => {
             console.log(err);
         });
-    api.getUserAvatar(userId2)
+    const req2 = api.getUserAvatar(participant2.user.id)
         .then((response) => {
-            dispatch(setUserAvatar(response, userId2))
+            data = [...data, response[response.length - 1].name]
         })
         .catch((err) => {
             console.log(err);
         });
+    Promise.all([req1, req2]).then( () => {
+        dispatch(setParticipantsAvatars(data))
+    });
 };
 
 export const toggleIsFetching = status => ({type: "DEAL:TOGGLE-IS-FETCHING", status: status});
@@ -287,7 +319,7 @@ export const setNotFound = status => ({type: "DEAL:SET-NOT-FOUND", status: statu
 export const setMessages = data => ({type: "DEAL:SET-MESSAGES", payload: data});
 export const setDealHistory = data => ({type: "DEAL:SET-DEAL-HISTORY", payload: data});
 export const setDealInfo = data => ({type: "DEAL:SET-DEAL-INFO", payload: data});
-export const setUserAvatar = (data, id) => ({type: "DEAL:SET-USER-AVATAR", data: data, id: id});
+export const setParticipantsAvatars = (data) => ({type: "DEAL:SET-PARTICIPANTS-AVATARS", payload: data});
 export const setParticipantsData = data => ({type: "DEAL:SET-PARTICIPANTS-DATA", payload: data});
 export const setPossibleStatuses = data => ({type: "DEAL:SET-POSSIBLE-STATUSES", payload: data});
 export const setTransitions = data => ({type: "DEAL:SET-TRANSITIONS", payload: data});

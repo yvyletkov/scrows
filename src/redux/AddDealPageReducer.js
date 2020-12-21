@@ -52,7 +52,6 @@ export const postDealFiles = (id, files) => (dispatch) => {
         api
             .postDealFile(id, files[i])
             .then((response) => {
-                debugger
                 if (response[0].file_type) {
                     if (i === files.length - 1) {
                         dispatch(setSuccess())

@@ -108,7 +108,7 @@ const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, getTransition
                         {/*{!notFound && <div>{props.status.title}</div>}*/}
 
                         {!notFound &&
-                        <h4 className='mb-0'><span className="">Сумма: {priceString}₽</span></h4>}
+                        <h4 className='mb-0'><span className="">Сумма: {priceString} ₽</span></h4>}
 
                     </div>
                 </div>
