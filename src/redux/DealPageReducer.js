@@ -296,14 +296,14 @@ export const getParticipantsAvatars = (participant1, participant2) => (dispatch)
     let data = [];
     const req1 = api.getUserAvatar(participant1.user.id)
         .then((response) => {
-            data = [...data, response[response.length - 1].name]
+            data[0] = response[response.length - 1].name
         })
         .catch((err) => {
             console.log(err);
         });
     const req2 = api.getUserAvatar(participant2.user.id)
         .then((response) => {
-            data = [...data, response[response.length - 1].name]
+            data[1] = response[response.length - 1].name
         })
         .catch((err) => {
             console.log(err);
