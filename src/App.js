@@ -13,6 +13,7 @@ import Footer from "./components/Footer/Footer";
 import {withAuthRedirect} from "./hoc/withAuthRedirect";
 import Profile from "./components/Forms/Profile";
 import {checkIsAuth} from "./redux/AuthReducer";
+import ExtraPage from "./components/ExtraPage";
 
 function App(props) {
 
@@ -30,6 +31,7 @@ function App(props) {
                         <Route exact path="/deals/:id" component={withAuthRedirect(DealPage)}/>
                         <Route path="/profile" component={withAuthRedirect(Profile)}/>
                         <Route exact path="/" render={() => <Redirect to='/profile'/>}/>
+                        <Route path='/extra' component={ withAuthRedirect(ExtraPage) } />
                         <Route render={ () => <Redirect to={'/profile'}/>} />
                     </Switch>
                 </div>
