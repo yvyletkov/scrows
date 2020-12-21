@@ -14,10 +14,8 @@
 }
 
 .verifyIcon {
-    position: absolute;
     width: 15px;
-    top: 5px;
-    right: 0;
+    margin-left: 10px;
 }
 
 .iconClose {
@@ -66,6 +64,8 @@
     padding: 1rem;
     color:#171717;
     position: relative;
+    display: flex;
+    align-items: center;
 }
 
 .fieldDesc {

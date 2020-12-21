@@ -14,7 +14,8 @@ import {
     takeCodeForPhone,
     sendPhoneCode,
     postUserFiles,
-    resetUserPassword} from "../../../redux/PersonalAreaReducer";
+    resetUserPassword,
+    verifyEmail} from "../../../redux/PersonalAreaReducer";
 import ModalUserFiles from "./ModalFiles";
 import Swal from "sweetalert2";
 import verifyIcon from "../../../img/icons/checkColor.svg";
@@ -31,27 +32,24 @@ const SecureUserArea = (props) => {
         sendPhoneCode,
         postUserFiles,
         resetUserPassword,
-        verification
+        verification,
+        verifyEmail
     } = props;
 
     useEffect(() => {
         getUserData()
     }, [])
 
-    const [modalEmail, openModalEmail] = useState(false);
     const [modalPhone, openModalPhone] = useState(false);
     const [modalFiles, openModalFiles] = useState(false);
-
-    const submitEmail = (data) => {
-        console.log(data)
-    }
 
     const submitPhone = (phone) => {
         takeCodeForPhone(phone.phone)
     }
 
     const verifyPhone = (code) => {
-        sendPhoneCode(verification_id, code.code)
+        sendPhoneCode(verification_id, code.code);
+        openModalPhone(!modalPhone);
     }
 
     const postUserInfoFiles = (files) => {
@@ -79,7 +77,7 @@ const SecureUserArea = (props) => {
                                         cancelButtonText: 'Отмена'
                                     }).then((result) => {
                                         if (result.value) {
-                                            resetUserPassword();
+                                            verifyEmail();
                                         }
                                     })
                                 }>
@@ -89,7 +87,8 @@ const SecureUserArea = (props) => {
                                     </span>
                                     <p className={s.fieldDesc}>{email}</p>
                                 </div>
-                                <div className={s.securityField} onClick={() => verification.phone ?
+                                <div className={s.securityField} onClick={() =>
+                                    verification.phone ?
                                     openModalPhone(!modalPhone)
                                     :
                                     Swal.fire({
@@ -102,7 +101,7 @@ const SecureUserArea = (props) => {
                                         cancelButtonText: 'Отмена'
                                     }).then((result) => {
                                         if (result.value) {
-                                            resetUserPassword();
+                                            
                                         }
                                     })
                                 }>
@@ -169,5 +168,6 @@ export default compose(connect(mapStateToProps,
         takeCodeForPhone,
         sendPhoneCode,
         postUserFiles,
-        resetUserPassword
+        resetUserPassword,
+        verifyEmail
     }), withAuthRedirect)(SecureUserArea);

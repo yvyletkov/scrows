@@ -321,6 +321,23 @@ export const resetUserPassword = () => (dispatch) => {
         });
 };
 
+export const verifyEmail = () => (dispatch) => {
+    api.verifyEmail()
+        .then((response) => {
+            Swal.fire({
+                icon: 'success',
+                title: 'Подтвердите email',
+                text: 'Проверьте почту и подтвердите email',
+                showConfirmButton: false,
+                timer: 2000
+            })
+            console.log(response)
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+};
+
 export const setUserData = (data) => ({ type: "SET_USER_DATA", payload: data });
 export const setSecureData = (data) => ({
   type: "SET_SECURE_DATA",

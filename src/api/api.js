@@ -253,6 +253,13 @@ const authApi = {
             headers: {'Authorization': `Bearer ${localStorage.getItem('jwt')}`},
         });
     },
+
+    async verifyEmail() {
+        return await this.request('/users/profile/security/verify/email/', {
+            method: "POST",
+            headers: {'Authorization': `Bearer ${localStorage.getItem('jwt')}`},
+        });
+    },
 };
 
 const dealApi = {
