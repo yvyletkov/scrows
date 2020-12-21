@@ -247,6 +247,12 @@ const authApi = {
             headers: {'Authorization': `Bearer ${localStorage.getItem('jwt')}`},
         });
     },
+    async resetUserPassword() {
+        return await this.request('/users/profile/security/password/reset/', {
+            method: "POST",
+            headers: {'Authorization': `Bearer ${localStorage.getItem('jwt')}`},
+        });
+    },
 };
 
 const dealApi = {
