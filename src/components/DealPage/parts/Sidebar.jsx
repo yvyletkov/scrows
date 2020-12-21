@@ -58,7 +58,10 @@ const Sidebar = (props) => {
 
     return (<>
 
-        <TransitionButtons makeTransition={props.makeTransition} dealId={props.dealId} mediaQuery={'(min-width: 768px)'} transitions={props.transitions}/>
+        <TransitionButtons redirectForPay={props.redirectForPay} needsPay={props.needsPay}
+                           payMethods={props.payMethods}
+                           makeTransition={props.makeTransition} dealId={props.dealId}
+                           mediaQuery={'(min-width: 768px)'} transitions={props.transitions}/>
 
         <ParticipantCard participant={props.participants[0]} img={vvpImg}/>
         <ParticipantCard participant={props.participants[1]} img={damImg}/>

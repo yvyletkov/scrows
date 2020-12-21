@@ -38,6 +38,7 @@ export const postNewDeal = (data) => (dispatch) => {
             dispatch(setNewDealId(response.id))
             if (data.files) dispatch(postDealFiles(response.id, data.files))
             else dispatch(setSuccess())
+            dispatch(toggleIsFetching(false));
         })
         .catch((err) => {
             console.log(err);

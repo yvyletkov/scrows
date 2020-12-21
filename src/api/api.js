@@ -295,6 +295,22 @@ const dealApi = {
         });
     },
 
+    async getPayMethods(id) {
+        this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+        return await this.request(`/users/profile/payment/methods/deal/${id}/`, {
+            method: "GET",
+            headers: this.headers,
+        });
+    },
+
+    async redirectForPay(methodId, methodType, dealId) {
+        this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
+        return await this.request(`/users/profile/payment/pay/deal/${dealId}/${methodType}/${methodId}/`, {
+            method: "GET",
+            headers: this.headers,
+        });
+    },
+
     async makeTransition(dealId, keyword) {
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
 

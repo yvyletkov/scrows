@@ -9,7 +9,7 @@ import {
     getHistory,
     getPossibleStatuses,
     postNewMessage,
-    makeTransition
+    makeTransition, redirectForPay
 } from "../../redux/DealPageReducer";
 import Sidebar from "./parts/Sidebar";
 import StatusTimeline from "./parts/StatusTimeline";
@@ -18,22 +18,55 @@ import DealHistory from "./parts/DealHistory";
 import DealFiles from "./parts/DealFiles";
 import Preloader from "../shared/Preloader/Preloader";
 import {NavLink} from "react-router-dom";
-import {getChatMessages, getDealHistory} from "../../redux/reselect";
+import {getChatMessages, getDealHistory, getPayMethodsList} from "../../redux/reselect";
 
-export const TransitionButtons = ({makeTransition, dealId, transitions, mediaQuery}) => {
+export const TransitionButtons = ({makeTransition, needsPay, payMethods, dealId, transitions, mediaQuery, redirectForPay}) => {
+    //redirectForPay(item.id, item.type, dealId)
+    const [showPayBtn, setShowPayBtn] = React.useState(false)
+    let [id, setId] = React.useState(null);
+    let [type, setType] = React.useState(null);
 
-    console.log('TRANSIRIONS PROPS', dealId)
+    const onChange = (e) => {
+        setShowPayBtn(true);
+        let value = e.target.value
+        for (let item of payMethods) {
+            if (value === item.title) {
+                setId(item.id);
+                setType(item.type);
+            }
+        }
+    }
+
+    const onPayBtnClick = () => {
+        redirectForPay(id, type, dealId)
+    }
 
     const handleClick = (keyword) => {
         makeTransition(dealId, keyword)
     }
     if (window.matchMedia(mediaQuery).matches) {
-        if (transitions.length)
-            return transitions.map(item => <div onClick={() => handleClick(item.keyword)}
-                                                className='btn w-100 mb-3 btn-success'>{item.transition_description}</div>)
-        else return <div className='btn disabled w-100 mb-3 btn-success'>Сейчас Вам недоступен переход<br/>к следующему статусу сделки</div>
-    }
-    else return null
+        if (transitions.length) {
+            if (needsPay) {
+                return <>
+                    <div className='card shadow-none p-4 mb-3 bg-warning text-white'>
+                        <p className='mb-2'>Необходимо произвести оплату товара/услуги.</p>
+                        <p className='mb-2'>Выберите способ оплаты:</p>
+                        <select onChange={onChange} className="custom-select">
+                            <option disabled selected>–</option>
+                            {payMethods.map((item, index) => <option key={index}>{item.title}</option>)}
+                        </select>
+                    </div>
+                    <div hidden={!showPayBtn} onClick={onPayBtnClick}
+                         className='btn btn-warning text-white w-100 mb-3'>Произвести оплату
+                    </div>
+                </>
+
+            } else return transitions.map((item, index) => <div key={index}
+                                                                onClick={() => handleClick(item.keyword)}
+                                                                className='btn w-100 mb-3 btn-success'>{item.transition_description}</div>)
+        } else return <div className='btn disabled w-100 mb-3 btn-success'>Сейчас Вам недоступен переход<br/>
+            к следующему статусу сделки</div>
+    } else return null
 }
 
 const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, getTransitions, getMessages, postNewMessage, getHistory, notFound, ...props}) => {
@@ -86,14 +119,17 @@ const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, getTransition
 
 
             {!notFound &&
-            <StatusTimeline currentStatusPriority={props.status.priority} possibleStatuses={props.possibleStatuses}/>}
+            <StatusTimeline currentStatusPriority={props.status.priority}
+                            possibleStatuses={props.possibleStatuses}/>}
 
             {!notFound && <div className='row mt-4'>
                 <div className='col-md-8 px-md-3'>
 
                     <div className={'p-0 ' + s.main}>
 
-                        <TransitionButtons makeTransition={props.makeTransition} dealId={props.dealId}
+                        <TransitionButtons redirectForPay={props.redirectForPay} needsPay={props.needsPay}
+                                           payMethods={props.payMethods}
+                                           makeTransition={props.makeTransition} dealId={props.dealId}
                                            mediaQuery={'(max-width: 767px)'} transitions={props.transitions}/>
 
                         <div className='row mb-lg-0 m-0'>
@@ -138,6 +174,8 @@ let mapStateToProps = (state) => {
         notFound: state.deal.notFound,
         dealId: state.deal.dealId,
         transitions: state.deal.transitions,
+        needsPay: state.deal.needsPay,
+        payMethods: getPayMethodsList(state),
         participants: state.deal.participants,
         createdAt: state.deal.createdAt,
         subject: state.deal.subject,
@@ -161,5 +199,6 @@ export default connect(mapStateToProps, {
     makeTransition,
     getMessages,
     getHistory,
-    postNewMessage
+    postNewMessage,
+    redirectForPay,
 })(DealPage);
