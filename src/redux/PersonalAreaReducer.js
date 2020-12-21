@@ -1,4 +1,5 @@
 import {api} from "../api/api";
+import Swal from "sweetalert2";
 
 let initialState = {
     id: null,
@@ -27,7 +28,8 @@ let initialState = {
     urlRedirect: '',
     showCodePhoneForm: false,
     verification_id: null,
-    verified: true
+    verified: false,
+    verification: []
 };
 
 const personalAreaReducer = (state = initialState, action) => {
@@ -297,6 +299,22 @@ export const getUserAvatar = (userId) => (dispatch) => {
     api.getUserAvatar(userId)
         .then((response) => {
             dispatch(setUserAvatar(response))
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+};
+
+export const resetUserPassword = () => (dispatch) => {
+    api.resetUserPassword()
+        .then((response) => {
+            Swal.fire({
+                icon: 'success',
+                title: 'Пароль успешно сброшен',
+                showConfirmButton: false,
+                timer: 2000
+            })
+            console.log(response)
         })
         .catch((err) => {
             console.log(err);

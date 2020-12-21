@@ -24,10 +24,6 @@ const PersonalAreaTabs = (props) => {
         userId
     } = props;
 
-    const handleSubmit = (data) => {
-        postUserAvatar(data.avatar[0])
-    }
-
     const userTypeTabs = entity_type === "entity" ?
         (<li className="nav-item">
             <NavLink to="/profile/entity-info" className={`nav-link ${s.navProfileTabs}`}>
@@ -49,6 +45,11 @@ const PersonalAreaTabs = (props) => {
   }, [last_name, name]);
 
     const [modalAvatar, openModalAvatar] = useState(false);
+
+    const handleSubmit = (data) => {
+        postUserAvatar(data.avatar[0]);
+        openModalAvatar(false);
+    }
 
   return (
       <div className={`col-lg-4 col-12 ${s.tabDesk}`}>
