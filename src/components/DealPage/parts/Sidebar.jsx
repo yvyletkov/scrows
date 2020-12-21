@@ -3,9 +3,12 @@ import s from "../DealPage.module.css";
 import vvpImg from "../../../img/vvp.jpg";
 import damImg from "../../../img/dam.jpg";
 import {TransitionButtons} from "../DealPage";
+import noAvatarUser from "../../../img/noAvatarUser.png";
 
-const ParticipantCard = ({participant, img}) => {
+const ParticipantCard = ({participant}) => {
     const [opened, setOpened] = React.useState(false)
+
+    let imageAvatar = participant.avatar ? `https://api.scrows.ml/api/v1/media/get/${participant.avatar}` : noAvatarUser;
 
     return <div className={`card shadow-none mt-3 mb-3 mt-md-0 ${s.sidebarCard} ${opened && s.opened}`}>
         <div style={{cursor: 'pointer'}} className='card-header' onClick={() => setOpened(!opened)}>
@@ -14,7 +17,7 @@ const ParticipantCard = ({participant, img}) => {
             </span>
         </div>
         <div className='card-body'>
-            <img className={s.cardImg} src={img} alt="Путин"/>
+            <img className={s.cardImg} style={{objectFit: "cover"}} src={imageAvatar} alt={participant.user.name}/>
             <div style={{width: window.matchMedia('(min-width: 993px)').matches ? '63%' : '100%'}}>
                 <p className='mb-2'><b>Имя: </b>{participant.user.name} {participant.user.last_name}</p>
                 <p className='mb-2'><b>E-mail: </b>{participant.user.email}</p>
@@ -58,10 +61,13 @@ const Sidebar = (props) => {
 
     return (<>
 
-        <TransitionButtons makeTransition={props.makeTransition} dealId={props.dealId} mediaQuery={'(min-width: 768px)'} transitions={props.transitions}/>
+        <TransitionButtons redirectForPay={props.redirectForPay} needsPay={props.needsPay}
+                           payMethods={props.payMethods}
+                           makeTransition={props.makeTransition} dealId={props.dealId}
+                           mediaQuery={'(min-width: 768px)'} transitions={props.transitions}/>
 
-        <ParticipantCard participant={props.participants[0]} img={vvpImg}/>
-        <ParticipantCard participant={props.participants[1]} img={damImg}/>
+        <ParticipantCard participant={props.participants[0]}/>
+        <ParticipantCard participant={props.participants[1]}/>
 
         <div style={{maxHeight: 'none'}} className={`card mt-3 shadow-none ${s.sidebarCard}`}>
             <div className='card-header'>
