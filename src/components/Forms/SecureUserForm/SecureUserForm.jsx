@@ -101,7 +101,7 @@ const SecureUserArea = (props) => {
                                         cancelButtonText: 'Отмена'
                                     }).then((result) => {
                                         if (result.value) {
-                                            
+
                                         }
                                     })
                                 }>

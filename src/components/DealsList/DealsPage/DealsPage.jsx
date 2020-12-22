@@ -50,6 +50,7 @@ const DealsPage = (props) => {
     return (
             verified ?
                 <div className="card shadow-none col-lg-8 p-0 col-12">
+                    <MobilePersonalAreaTabs/>
                     <div className="card-header">
                         <div className="col-12 d-flex my-3 align-items-center">
                             <h5 className="m-0">Список сделок</h5>
