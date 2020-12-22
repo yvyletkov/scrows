@@ -58,7 +58,7 @@ const LoginPage = (props) => {
         return clearTimeout(timeoutAlert);
     }, []);
 
-    if (props.isAuth === true) return <Redirect to={'/profile/'}/>
+    if (props.isAuth === true) return <Redirect to={'/profile/personal-info'}/>
 
     console.log(props)
 

@@ -30,7 +30,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "scp -rp build front_dev_1@185.200.242.171:/home/front_dev_1"
   },
   "eslintConfig": {
     "extends": "react-app"
