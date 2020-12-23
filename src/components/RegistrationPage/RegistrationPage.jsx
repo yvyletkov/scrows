@@ -62,7 +62,7 @@ const AuthForm = (props) => {
                     <div className="form-group">
                         <Field name="entity_type" component={renderSelect} required>
                             <option selected disabled hidden value="">
-                                Выберите лицо
+                                Выберите тип организации
                             </option>
                             <option value="single">Физическое лицо</option>
                             <option value="entity">Юридическое лицо</option>
