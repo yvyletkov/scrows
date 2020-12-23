@@ -74,7 +74,7 @@ const Sidebar = (props) => {
                 <div className={'text-lg-left text-center font-weight-bold'}>Описание сделки</div>
             </div>
             <div className='card-body'>
-                <table className="table table-striped">
+                <table className="table">
 
                     <tbody>
                     <tr>

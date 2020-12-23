@@ -24,7 +24,7 @@ const AddDealPage = ({postNewDeal, isFetching, newDealId, success}) => {
                 <div className='card-body'>
                     <p className='mb-2'>Сделка успешно создана!</p>
                     <NavLink to={`/deals/${newDealId}`} className='btn btn-outline-dark'>Перейти</NavLink>
-                </div>
+                </div>git
             </div> :
             <div className='card shadow-none mt-4'>
                 <div className='card-header font-weight-bold'>Создание новой безопасной сделки (ШАГ {step})</div>
@@ -33,17 +33,17 @@ const AddDealPage = ({postNewDeal, isFetching, newDealId, success}) => {
                     <div style={{height: '13px'}} className="progress mb-5">
                         <div onClick={() => setStep(1)}
                              className={'progress-bar'} role="progressbar"
-                             style={{width: "33.33%", height: "13px", cursor: "pointer", backgroundColor: '#60ca56'}}
-                             aria-valuenow="33.33" aria-valuemin="0" aria-valuemax="100">ШАГ 1</div>
+                             style={{fontSize: '9px', width: "33.33%", height: "13px", cursor: "pointer", backgroundColor: '#60ca56'}}
+                             aria-valuenow="33.33" aria-valuemin="0" aria-valuemax="100" >ШАГ 1</div>
                         <div onClick={() => setStep(2)} hidden={step < 2}
                              className="progress-bar"
                              role="progressbar"
-                             style={{width: "33.33%", height: "13px", cursor: "pointer", backgroundColor: '#5dbb55'}}
+                             style={{fontSize: '9px', width: "33.33%", height: "13px", cursor: "pointer", backgroundColor: '#5dbb55'}}
                              aria-valuenow="66.66" aria-valuemin="0" aria-valuemax="100">ШАГ 2</div>
                         <div onClick={() => setStep(3)} hidden={step < 3}
                              className="progress-bar"
                              role="progressbar"
-                             style={{width: "33.33%", height: "13px", cursor: "pointer", backgroundColor: '#56ac55'}}
+                             style={{fontSize: '9px', width: "33.33%", height: "13px", cursor: "pointer", backgroundColor: '#56ac55'}}
                              aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">ШАГ 3</div>
                     </div>
 
