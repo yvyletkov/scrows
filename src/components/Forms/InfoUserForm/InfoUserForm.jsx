@@ -69,7 +69,7 @@ const InfoUserForm = (props) => {
                         <label htmlFor="entity_type">Тип (Ф/Ю)</label>
                         <Field name="entity_type" component={renderSelect} required>
                             <option selected disabled hidden value="">
-                                Выберите тип лица
+                                Выберите тип организации
                             </option>
                             <option value="single">Физическое лицо</option>
                             <option value="entity">Юридическое лицо/ИП</option>

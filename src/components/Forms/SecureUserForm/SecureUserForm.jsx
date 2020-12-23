@@ -36,6 +36,8 @@ const SecureUserArea = (props) => {
         verifyEmail
     } = props;
 
+    console.log(props)
+
     useEffect(() => {
         getUserData()
     }, [])
@@ -101,7 +103,8 @@ const SecureUserArea = (props) => {
                                         cancelButtonText: 'Отмена'
                                     }).then((result) => {
                                         if (result.value) {
-
+                                            submitPhone({phone})
+                                            openModalPhone(true);
                                         }
                                     })
                                 }>
