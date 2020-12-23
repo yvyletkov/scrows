@@ -24,7 +24,7 @@ const AddDealPage = ({postNewDeal, isFetching, newDealId, success}) => {
                 <div className='card-body'>
                     <p className='mb-2'>Сделка успешно создана!</p>
                     <NavLink to={`/deals/${newDealId}`} className='btn btn-outline-dark'>Перейти</NavLink>
-                </div>git
+                </div>
             </div> :
             <div className='card shadow-none mt-4'>
                 <div className='card-header font-weight-bold'>Создание новой безопасной сделки (ШАГ {step})</div>
