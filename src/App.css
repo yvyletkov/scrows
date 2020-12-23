@@ -15,6 +15,17 @@ p {
     margin: 0;
 }
 
+.card {
+    border-radius: 0.325rem !important;
+    -webkit-box-shadow: 0px 9px 14px -1px rgba(0,0,0,0.03) !important;
+    -moz-box-shadow: 0px 9px 14px -1px rgba(0,0,0,0.03) !important;
+    box-shadow: 0px 9px 14px -1px rgba(0,0,0,0.03) !important;
+}
+
+.card .card-header {
+    border-radius: 0.325rem 0.325rem 0 0 !important;
+}
+
 .custom-checkbox .custom-control-label::after {
     top:3px;
     left:5px;

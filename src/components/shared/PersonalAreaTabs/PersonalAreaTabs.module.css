@@ -36,6 +36,7 @@
   color:#171717;
   border-bottom-right-radius: .375rem;
   border-bottom-left-radius: .375rem;
+  border: none !important;
 }
 
 .navProfile:hover, .navProfileTabs:hover {
@@ -70,6 +71,7 @@
 
 .iconAvatar {
   background-image: url("../../../img/icons/camera.svg");
+  filter: invert(1);
   position: absolute;
   display: flex;
   top: 50%;
