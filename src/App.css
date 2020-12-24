@@ -2,6 +2,7 @@
 
 body {
     background-color: #eeeeee;
+    background: linear-gradient(-135deg, #c850c0, #4158d0);
     line-height: 1.2;
     font-size: 13px;
 }
@@ -50,4 +51,12 @@ p {
 
 .themeColor {
     background-color: #5fbdff1f;
+}
+
+.nav-tabs .nav-link.active {
+    filter: opacity(0.7);
+}
+
+.nav-tabs .nav-link:hover {
+    color: #fff
 }

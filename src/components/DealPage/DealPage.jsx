@@ -141,7 +141,7 @@ const DealPage = ({fileNamesArray, chatMessages, getDealInfo, getPossibleStatuse
                                         <div className={'font-weight-bold'}>Предмет сделки</div>
                                     </div>
                                     <div className='card-body'>
-                                        <p>{props.subject}</p>
+                                        <p style={!window.matchMedia('(max-width: 768px)').matches ? {fontSize: '2rem', fontWeight: 500} : {}}>{props.subject}</p>
                                     </div>
                                 </div>
                             </div>

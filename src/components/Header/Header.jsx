@@ -38,11 +38,11 @@ const Header = (props) => {
     };
 
     return (
-        <Navbar className={'themeColor'} type="light" expand="md">
+        <Navbar className={'themeColor'} type="dark" expand="md">
             <div className='container'>
                 <NavbarBrand><img src={logo} style={{
                     maxWidth: "200px",
-                    background: '#fff',
+                    background: 'rgba(255,255,255,0.8)',
                     borderRadius: '100px',
                     padding: '5px'
                 }} alt="Scrows.ru - Сервис безопасных сделок"/></NavbarBrand>

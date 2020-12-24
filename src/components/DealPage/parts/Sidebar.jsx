@@ -69,7 +69,7 @@ const Sidebar = (props) => {
 
         <div style={{maxHeight: 'none'}} className={`card mt-3 shadow-none ${s.sidebarCard}`}>
             <div className='card-header'>
-                <div className={'text-lg-left text-center font-weight-bold'}>Описание сделки</div>
+                <div className={'font-weight-bold'}>Описание сделки</div>
             </div>
             <div className='card-body'>
                 <table className="table">
