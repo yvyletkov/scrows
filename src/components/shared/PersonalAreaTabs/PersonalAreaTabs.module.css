@@ -1,6 +1,7 @@
 .navIcon {
   width: 30px;
   margin: 0 10px 0 0;
+  opacity: 0.5;
 }
 
 .navProfile {
@@ -33,7 +34,7 @@
 }
 
 .navProfileTabs {
-  color:#171717;
+  color: #e7e7e7;
   border-bottom-right-radius: .375rem;
   border-bottom-left-radius: .375rem;
   border: none !important;
@@ -91,6 +92,7 @@
   text-align: center;
   justify-content: center;
   margin:0 auto 20px;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .userBlock {
@@ -107,6 +109,7 @@
   margin:20px auto 10px;
   text-align: center;
   justify-content: center;
+  color: #fff
 }
 
 .navTabs {

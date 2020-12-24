@@ -27,7 +27,7 @@ const DealFiles = ({fileNamesArray}) => {
                 <div className={'font-weight-bold'}>Файлы сделки</div>
             </div>
             <div className='card-body'>
-                {fileLinks.length ? fileLinks : <p>Файлы не прикреплены</p>}
+                {fileLinks.length ? fileLinks : <p>Файлы не прикреплены <span style={{fontSize: '200%', verticalAlign: 'sub'}}>😢</span></p>}
             </div>
         </div>
 };

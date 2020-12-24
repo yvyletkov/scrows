@@ -36,7 +36,7 @@
 
 .card {
   box-shadow: none;
-  border:1px solid rgba(90,97,105,.15);
+  /*border:1px solid rgba(90,97,105,.15);*/
 }
 
 .nameDeal {
