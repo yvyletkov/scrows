@@ -73,7 +73,7 @@ const PersonalAreaTabs = (props) => {
                        className={`nav-link ${s.navProfileTabs}`}>
                 <img className={s.navIcon}
                      src={personalDataIcon}
-                     alt="user-icon"/>
+                     alt="Пользователь"/>
                 Личная информация
               </NavLink>
               </li>
@@ -87,14 +87,14 @@ const PersonalAreaTabs = (props) => {
                          to="/profile/payment-info">
                   <img className={s.navIcon}
                        src={extraDataIcon}
-                       alt="extra-icon"/>
+                       alt="Платежные данные"/>
                   Платежные данные
                 </NavLink>
               </li>
             {userTypeTabs}
               <li className="nav-item">
                   <NavLink className={`nav-link ${s.navProfileTabs}`} to="/profile/deals/">
-                      <img className={s.navIcon} src={dealsIcon} alt="deals-icon"/>Сделки
+                      <img className={s.navIcon} src={dealsIcon} alt="Сделки"/>Сделки
                   </NavLink>
               </li>
           </ul>
