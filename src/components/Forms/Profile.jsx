@@ -21,6 +21,7 @@ const Profile = ({verified}) => {
             <div className="row">
                 <PersonalAreaTabs/>
                 <Switch>
+                    <Route exact path="/profile" component={() => <Redirect to={'/profile/personal-info'}/>}/>
                     <Route path="/profile/personal-info" component={() => <InfoUserArea/>}/>
                     <Route path="/profile/security" component={() => <SecureUserArea/>}/>
                     <Route path="/profile/payment-info" component={() => <PaymentUserArea/>}/>
@@ -51,7 +52,7 @@ const Profile = ({verified}) => {
                                 </div>
                             </div>
                     }
-                    <Route exact path="/profile" component={() => <Redirect to={'/profile/personal-info'}/>}/>
+
                 </Switch>
             </div>
         </div>

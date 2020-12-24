@@ -9,7 +9,7 @@ import {
     getHistory,
     getPossibleStatuses,
     postNewMessage,
-    makeTransition, redirectForPay
+    makeTransition, redirectForPay, getDealFiles
 } from "../../redux/DealPageReducer";
 import Sidebar from "./parts/Sidebar";
 import StatusTimeline from "./parts/StatusTimeline";
@@ -18,7 +18,7 @@ import DealHistory from "./parts/DealHistory";
 import DealFiles from "./parts/DealFiles";
 import Preloader from "../shared/Preloader/Preloader";
 import {NavLink} from "react-router-dom";
-import {getChatMessages, getDealHistory, getPayMethodsList} from "../../redux/reselect";
+import {getChatMessages, getDealFileNamesArray, getDealHistory, getPayMethodsList} from "../../redux/reselect";
 
 export const TransitionButtons = ({makeTransition, needsPay, payMethods, dealId, transitions, mediaQuery, redirectForPay}) => {
     //redirectForPay(item.id, item.type, dealId)
@@ -69,7 +69,7 @@ export const TransitionButtons = ({makeTransition, needsPay, payMethods, dealId,
     } else return null
 }
 
-const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, getTransitions, getMessages, postNewMessage, getHistory, notFound, ...props}) => {
+const DealPage = ({fileNamesArray, chatMessages, getDealInfo, getPossibleStatuses, getTransitions, getMessages, postNewMessage, getHistory, getDealFiles, notFound, ...props}) => {
 
     const idForRequest = props.match.params.id;
     const priceString = props.price && props.price.toString().replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ');
@@ -80,10 +80,11 @@ const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, getTransition
         getTransitions(idForRequest);
         getMessages(idForRequest);
         getHistory(idForRequest)
+        getDealFiles(idForRequest);
     }, [idForRequest]);
 
     React.useEffect(() => {
-        const interval = setInterval(() => getMessages(idForRequest), 4000);
+        const interval = setInterval(() => getMessages(idForRequest), 2000);
         return clearInterval(interval);
     }, []);
 
@@ -146,7 +147,7 @@ const DealPage = ({chatMessages, getDealInfo, getPossibleStatuses, getTransition
                             </div>
 
                             <div className={'col-lg-6 pl-lg-2 px-0'}>
-                                <DealFiles/>
+                                <DealFiles fileNamesArray={fileNamesArray}/>
                             </div>
 
                         </div>
@@ -173,6 +174,7 @@ let mapStateToProps = (state) => {
     return {
         notFound: state.deal.notFound,
         dealId: state.deal.dealId,
+        fileNamesArray: getDealFileNamesArray(state),
         transitions: state.deal.transitions,
         needsPay: state.deal.needsPay,
         payMethods: getPayMethodsList(state),
@@ -196,6 +198,7 @@ export default connect(mapStateToProps, {
     getDealInfo,
     getPossibleStatuses,
     getTransitions,
+    getDealFiles,
     makeTransition,
     getMessages,
     getHistory,

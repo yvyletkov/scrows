@@ -1,7 +1,5 @@
 import React from "react";
 import s from "../DealPage.module.css";
-import vvpImg from "../../../img/vvp.jpg";
-import damImg from "../../../img/dam.jpg";
 import {TransitionButtons} from "../DealPage";
 import noAvatarUser from "../../../img/noAvatarUser.png";
 
