@@ -54,6 +54,7 @@ let initialState = {
     history: [],
     needsPay: false,
     payMethods: {cards: [], extra: []},
+    files: [],
     isFetching: false,
     chatIsFetching: false,
 };
@@ -118,6 +119,11 @@ const dealPageReducer = (state = initialState, action) => {
             return {
                 ...state,
                 transitions: [...action.payload]
+            };
+        case "DEAL:SET-DEAL-FILES":
+            return {
+                ...state,
+                files: [...action.payload]
             };
         case "DEAL:TOGGLE-IS-FETCHING": {
             return {...state, isFetching: action.status};
@@ -248,8 +254,20 @@ export const getPayMethods = (id) => (dispatch) => {
     dispatch(toggleIsFetching(true));
     api.getPayMethods(id)
         .then((response) => {
-            console.log('о привет', response)
             dispatch(setPayMethods(response));
+            dispatch(toggleIsFetching(false));
+        })
+        .catch((err) => {
+            console.log(err);
+            dispatch(toggleIsFetching(false));
+        });
+}
+
+export const getDealFiles = (id) => (dispatch) => {
+    dispatch(toggleIsFetching(true));
+    api.getDealFiles(id)
+        .then((response) => {
+            dispatch(setDealFiles(response));
             dispatch(toggleIsFetching(false));
         })
         .catch((err) => {
@@ -325,6 +343,7 @@ export const setPossibleStatuses = data => ({type: "DEAL:SET-POSSIBLE-STATUSES",
 export const setTransitions = data => ({type: "DEAL:SET-TRANSITIONS", payload: data});
 export const setNeedsPay = status => ({type: "DEAL:SET-NEEDS-PAY", status: status});
 export const setPayMethods = data => ({type: "DEAL:SET-PAY-METHODS", payload: data});
+export const setDealFiles = data => ({type: "DEAL:SET-DEAL-FILES", payload: data});
 
 
 export default dealPageReducer;

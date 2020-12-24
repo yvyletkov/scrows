@@ -13,6 +13,7 @@ const getChatMessagesData = (state) => state.deal.chatMessages
 const getDealParticipantsData = (state) => state.deal.participants
 const getDealHistoryData = (state) => state.deal.history
 const getDealPayMethods = (state) => state.deal.payMethods
+const getDealFilesObj = (state) => state.deal.files
 
 export const getChatMessages = createSelector(
     [getChatMessagesData, getDealParticipantsData],
@@ -46,6 +47,13 @@ export const getDealHistory = createSelector(
     }
 )
 
+export const getDealFileNamesArray = createSelector(
+    [getDealFilesObj],
+    (filesObj) => {
+        return filesObj.map(item => item.name)
+    }
+)
+
 export const getPayMethodsList = createSelector(
     [getDealPayMethods],
     (payMethods) => {
@@ -54,13 +62,13 @@ export const getPayMethodsList = createSelector(
 
         let payMethodsList = [];
 
-        if (payMethods.cards) payMethods.cards.map( item => {
+        if (payMethods.cards) payMethods.cards.map(item => {
             payMethodsList = [
                 ...payMethodsList,
                 {type: "cards", id: item.id, title: item.title}
             ]
         })
-        if (payMethods.extra) payMethods.extra.map( item => {
+        if (payMethods.extra) payMethods.extra.map(item => {
             payMethodsList = [
                 ...payMethodsList,
                 {type: "extra", id: item.id, title: item.title}
