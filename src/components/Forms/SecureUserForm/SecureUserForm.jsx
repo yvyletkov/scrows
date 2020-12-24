@@ -36,11 +36,9 @@ const SecureUserArea = (props) => {
         verifyEmail
     } = props;
 
-    console.log(props)
-
     useEffect(() => {
         getUserData()
-    }, [])
+    }, [verification])
 
     const [modalPhone, openModalPhone] = useState(false);
     const [modalFiles, openModalFiles] = useState(false);
