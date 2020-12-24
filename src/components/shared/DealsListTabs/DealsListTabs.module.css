@@ -8,10 +8,11 @@
 
 .navLink {
     color:#5a6169;
+    border-radius: 25px 25px 0 0 !important;
 }
 
 .navLink:hover {
-    color:#5a6169;
+    color:#5a6169 !important;
 }
 
 .navList {
