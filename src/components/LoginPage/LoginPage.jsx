@@ -73,13 +73,13 @@ const LoginPage = (props) => {
             <div className="card auth-card" style={{width: "20rem"}}>
                 <div className="card-header">
                     <ul className="nav nav-tabs card-header-tabs">
-                        <li className="nav-item">
-                            <NavLink className="nav-link active" to="/login">
+                        <li className="nav-item" >
+                            <NavLink style={{borderRadius: '0.825rem 0.825rem 0 0'}} className="nav-link active" to="/login">
                                 Авторизация
                             </NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/registration">
+                            <NavLink style={{borderRadius: '0.825rem 0.825rem 0 0'}} className="nav-link" to="/registration">
                                 Регистрация
                             </NavLink>
                         </li>
