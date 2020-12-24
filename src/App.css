@@ -17,14 +17,15 @@ p {
 }
 
 .card {
-    border-radius: 0.325rem !important;
+    border-radius: 0.825rem !important;
     -webkit-box-shadow: 0px 9px 14px -1px rgba(0,0,0,0.03) !important;
     -moz-box-shadow: 0px 9px 14px -1px rgba(0,0,0,0.03) !important;
     box-shadow: 0px 9px 14px -1px rgba(0,0,0,0.03) !important;
+    background-color: rgba(255,255,255,0.96);
 }
 
 .card .card-header {
-    border-radius: 0.325rem 0.325rem 0 0 !important;
+    border-radius: 0.825rem 0.825rem 0 0 !important;
 }
 
 .custom-checkbox .custom-control-label::after {
@@ -53,10 +54,27 @@ p {
     background-color: #5fbdff1f;
 }
 
+
+/* profile tabs*/
+.nav-tabs .nav-link {
+    border-radius: 50px;
+}
 .nav-tabs .nav-link.active {
-    filter: opacity(0.7);
+    filter: opacity(0.8);
+}
+.nav-tabs .nav-link:hover:not(.active) {
+    color: #fff;
+}
+@media screen and (max-width: 768px) {
+    .nav-tabs .nav-link:hover:not(.active) {
+        color: inherit
+    }
+}
+.nav-tabs .nav-link.active img {
+    mix-blend-mode: normal;
+    filter: none;
 }
 
-.nav-tabs .nav-link:hover {
-    color: #fff
+.btn {
+    border-radius: 0.825rem !important;
 }

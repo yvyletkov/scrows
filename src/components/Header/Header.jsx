@@ -42,7 +42,7 @@ const Header = (props) => {
             <div className='container'>
                 <NavbarBrand><img src={logo} style={{
                     maxWidth: "200px",
-                    background: 'rgba(255,255,255,0.8)',
+                    background: 'rgba(255,255,255,0.96)',
                     borderRadius: '100px',
                     padding: '5px'
                 }} alt="Scrows.ru - Сервис безопасных сделок"/></NavbarBrand>

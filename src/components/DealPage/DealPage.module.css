@@ -71,9 +71,9 @@
 
 
 .statusDescription.current {
-    background-color: #6ade5f;
+    background-color: #17c671;
     color: #fff;
-    font-weight: bold;
+    /*font-weight: bold;*/
 }
 
 .statusDescription.error{
@@ -105,7 +105,7 @@
     z-index: 1;
     width: 80px;
     height: 80px;
-    background-color: #efefef;
+    background-color: rgba(239, 239, 239, 0.1);
     border-radius: 50%;
     transition: all 200ms;
     /*border: 6px solid rgb(232, 232, 232);*/
@@ -125,8 +125,9 @@
 .statusItem.archieved {
     width: 90px;
     height: 90px;
-    background-color: #6ade5f;
+    background-color: #17c671;
     border-radius: 50%;
+    filter: brightness(1.1);
     /*border: 6px solid #71ee66;*/
     z-index: -2;
 }
@@ -146,7 +147,9 @@
 .statusItem.archieved.past {
     width: 80px;
     height: 80px;
-    background-color: #60ca56;
+    background-color: #17c671;
+    filter: none;
+
     /*border: 6px solid #68dc5f;*/
 }
 
