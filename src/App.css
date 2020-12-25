@@ -74,7 +74,14 @@ p {
     mix-blend-mode: normal;
     filter: none;
 }
-
+/*other restyles*/
 .btn {
     border-radius: 0.825rem !important;
 }
+.swal2-popup, button.swal2-styled {
+    border-radius: 0.825rem !important;
+}
+button.swal2-confirm {
+    background-color: #16c671 !important;
+}
+
