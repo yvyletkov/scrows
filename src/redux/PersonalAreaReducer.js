@@ -29,7 +29,8 @@ let initialState = {
     showCodePhoneForm: false,
     verification_id: null,
     verified: false,
-    verification: []
+    verification: {},
+    scansPersonalData: []
 };
 
 const personalAreaReducer = (state = initialState, action) => {
@@ -37,7 +38,17 @@ const personalAreaReducer = (state = initialState, action) => {
     case "SET_USER_DATA":
       return {
         ...state,
-        ...action.payload,
+          id: action.payload.id,
+          name: action.payload.name,
+          last_name: action.payload.last_name,
+          middle_name: action.payload.middle_name,
+          gender: action.payload.gender,
+          entity_type: action.payload.entity_type,
+          date_of_birth: action.payload.date_of_birth,
+          email: action.payload.email,
+          phone: action.payload.phone,
+          verified: action.payload.verified,
+          verification: action.payload.verification,
       };
     case "SET_SECURE_DATA":
       return {
@@ -91,6 +102,9 @@ const personalAreaReducer = (state = initialState, action) => {
     }
     case "SET_USER_PHONE": {
       return { ...state, phone: action.payload };
+    }
+    case "SET_SCANS_PERSONAL_DATA": {
+        return { ...state, scansPersonalData: action.payload };
     }
 
     default:
@@ -268,14 +282,10 @@ export const postUserFiles = (files) => (dispatch) => {
         .then((response) => {
           if (response[0].file_type) {
             if (i === files.length - 1) {
-              // dispatch(setSuccess())
-              // dispatch(toggleIsFetching(false))
-              console.log(response)
+                dispatch(setScansPersonalData(response))
+                console.log(response)
             }
           }
-          // dispatch(setVerificationId(response));
-          // dispatch(showCodePhoneForm(true))
-          // dispatch(toggleIsFetching(false));
         })
         .catch((err) => {
           console.log(err);
@@ -330,8 +340,20 @@ export const verifyEmail = () => (dispatch) => {
                 text: 'Проверьте почту и подтвердите email',
                 showConfirmButton: false,
                 timer: 2000
-            })
+            });
             console.log(response)
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+};
+
+export const getScansPersonalData = (userId) => (dispatch) => {
+    // dispatch(toggleIsFetching(true));
+    api.getScansPersonalData(userId)
+        .then((response) => {
+            console.log(response)
+            dispatch(setScansPersonalData(response))
         })
         .catch((err) => {
             console.log(err);
@@ -405,6 +427,11 @@ export const setVerificationId = (data) => ({
 export const setUserPhone = (data) => ({
   type: "SET_USER_PHONE",
   payload: data
+});
+
+export const setScansPersonalData = (data) => ({
+    type: "SET_SCANS_PERSONAL_DATA",
+    payload: data,
 });
 
 export default personalAreaReducer;

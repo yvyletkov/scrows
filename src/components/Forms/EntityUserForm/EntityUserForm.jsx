@@ -118,21 +118,22 @@ const EntityUserArea = (props) => {
         isFetching,
         alertSuccessShow,
         alertErrorShow,
-        dispatch
+        hideErrorAlert,
+        hideSuccessAlert
     } = props;
 
     const timeoutAlert = (action) => {
         setTimeout(() => {
-            dispatch(action)
+            action(false)
         }, 1500)
     }
 
     if(alertSuccessShow) {
-        timeoutAlert(hideSuccessAlert(false))
+        timeoutAlert(hideSuccessAlert)
     }
 
     if(alertErrorShow) {
-        timeoutAlert(hideErrorAlert(false))
+        timeoutAlert(hideErrorAlert)
     }
 
     useEffect(() => {
@@ -192,4 +193,8 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default compose(connect(mapStateToProps, {getEntityData, changeEntityData}),withAuthRedirect)(EntityUserArea);
+export default compose(connect(mapStateToProps,
+    {   getEntityData,
+        changeEntityData,
+        hideErrorAlert,
+        hideSuccessAlert }),withAuthRedirect)(EntityUserArea);

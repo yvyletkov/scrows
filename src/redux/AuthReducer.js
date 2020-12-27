@@ -49,7 +49,6 @@ export const login = (email, password, rememberMe) => dispatch => {
             console.log(response)
             localStorage.setItem('jwt', response.token);
             dispatch(setIsAuth(true));
-            dispatch(showSuccessAlert(true))
         })
         .catch((err) => {
             dispatch(showErrorAlert(true))
