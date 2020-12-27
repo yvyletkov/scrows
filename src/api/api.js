@@ -260,6 +260,13 @@ const authApi = {
             headers: {'Authorization': `Bearer ${localStorage.getItem('jwt')}`},
         });
     },
+
+    async getScansPersonalData(userId) {
+        return await this.request(`/media/files/user/${userId}/passport`, {
+            method: "GET",
+            headers: {'Authorization': `Bearer ${localStorage.getItem('jwt')}`},
+        });
+    },
 };
 
 const dealApi = {
