@@ -107,23 +107,24 @@ const InfoUserArea = (props) => {
         changeUserData,
         alertSuccessShow,
         alertErrorShow,
-        dispatch
+        hideErrorAlert,
+        hideSuccessAlert
     } = props;
     console.log(props)
 
     const timeoutAlert = (action) => {
         setTimeout(() => {
-            dispatch(action)
+            action(false)
         }, 1500)
     }
 
 
     if(alertSuccessShow) {
-        timeoutAlert(hideSuccessAlert(false))
+        timeoutAlert(hideSuccessAlert)
     }
 
     if(alertErrorShow) {
-        timeoutAlert(hideErrorAlert(false))
+        timeoutAlert(hideErrorAlert)
     }
 
     useEffect(() => {
@@ -187,4 +188,8 @@ const mapStateToProps = (state) => {
 
 };
 
-export default compose(connect(mapStateToProps , {getUserData, changeUserData}),withAuthRedirect)(InfoUserArea);
+export default compose(connect(mapStateToProps ,
+    {   getUserData,
+        changeUserData,
+        hideErrorAlert,
+        hideSuccessAlert }),withAuthRedirect)(InfoUserArea);

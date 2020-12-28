@@ -110,21 +110,23 @@ const IndividualUserArea = (props) => {
     changeIndividualData,
     alertSuccessShow,
     alertErrorShow,
-    dispatch
+    hideErrorAlert,
+    hideSuccessAlert
   } = props;
+
 
   const timeoutAlert = (action) => {
     setTimeout(() => {
-      dispatch(action)
+      action(false)
     }, 1500)
   }
 
   if(alertSuccessShow) {
-    timeoutAlert(hideSuccessAlert(false))
+    timeoutAlert(hideSuccessAlert)
   }
 
   if(alertErrorShow) {
-    timeoutAlert(hideErrorAlert(false))
+    timeoutAlert(hideErrorAlert)
   }
 
   useEffect(() => {
@@ -180,6 +182,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default compose(connect(mapStateToProps, { getIndividualData, changeIndividualData }),withAuthRedirect)(
+export default compose(connect(mapStateToProps,
+    { getIndividualData,
+      changeIndividualData,
+      hideErrorAlert,
+      hideSuccessAlert }),withAuthRedirect)(
   IndividualUserArea
 );

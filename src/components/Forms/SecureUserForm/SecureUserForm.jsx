@@ -15,7 +15,8 @@ import {
     sendPhoneCode,
     postUserFiles,
     resetUserPassword,
-    verifyEmail} from "../../../redux/PersonalAreaReducer";
+    verifyEmail,
+    getScansPersonalData } from "../../../redux/PersonalAreaReducer";
 import ModalUserFiles from "./ModalFiles";
 import Swal from "sweetalert2";
 import verifyIcon from "../../../img/icons/checkColor.svg";
@@ -33,12 +34,20 @@ const SecureUserArea = (props) => {
         postUserFiles,
         resetUserPassword,
         verification,
-        verifyEmail
+        verifyEmail,
+        getScansPersonalData,
+        userId,
+        scansPersonalData,
     } = props;
 
     useEffect(() => {
-        getUserData()
-    }, [verification])
+        getUserData();
+    }, []);
+
+    useEffect(() => {
+        console.log(userId)
+        getScansPersonalData(userId);
+    }, []);
 
     const [modalPhone, openModalPhone] = useState(false);
     const [modalFiles, openModalFiles] = useState(false);
@@ -65,7 +74,7 @@ const SecureUserArea = (props) => {
                     </div>
                     <div className="card-body">
                         <div className="row">
-                            <div className="col-12">
+                            <div className="col-12 p-0">
                                 <div className={s.securityField} onClick={() => !verification.email &&
                                     Swal.fire({
                                         icon: 'warning',
@@ -133,9 +142,10 @@ const SecureUserArea = (props) => {
                                 </div>
                                 <div className={s.securityField} onClick={() => openModalFiles(!modalFiles)}>
                                     <img className={s.securityIcon} src={filesIcon} alt="files"/>
-                                    <span className={s.fieldName}>Подтвердить личность
+                                    <span className={s.fieldName}>Документы
                                         <img src={verification.documents ? verifyIcon : unverifyIcon} alt="Верефикация" className={s.verifyIcon}/>
                                     </span>
+                                    <p className={s.fieldDesc}>Загружено {scansPersonalData.length} документа(ов)</p>
                                 </div>
                             </div>
                         </div>
@@ -159,7 +169,9 @@ const mapStateToProps = (state) => {
         email:state.infoUser.email,
         phone:state.infoUser.phone,
         verification_id:state.infoUser.verification_id,
-        verification: state.infoUser.verification
+        verification: state.infoUser.verification,
+        userId: state.infoUser.id,
+        scansPersonalData: state.infoUser.scansPersonalData
     };
 };
 
@@ -170,5 +182,6 @@ export default compose(connect(mapStateToProps,
         sendPhoneCode,
         postUserFiles,
         resetUserPassword,
-        verifyEmail
+        verifyEmail,
+        getScansPersonalData
     }), withAuthRedirect)(SecureUserArea);
