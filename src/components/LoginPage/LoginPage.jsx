@@ -1,13 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {NavLink, Redirect} from "react-router-dom";
 import {Field, reduxForm} from 'redux-form';
 import {validate, warn} from "../../utils/validators/validators";
 import {renderCheckBox, renderInput} from "../shared/FormContols/FormControls";
 import "./LoginPage.css";
-import {login} from '../../redux/AuthReducer';
+import {hideErrorAlert, hideSuccessAlert, login} from '../../redux/AuthReducer';
 import {connect} from "react-redux";
 import {AlertDanger, AlertSuccess} from '../shared/CustomAlerts/CustomAlerts';
-import {hideErrorAlert, hideSuccessAlert} from "../../redux/AuthReducer";
 
 const LoginForm = props => {
     const {handleSubmit, pristine, reset, submitting, error, setErrorText, valid} = props;
@@ -68,28 +67,30 @@ const LoginPage = (props) => {
                           show={props.alertSuccessShow}
                           text={"Данные верные выполяется вход"}/>
             <AlertDanger show={props.alertErrorShow}
-                         style={{display:'flex', justifyContent: 'center'}}
+                         style={{display: 'flex', justifyContent: 'center'}}
                          text={"Введены не верные данные"}/>
-            <div className="card auth-card" style={{width: "20rem"}}>
-                <div className="card-header">
-                    <ul className="nav nav-tabs card-header-tabs">
-                        <li className="nav-item" >
-                            <NavLink style={{borderRadius: '0.825rem 0.825rem 0 0'}} className="nav-link active" to="/login">
-                                Авторизация
-                            </NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink style={{borderRadius: '0.825rem 0.825rem 0 0'}} className="nav-link" to="/registration">
-                                Регистрация
-                            </NavLink>
-                        </li>
-                    </ul>
+                <div className="card auth-card" style={{width: "20rem"}}>
+                    <div className="card-header">
+                        <ul className="nav nav-tabs card-header-tabs">
+                            <li className="nav-item">
+                                <NavLink style={{borderRadius: '0.825rem 0.825rem 0 0'}} className="nav-link active"
+                                         to="/login">
+                                    Авторизация
+                                </NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink style={{borderRadius: '0.825rem 0.825rem 0 0'}} className="nav-link"
+                                         to="/registration">
+                                    Регистрация
+                                </NavLink>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="card-body">
+                        <h4 className="card-title text-center">Авторизация</h4>
+                        <LoginReduxForm onSubmit={handleSubmit}/>
+                    </div>
                 </div>
-                <div className="card-body">
-                    <h4 className="card-title text-center">Авторизация</h4>
-                    <LoginReduxForm onSubmit={handleSubmit}/>
-                </div>
-            </div>
         </>
     );
 };

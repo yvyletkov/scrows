@@ -27,11 +27,12 @@ const renderInput = ({
   </>
 );
 
-const renderCheckBox = ({ input, type, label }) => (
+const renderCheckBox = ({ input, type, label, ...props }) => (
   <>
     <input
       className="custom-control-input"
       id="custom-checkbox"
+      {...props}
       {...input}
       type={type}
     />
