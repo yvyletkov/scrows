@@ -202,7 +202,7 @@ const authApi = {
                   password) {
         return await this.request(`/users/create/`, {
             method: "POST",
-            headers: this.headers,
+            headers: {"Content-Type": "application/json;charset=utf-8"},
             body: JSON.stringify({
                 name: `${name}`,
                 last_name: `${lastName}`,

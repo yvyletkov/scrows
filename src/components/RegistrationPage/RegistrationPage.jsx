@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import "./RegistrationPage.css";
+import "./RegistrationPage.module.css";
 import {NavLink, Redirect} from "react-router-dom";
 import {Field, reduxForm} from "redux-form";
 import {validate, warn} from "../../utils/validators/validators";
@@ -11,16 +11,16 @@ import {
     renderSelect
 } from "../shared/FormContols/FormControls";
 import {connect} from "react-redux";
-import {regUser} from "../../redux/AuthReducer";
+import {hideErrorAlert, hideSuccessAlert, regUser} from "../../redux/AuthReducer";
 import {AlertDanger, AlertSuccess} from "../shared/CustomAlerts/CustomAlerts";
-import {hideErrorAlert, hideSuccessAlert} from "../../redux/AuthReducer";
+import s from "./RegistrationPage.module.css";
 
 const AuthForm = (props) => {
     const {handleSubmit, pristine, reset, submitting, valid} = props;
     return (
         <form className="popup__form" onSubmit={handleSubmit}>
             <div className="row">
-                <div className="col-6">
+                <div className="col-12 col-md-6">
                     <div className="form-group">
                         <Field placeholder="Введите имя"
                                name="name"
@@ -58,7 +58,7 @@ const AuthForm = (props) => {
                                required/>
                     </div>
                 </div>
-                <div className="col-6">
+                <div className="col-12 col-md-6">
                     <div className="form-group">
                         <Field name="entity_type" component={renderSelect} required>
                             <option selected disabled hidden value="">
@@ -101,6 +101,7 @@ const AuthForm = (props) => {
                 <Field type="checkbox"
                        name="onChecked"
                        component={renderCheckBox}
+                       required
                        label={"Я принимаю условия Пользовательского соглашения"}/>
             </div>
             <div>
@@ -147,30 +148,34 @@ const RegistrationPage = (props) => {
     };
     return (
         <>
-            <AlertSuccess style={{display:'flex', justifyContent: 'center'}}
+            <AlertSuccess style={{display: 'flex', justifyContent: 'center'}}
                           show={props.alertSuccessShow}
                           text={"Пользователь успешно зарегистрирован!"}/>
             <AlertDanger show={props.alertErrorShow}
-                         style={{display:'flex', justifyContent: 'center'}}
+                         style={{display: 'flex', justifyContent: 'center'}}
                          text={"Ошибка при регистрации"}/>
-            <div className="card auth-card" style={{width: "50rem"}}>
-                <div className="card-header">
-                    <ul className="nav nav-tabs card-header-tabs">
-                        <li className="nav-item">
-                            <NavLink style={{borderRadius: '0.825rem 0.825rem 0 0'}} className="nav-link" to="/login">
-                                Авторизация
-                            </NavLink>
-                        </li>
-                        <li className="nav-item active">
-                            <NavLink style={{borderRadius: '0.825rem 0.825rem 0 0'}} className="nav-link" to="/registration">
-                                Регистрация
-                            </NavLink>
-                        </li>
-                    </ul>
-                </div>
-                <div className="card-body">
-                    <h4 className="card-title text-center">Регистрация</h4>
-                    <AuthReduxForm onSubmit={handleSubmit}/>
+            <div className={s.cardContainer}>
+                <div className={`card ${s.authCard} col-md-6 p-0`}>
+                    <div className="card-header">
+                        <ul className="nav nav-tabs card-header-tabs">
+                            <li className="nav-item">
+                                <NavLink style={{borderRadius: '0.825rem 0.825rem 0 0'}} className="nav-link"
+                                         to="/login">
+                                    Авторизация
+                                </NavLink>
+                            </li>
+                            <li className="nav-item active">
+                                <NavLink style={{borderRadius: '0.825rem 0.825rem 0 0'}} className="nav-link"
+                                         to="/registration">
+                                    Регистрация
+                                </NavLink>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="card-body">
+                        <h4 className="card-title text-center">Регистрация</h4>
+                        <AuthReduxForm onSubmit={handleSubmit}/>
+                    </div>
                 </div>
             </div>
         </>
