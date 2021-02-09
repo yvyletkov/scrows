@@ -148,11 +148,11 @@ const RegistrationPage = (props) => {
     };
     return (
         <>
-            <AlertSuccess style={{display: 'flex', justifyContent: 'center'}}
+            <AlertSuccess style={{display: 'flex', justifyContent: 'center', zIndex: 100}}
                           show={props.alertSuccessShow}
                           text={"Пользователь успешно зарегистрирован!"}/>
             <AlertDanger show={props.alertErrorShow}
-                         style={{display: 'flex', justifyContent: 'center'}}
+                         style={{display: 'flex', justifyContent: 'center', zIndex: 100}}
                          text={"Ошибка при регистрации"}/>
             <div className={s.cardContainer}>
                 <div className={`card ${s.authCard} col-md-6 p-0`}>

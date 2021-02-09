@@ -86,8 +86,12 @@ export const regUser = (name,
                 password)
         .then((response) => {
             console.log('getUserData response: ', response);
-            dispatch(showSuccessAlert(true));
-            dispatch(reset('auth'))
+            if(response.email || response.phone) {
+                dispatch(showErrorAlert(true));
+            } else {
+                dispatch(showSuccessAlert(true));
+                dispatch(reset('auth'))
+            }
         })
         .catch((err) => {
             console.log(err);
