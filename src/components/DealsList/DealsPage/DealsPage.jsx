@@ -72,8 +72,8 @@ const DealsPage = (props) => {
                     </div>
                     <div className="card-body pt-0">
                         {isFetching ? <Preloader/> :
-                            <h4 className="text-center">Ваш аккаунт не верифицирован, загрузите документы или подтвердите номер телефона во
-                                вкладке безопасность</h4>}
+                            <h4 className="text-center">Пройдите все пункты верификации прежде чем создать или принять
+                                участие в сделке</h4>}
                     </div>
                 </div>
     )

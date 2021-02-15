@@ -11,8 +11,8 @@ import DealsPageCompleted from "../DealsList/DealsPageCompleted/DealsPageComplet
 import DealsPageClaim from "../DealsList/DealsPageClaim/DealsPageClaim";
 import DealsPageAction from "../DealsList/DealsPageAction/DealsPageAction";
 import {connect} from "react-redux";
-import AddDealPage from "../AddDealPage/AddDealPage";
-import DealPage from "../DealPage/DealPage";
+import s from "./SecureUserForm/SecureUserForm.module.css";
+import {NavLink} from "react-router-dom";
 
 const Profile = ({verified}) => {
     console.log(verified)
@@ -44,11 +44,13 @@ const Profile = ({verified}) => {
                                     </div>
                                 </div>
                                 <div className="card-body pt-0">
-                                    <h4 className="text-center">Ваш аккаунт не верифицирован, загрузите
-                                        документы
-                                        или
-                                        подтвердите номер телефона во
-                                        вкладке безопасность</h4>
+                                    <div className="text-center">
+                                        <p className="my-3" style={{fontSize: '14px'}}>Пройдите все пункты верификации прежде чем создать или принять участие в
+                                            сделке</p>
+                                        <NavLink to="/profile/security"
+                                                 className={`badge badge-danger ${s.noVerificate}`}>Ваш аккаунт не верифицирован
+                                        </NavLink>
+                                    </div>
                                 </div>
                             </div>
                     }
