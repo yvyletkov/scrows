@@ -6,21 +6,20 @@ import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 import MobilePersonalAreaTabs from "../../shared/MobilePersonalAreaTabs/MobilePersonalAreaTabs";
 import keyIcon from "../../../img/icons/key.svg";
 import PhoneUserReduxForm from "./ModalPhone";
-import {getUserData} from "../../../redux/PersonalAreaReducer";
+import {
+    getScansPersonalData,
+    getUserData,
+    postUserFiles,
+    resetUserPassword,
+    sendPhoneCode,
+    takeCodeForPhone,
+    verifyEmail
+} from "../../../redux/PersonalAreaReducer";
 import emailIcon from "../../../img/icons/email.svg";
 import phoneIcon from "../../../img/icons/phone.svg";
 import filesIcon from "../../../img/icons/files.svg";
-import {
-    takeCodeForPhone,
-    sendPhoneCode,
-    postUserFiles,
-    resetUserPassword,
-    verifyEmail,
-    getScansPersonalData } from "../../../redux/PersonalAreaReducer";
 import ModalUserFiles from "./ModalFiles";
 import Swal from "sweetalert2";
-import verifyIcon from "../../../img/icons/checkColor.svg";
-import unverifyIcon from "../../../img/icons/closeColor.svg";
 
 const SecureUserArea = (props) => {
     const {
@@ -92,7 +91,10 @@ const SecureUserArea = (props) => {
                                 }>
                                     <img className={s.securityIcon} src={emailIcon} alt="Email"/>
                                     <span className={s.fieldName}>Email
-                                        <img src={verification.email ? verifyIcon : unverifyIcon} alt="Верефикация" className={s.verifyIcon}/>
+                                        <span
+                                            className={`badge ml-2 ${verification.email ? "badge-success" : "badge-danger"}`}
+                                            alt="Верефикация">{verification.email ? "Подтверждено" : "Подтвердить"}
+                                        </span>
                                     </span>
                                     <p className={s.fieldDesc}>{email}</p>
                                 </div>
@@ -117,7 +119,10 @@ const SecureUserArea = (props) => {
                                 }>
                                     <img className={s.securityIcon} src={phoneIcon} alt="Телефон"/>
                                     <span className={s.fieldName}>Номер телефона
-                                        <img src={verification.phone ? verifyIcon : unverifyIcon} alt="Верефикация" className={s.verifyIcon}/>
+                                        <span
+                                            className={`badge ml-2 ${verification.phone ? "badge-success" : "badge-danger"}`}
+                                            alt="Верефикация">{verification.phone ? "Подтверждено" : "Подтвердить"}
+                                        </span>
                                     </span>
                                     <p className={s.fieldDesc}>{phone}</p>
                                 </div>
@@ -143,10 +148,19 @@ const SecureUserArea = (props) => {
                                 <div className={s.securityField} onClick={() => openModalFiles(!modalFiles)}>
                                     <img className={s.securityIcon} src={filesIcon} alt="files"/>
                                     <span className={s.fieldName}>Документы
-                                        <img src={verification.documents ? verifyIcon : unverifyIcon} alt="Верефикация" className={s.verifyIcon}/>
+                                        <span
+                                            className={`badge ml-2 ${verification.documents ? "badge-success" : "badge-danger"}`}
+                                            alt="Верефикация">{verification.documents ? "Подтверждено" : "Подтвердить"}
+                                        </span>
                                     </span>
                                     <p className={s.fieldDesc}>Загружено {scansPersonalData.length} документа(ов)</p>
                                 </div>
+                                {!(verification.documents && verification.phone && verification.email) &&
+                                <div className="text-center">
+                                    <p className="my-3" style={{fontSize: '14px'}}>Пройдите все пункты верификации прежде чем создать или принять участие в
+                                        сделке</p>
+                                    <p className={`badge badge-danger ${s.noVerificate}`}>Ваш аккаунт не верифицирован</p>
+                                </div>}
                             </div>
                         </div>
                     </div>

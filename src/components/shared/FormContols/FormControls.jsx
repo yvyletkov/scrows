@@ -62,6 +62,7 @@ const renderPersonalAreaInput = ({
   type,
   meta: { touched, error, warning },
   placeholder,
+  ...props
 }) => (
   <>
     <input
@@ -74,6 +75,7 @@ const renderPersonalAreaInput = ({
       {...input}
       placeholder={placeholder}
       type={type}
+      {...props}
     />
     {touched &&
       ((error && <ErrorField message={error} />) ||
@@ -115,6 +117,7 @@ const renderSelect = ({
   meta: { touched, error, warning },
   placeholder,
   children,
+  ...props
 }) => (
   <>
     <select
@@ -129,6 +132,7 @@ const renderSelect = ({
       {...input}
       placeholder={placeholder}
       type={type}
+      {...props}
     >
       {children}
     </select>

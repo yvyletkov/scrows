@@ -27,6 +27,7 @@ const InfoUserForm = (props) => {
                         <Field placeholder="Введите имя"
                                name="name"
                                type="text"
+                               disabled
                                component={renderPersonalAreaInput}
                                required/>
                     </div>
@@ -35,11 +36,12 @@ const InfoUserForm = (props) => {
                         <Field placeholder="Введите отчество"
                                name="middle_name"
                                type="text"
+                               disabled
                                component={renderPersonalAreaInput}/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="gender">Пол</label>
-                        <Field name="gender" component={renderSelect} required>
+                        <Field name="gender" disabled component={renderSelect} required>
                             <option selected disabled hidden value="">
                                 Выберите пол
                             </option>
@@ -54,6 +56,7 @@ const InfoUserForm = (props) => {
                         <Field placeholder="Введите фамилию"
                                name="last_name"
                                type="text"
+                               disabled
                                component={renderPersonalAreaInput}
                                required/>
                     </div>
@@ -62,12 +65,13 @@ const InfoUserForm = (props) => {
                         <Field placeholder="Выберите дату рождения"
                                name="date_of_birth"
                                type="date"
+                               disabled
                                component={renderPersonalAreaInput}
                                required/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="entity_type">Тип (Ф/Ю)</label>
-                        <Field name="entity_type" component={renderSelect} required>
+                        <Field name="entity_type" disabled component={renderSelect} required>
                             <option selected disabled hidden value="">
                                 Выберите тип организации
                             </option>
