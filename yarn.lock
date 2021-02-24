@@ -9549,6 +9549,11 @@ redent@^3.0.0:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
 
+redux-form-input-masks@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/redux-form-input-masks/-/redux-form-input-masks-2.0.1.tgz#a3ae33cf52192f405487bebfee09e30566797561"
+  integrity sha512-+GSMoi6N5/Fu2C3CJl9fgzjrwdnTzZv4UK/MtqE7K9bkF3aVJgjOmBBWXWTRqWg8BxHIsKsGsVaraFu6WahUcQ==
+
 redux-form@^8.3.6:
   version "8.3.6"
   resolved "https://registry.yarnpkg.com/redux-form/-/redux-form-8.3.6.tgz#c098dcd0b9d8c38e2e443dab91033ea0e74d4609"

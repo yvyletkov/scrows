@@ -14,6 +14,11 @@ import {connect} from "react-redux";
 import {hideErrorAlert, hideSuccessAlert, regUser} from "../../redux/AuthReducer";
 import {AlertDanger, AlertSuccess} from "../shared/CustomAlerts/CustomAlerts";
 import s from "./RegistrationPage.module.css";
+import { createTextMask } from 'redux-form-input-masks';
+
+const phoneMask = createTextMask({
+    pattern: '+7 (999) 999-9999',
+});
 
 const AuthForm = (props) => {
     const {handleSubmit, pristine, reset, submitting, valid} = props;
@@ -71,8 +76,9 @@ const AuthForm = (props) => {
                     <div className="form-group">
                         <Field placeholder="Введите номер телефона"
                                name="phone"
-                               type="number"
+                               type="tel"
                                component={renderCardNumberInput}
+                               {...phoneMask}
                                required/>
                     </div>
                     <div className="form-group">
@@ -117,9 +123,6 @@ const AuthForm = (props) => {
 const AuthReduxForm = reduxForm({form: "auth", validate, warn})(AuthForm);
 
 const RegistrationPage = (props) => {
-
-    console.log(props)
-
     useEffect( () => {
         if(props.alertErrorShow) {
             setTimeout(() => props.hideErrorAlert(false), 1500)
@@ -135,7 +138,9 @@ const RegistrationPage = (props) => {
     if (props.isAuth) return <Redirect to={'/profile/'}/>
 
     const handleSubmit = (data) => {
-        props.regUser(data.name,
+        data.phone = `+7${data.phone}`;
+        props.regUser(
+            data.name,
             data.last_name,
             data.middle_name,
             data.gender,
@@ -143,8 +148,8 @@ const RegistrationPage = (props) => {
             data.date_of_birth,
             data.email,
             data.phone,
-            data.password)
-        console.log(data);
+            data.password
+        )
     };
     return (
         <>
