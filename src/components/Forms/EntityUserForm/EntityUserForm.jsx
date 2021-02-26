@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {Field, reduxForm} from "redux-form";
 import {changeEntityData, getEntityData, hideErrorAlert, hideSuccessAlert} from "../../../redux/PersonalAreaReducer";
 import {validate, warn} from "../../../utils/validators/validators";
-import {renderPersonalAreaInput} from "../../shared/FormContols/FormControls";
+import {renderPersonalAreaInput, renderSelect} from "../../shared/FormContols/FormControls";
 import Preloader from "../../shared/Preloader/Preloader";
 import s from './EntityUserForm.module.css';
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
@@ -30,13 +30,15 @@ const EntityUserForm = (props) => {
                 <div className="col-lg-6 col-12">
                     <div className="form-group">
                         <label htmlFor="judical_type">Тип организации</label>
-                        <Field
-                            placeholder="Введите тип организации"
-                            name="judical_type"
-                            type="text"
-                            component={renderPersonalAreaInput}
-                            required
-                        />
+                        <Field name="judical_type" component={renderSelect} required>
+                            <option selected disabled hidden value="">
+                                Выберите тип организации
+                            </option>
+                            <option value="ООО">ООО</option>
+                            <option value="ЗАО">ЗАО</option>
+                            <option value="ИП">ИП</option>
+                            <option value="Другое">Другое</option>
+                        </Field>
                     </div>
                     <div className="form-group">
                         <label htmlFor="entity_id">ОГРН</label>
@@ -52,46 +54,39 @@ const EntityUserForm = (props) => {
                 <div className="col-lg-6 col-12">
                     <div className="form-group">
                         <label htmlFor="entity_bank_account_data">Рассчетный счет</label>
-                        <Field
-                            placeholder="Введите номер счета и название банка"
-                            name="entity_bank_account_data"
-                            type="text"
-                            component={renderPersonalAreaInput}
-                            required
+                        <Field placeholder="Введите номер счета и название банка"
+                                name="entity_bank_account_data"
+                                type="text"
+                                component={renderPersonalAreaInput}
+                                required
                         />
                     </div>
                     <div className="form-group">
                         <label htmlFor="entity_tin">ИНН</label>
-                        <Field
-                            placeholder="Введите номер ИНН организации"
-                            name="entity_tin"
-                            type="text"
-                            component={renderPersonalAreaInput}
-                            required
+                        <Field placeholder="Введите номер ИНН организации"
+                                name="entity_tin"
+                                type="text"
+                                component={renderPersonalAreaInput}
+                                required
                         />
                     </div>
                 </div>
                 <div className="col-lg-6 col-12">
                     <div className="form-group">
-                        <label htmlFor="entity_bank_account_data">Название организации</label>
-                        <Field
-                            placeholder="Введите название организации"
-                            name="entity_name"
-                            type="text"
-                            component={renderPersonalAreaInput}
-                            required
+                        <label htmlFor="entity_bank_account_data">Название организации(Без типа)</label>
+                        <Field placeholder="Введите название организации"
+                                name="entity_name"
+                                type="text"
+                                component={renderPersonalAreaInput}
+                                required
                         />
                     </div>
                 </div>
             </div>
 
             <div>
-                <button
-                    type="submit"
-                    className="btn btn-success"
-                    disabled={submitting || pristine}
-                >
-                    Сохранить
+                <button type="submit" className="btn btn-success"
+                        disabled={submitting || pristine}>Сохранить
                 </button>
             </div>
         </form>

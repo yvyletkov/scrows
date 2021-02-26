@@ -27,7 +27,7 @@ const renderInput = ({
   </>
 );
 
-const renderCheckBox = ({ input, type, label, ...props }) => (
+const renderCheckBox = ({ input, type, label, href, ...props}) => (
   <>
     <input
       className="custom-control-input"
@@ -37,7 +37,7 @@ const renderCheckBox = ({ input, type, label, ...props }) => (
       type={type}
     />
     <label className="custom-control-label" htmlFor="custom-checkbox">
-      {label}
+        {href ? <a target='_blank' href={href}>{label}</a> : label}
     </label>
   </>
 );

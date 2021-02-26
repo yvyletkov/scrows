@@ -70,7 +70,7 @@ const InfoUserForm = (props) => {
                                required/>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="entity_type">Тип (Ф/Ю)</label>
+                        <label htmlFor="entity_type">Зарегистрирован как</label>
                         <Field name="entity_type" disabled component={renderSelect} required>
                             <option selected disabled hidden value="">
                                 Выберите тип организации

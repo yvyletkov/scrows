@@ -15,6 +15,7 @@ import {hideErrorAlert, hideSuccessAlert, regUser} from "../../redux/AuthReducer
 import {AlertDanger, AlertSuccess} from "../shared/CustomAlerts/CustomAlerts";
 import s from "./RegistrationPage.module.css";
 import { createTextMask } from 'redux-form-input-masks';
+import agreement from "../../documents/agreement.pdf";
 
 const phoneMask = createTextMask({
     pattern: '+7 (999) 999-9999',
@@ -67,7 +68,7 @@ const AuthForm = (props) => {
                     <div className="form-group">
                         <Field name="entity_type" component={renderSelect} required>
                             <option selected disabled hidden value="">
-                                Выберите тип организации
+                                Я регистрируюсь как
                             </option>
                             <option value="single">Физическое лицо</option>
                             <option value="entity">Юридическое лицо</option>
@@ -108,7 +109,8 @@ const AuthForm = (props) => {
                        name="onChecked"
                        component={renderCheckBox}
                        required
-                       label={"Я принимаю условия Пользовательского соглашения"}/>
+                       label={"Я принимаю условия Пользовательского соглашения"}
+                       href={agreement}/>
             </div>
             <div>
                 <button type="submit"
