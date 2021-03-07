@@ -37,6 +37,7 @@ const SecureUserArea = (props) => {
         getScansPersonalData,
         userId,
         scansPersonalData,
+        entity_type
     } = props;
 
     useEffect(() => {
@@ -46,7 +47,7 @@ const SecureUserArea = (props) => {
     useEffect(() => {
         console.log(userId)
         getScansPersonalData(userId);
-    }, []);
+    }, [userId]);
 
     const [modalPhone, openModalPhone] = useState(false);
     const [modalFiles, openModalFiles] = useState(false);
@@ -147,14 +148,25 @@ const SecureUserArea = (props) => {
                                 </div>
                                 <div className={s.securityField} onClick={() => openModalFiles(!modalFiles)}>
                                     <img className={s.securityIcon} src={filesIcon} alt="files"/>
-                                    <span className={s.fieldName}>Документы
+                                    <span className={s.fieldName}>Паспорт
                                         <span
                                             className={`badge ml-2 ${verification.documents ? "badge-success" : "badge-danger"}`}
                                             alt="Верефикация">{verification.documents ? "Подтверждено" : "Подтвердить"}
                                         </span>
                                     </span>
-                                    <p className={s.fieldDesc}>Загружено {scansPersonalData.length} документа(ов)</p>
+                                    <p className={s.fieldDesc}>{scansPersonalData.length > 1 && 'Документы загружены' }</p>
                                 </div>
+                                {entity_type === "entity" &&
+                                <div className={s.securityField} onClick={() => openModalFiles(!modalFiles)}>
+                                    <img className={s.securityIcon} src={filesIcon} alt="files"/>
+                                    <span className={s.fieldName}>Свидетельство о юр.лице
+                                        <span
+                                            className={`badge ml-2 ${verification.documents ? "badge-success" : "badge-danger"}`}
+                                            alt="Верефикация">{verification.documents ? "Подтверждено" : "Подтвердить"}
+                                        </span>
+                                    </span>
+                                    <p className={s.fieldDesc}>{scansPersonalData.length > 1 && 'Документы загружены' }</p>
+                                </div>}
                                 {!(verification.documents && verification.phone && verification.email) &&
                                 <div className="text-center">
                                     <p className="my-3" style={{fontSize: '14px'}}>Пройдите все пункты верификации прежде чем создать или принять участие в
@@ -185,7 +197,8 @@ const mapStateToProps = (state) => {
         verification_id:state.infoUser.verification_id,
         verification: state.infoUser.verification,
         userId: state.infoUser.id,
-        scansPersonalData: state.infoUser.scansPersonalData
+        scansPersonalData: state.infoUser.scansPersonalData,
+        entity_type: state.infoUser.entity_type
     };
 };
 
@@ -197,5 +210,5 @@ export default compose(connect(mapStateToProps,
         postUserFiles,
         resetUserPassword,
         verifyEmail,
-        getScansPersonalData
+        getScansPersonalData,
     }), withAuthRedirect)(SecureUserArea);
