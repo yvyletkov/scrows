@@ -77,7 +77,6 @@ const authApi = {
 
     async getSecureData() {
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
-        // this.headers.Authorization = `Bearer token`;
         return await this.request(`/profile/security/`, {
             method: "GET",
             headers: this.headers,
@@ -94,7 +93,6 @@ const authApi = {
 
     async changeIndividualData(document_type, passport_data_number, passport_data_created, passport_data_code) {
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
-        // this.headers.Authorization = `Bearer token`;
         return await this.request(`/users/profile/judical/single/`, {
             method: "PATCH",
             headers: this.headers,
@@ -109,7 +107,6 @@ const authApi = {
 
     async getEntityData() {
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
-        // this.headers.Authorization = `Bearer token`;
         return await this.request(`/users/profile/judical/entity/`, {
             method: "GET",
             headers: this.headers,
@@ -118,19 +115,18 @@ const authApi = {
 
     async getUserData() {
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
-        // this.headers.Authorization = `Bearer token`;
         return await this.request(`/users/profile/personal/`, {
             method: "GET",
             headers: this.headers,
         });
     },
 
-    async addUserCard() {
+    async addUserCard(data) {
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
-        // this.headers.Authorization = `Bearer token`;
         return await this.request(`/users/profile/payment/cards/`, {
             method: "POST",
             headers: this.headers,
+            body: JSON.stringify(data),
         });
     },
 

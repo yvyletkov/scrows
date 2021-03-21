@@ -30,7 +30,8 @@ let initialState = {
     verification_id: null,
     verified: false,
     verification: {},
-    scansPersonalData: []
+    scansPersonalData: [],
+    showAddingCardModal: false
 };
 
 const personalAreaReducer = (state = initialState, action) => {
@@ -105,6 +106,9 @@ const personalAreaReducer = (state = initialState, action) => {
     }
     case "SET_SCANS_PERSONAL_DATA": {
         return { ...state, scansPersonalData: action.payload };
+    }
+    case "SET_SHOW_ADDING_CARD_MODAL": {
+        return { ...state, showAddingCardModal: action.payload };
     }
 
     default:
@@ -203,8 +207,8 @@ export const getEntityData = () => (dispatch) => {
       });
 };
 
-export  const addUserCard = () => (dispatch) => {
-  api.addUserCard()
+export const addUserCard = (data) => (dispatch) => {
+  api.addUserCard(data)
       .then((response) => {
         dispatch(showSuccessAlert(true));
         dispatch(setUrlRedirect(response));
@@ -432,6 +436,11 @@ export const setUserPhone = (data) => ({
 export const setScansPersonalData = (data) => ({
     type: "SET_SCANS_PERSONAL_DATA",
     payload: data,
+});
+
+export const setShowAddingCardModal = (status) => ({
+    type: "SET_SHOW_ADDING_CARD_MODAL",
+    payload: status,
 });
 
 export default personalAreaReducer;

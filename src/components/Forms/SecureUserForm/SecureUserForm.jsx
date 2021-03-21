@@ -104,8 +104,8 @@ const SecureUserArea = (props) => {
                                     openModalPhone(!modalPhone)
                                     :
                                     Swal.fire({
-                                        icon: 'warning',
-                                        title: 'Вы хотите подтвердить телефон',
+                                        // icon: 'warning',
+                                        title: 'Вы хотите подтвердить телефон?',
                                         showCancelButton: true,
                                         confirmButtonColor: '#3085d6',
                                         cancelButtonColor: '#d33',

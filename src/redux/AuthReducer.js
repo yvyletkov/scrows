@@ -3,8 +3,8 @@ import {reset} from 'redux-form';
 
 let initialState = {
     isAuth: null,
-    alertSuccessShow:false,
-    alertErrorShow:false,
+    isSuccessAlertShowing: false,
+    isErrorAlertShowing: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -13,16 +13,10 @@ const authReducer = (state = initialState, action) => {
             return {...state, isAuth: action.status,};
         }
         case "AUTH:SHOW-SUCCESS-ALERT": {
-            return { ...state, alertSuccessShow: action.status };
+            return { ...state, isSuccessAlertShowing: action.status };
         }
         case "AUTH:SHOW-ERROR-ALERT": {
-            return { ...state, alertErrorShow: action.status };
-        }
-        case "AUTH:HIDE-SUCCESS-ALERT": {
-            return { ...state, alertSuccessShow: action.status };
-        }
-        case "AUTH:HIDE-ERROR-ALERT": {
-            return { ...state, alertErrorShow: action.status };
+            return { ...state, isErrorAlertShowing: action.status };
         }
         default:
             return state;
@@ -47,12 +41,18 @@ export const login = (email, password, rememberMe) => dispatch => {
     api.login(email, password, rememberMe)
         .then((response) => {
             console.log(response)
-            localStorage.setItem('jwt', response.token);
-            dispatch(setIsAuth(true));
+            if (response.token) {
+                localStorage.setItem('jwt', response.token);
+                dispatch(setIsAuth(true));
+            }
+            else
+            {
+                dispatch(setShowErrorAlert(true))
+                console.log('wrong email or password')
+            }
         })
         .catch((err) => {
-            dispatch(showErrorAlert(true))
-            console.log(err)
+
         });
 };
 
@@ -87,39 +87,29 @@ export const regUser = (name,
         .then((response) => {
             console.log('getUserData response: ', response);
             if(response.email || response.phone) {
-                dispatch(showErrorAlert(true));
+                dispatch(setShowErrorAlert(true));
             } else {
-                dispatch(showSuccessAlert(true));
+                dispatch(setShowSuccessAlert(true));
                 dispatch(reset('auth'))
             }
         })
         .catch((err) => {
             console.log(err);
-            dispatch(showErrorAlert(true))
+            dispatch(setShowErrorAlert(true))
         })
 }
 
 export const setIsAuth = (status) => ({type: "AUTH:SET-IS-AUTH", status: status});
 
-export const showSuccessAlert = (status) => ({
+export const setShowSuccessAlert = (status) => ({
     type: "AUTH:SHOW-SUCCESS-ALERT",
     status: status,
 });
 
-export const showErrorAlert = (status) => ({
+export const setShowErrorAlert = (status) => ({
     type: "AUTH:SHOW-ERROR-ALERT",
     status: status,
 });
-
-export const hideSuccessAlert = (status) => ({
-    type:"AUTH:HIDE-SUCCESS-ALERT",
-    status: status,
-})
-
-export const hideErrorAlert = (status) => ({
-    type:"AUTH:HIDE-ERROR-ALERT",
-    status: status,
-})
 
 
 export default authReducer;
