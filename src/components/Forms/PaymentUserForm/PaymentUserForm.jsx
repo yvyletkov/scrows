@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {Field, reduxForm} from "redux-form";
 import iconAdd from "../../../img/icons/plus.svg";
-import {addUserCard, getPaymentData} from "../../../redux/PersonalAreaReducer";
+import {addUserCard, getPaymentData, setShowAddingCardModal} from "../../../redux/PersonalAreaReducer";
 import {validate, warn} from "../../../utils/validators/validators";
 import {renderCheckBoxCards,} from "../../shared/FormContols/FormControls";
 import Preloader from "../../shared/Preloader/Preloader";
@@ -10,6 +10,7 @@ import s from "./PaymentUserForm.module.css";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 import MobilePersonalAreaTabs from "../../shared/MobilePersonalAreaTabs/MobilePersonalAreaTabs";
+import AddingCardModal from "./AddingCardModal";
 
 const PaymentUserForm = (props) => {
 
@@ -23,8 +24,19 @@ const PaymentUserForm = (props) => {
         valid,
         alertSuccessShow,
         alertErrorShow,
-        addUserCard
+        addUserCard,
+        setShowAddingCardModal,
+        showAddingCardModal
     } = props;
+
+    const onAddingCardSubmit = (values) => {
+        const data = {
+            "card_number": `${values.cardNumber}`
+        }
+        console.log(data)
+        addUserCard(data)
+
+    }
 
     const cards = payment_data.map((card) => {
         const cardChecked = card.card_checked ? "checked" : null;
@@ -35,7 +47,7 @@ const PaymentUserForm = (props) => {
                 <div className={`card-body ${s.cardBodyCustom}`}>
                     <div className="d-flex justify-content-between">
                         <p className={s.cardBank}>{card.card_bank}</p>
-                        <img src={card.svg_icon} style={{ width: '30px', height: '30px'}}/>
+                        <img src={card.svg_icon} style={{width: '30px', height: '30px'}}/>
                     </div>
                     <div className={s.cardNumber}>
                         <p className={s.cardNumberTitle}>Номер карты</p>
@@ -73,14 +85,17 @@ const PaymentUserForm = (props) => {
         <Preloader/>
     ) : (
         <div className="row">
-            {payment_data.length >= 3 ? null : <div className={`card col-md-5 col-12 ${s.creditCard}`}>
-                <div className="card-body d-flex justify-content-center align-items-center">
-                    <div onClick={() => addUserCard()}>
-                        <img className={s.btnAdd} src={iconAdd} alt="Добавить карту"/>
+            {payment_data.length >= 3 ? null :
+                <div className={`card col-md-5 col-12 ${s.creditCard}`}>
+                    <div className="card-body d-flex justify-content-center align-items-center">
+                        <div onClick={() => setShowAddingCardModal(true)}>
+                            <img className={s.btnAdd} src={iconAdd} alt="Добавить карту"/>
+                        </div>
                     </div>
-                </div>
-            </div>}
+                </div>}
+
             {cards}
+
             <div className="col-12 mt-3 p-0 p-lg-3 ml-3">
                 <button
                     type="submit"
@@ -89,6 +104,8 @@ const PaymentUserForm = (props) => {
                     Сохранить
                 </button>
             </div>
+
+            <AddingCardModal onSubmit={onAddingCardSubmit} />
         </div>
     );
 };
@@ -97,7 +114,7 @@ const PaymentUserReduxForm = reduxForm({
     form: "PaymentUserForm",
     validate,
     warn,
-    destroyOnUnmount:false,
+    destroyOnUnmount: false,
     enableReinitialize: true,
 })(PaymentUserForm);
 
@@ -109,7 +126,10 @@ const PaymentUserArea = (props) => {
         addUserCard,
         alertSuccessShow,
         alertErrorShow,
-        urlRedirect } = props;
+        urlRedirect,
+        setShowAddingCardModal,
+        showAddingCardModal
+    } = props;
 
     console.log(props);
     useEffect(() => {
@@ -121,21 +141,23 @@ const PaymentUserArea = (props) => {
     }
 
     return (
-                <div className={`card shadow-none col-lg-8 col-12 ${s.cardMob}`}>
-                    <MobilePersonalAreaTabs />
-                    <div className="card-header">
-                        <h5 className="m-0">Платежные данные</h5>
-                    </div>
-                    <div className="card-body">
-                        <PaymentUserReduxForm
-                            payment_data={payment_data}
-                            isFetching={isFetching}
-                            addUserCard={addUserCard}
-                            alertSuccessShow={alertSuccessShow}
-                            alertErrorShow={alertErrorShow}
-                        />
-                    </div>
-                </div>
+        <div className={`card shadow-none col-lg-8 col-12 ${s.cardMob}`}>
+            <MobilePersonalAreaTabs/>
+            <div className="card-header">
+                <h5 className="m-0">Платежные данные</h5>
+            </div>
+            <div className="card-body">
+                <PaymentUserReduxForm
+                    payment_data={payment_data}
+                    isFetching={isFetching}
+                    addUserCard={addUserCard}
+                    alertSuccessShow={alertSuccessShow}
+                    alertErrorShow={alertErrorShow}
+                    setShowAddingCardModal={setShowAddingCardModal}
+                    showAddingCardModal={showAddingCardModal}
+                />
+            </div>
+        </div>
     );
 };
 
@@ -146,7 +168,8 @@ const mapStateToProps = (state) => {
         alertSuccessShow: state.infoUser.alertSuccessShow,
         alertErrorShow: state.infoUser.alertErrorShow,
         urlRedirect: state.infoUser.urlRedirect,
+        showAddingCardModal: state.infoUser.showAddingCardModal,
     };
 };
 
-export default compose(connect(mapStateToProps, {getPaymentData, addUserCard}),withAuthRedirect)(PaymentUserArea);
+export default compose(connect(mapStateToProps, {getPaymentData, addUserCard, setShowAddingCardModal}), withAuthRedirect)(PaymentUserArea);

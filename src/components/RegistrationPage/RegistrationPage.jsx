@@ -11,10 +11,14 @@ import {
     renderSelect
 } from "../shared/FormContols/FormControls";
 import {connect} from "react-redux";
-import {hideErrorAlert, hideSuccessAlert, regUser} from "../../redux/AuthReducer";
+import {
+    regUser,
+    setShowErrorAlert,
+    setShowSuccessAlert
+} from "../../redux/AuthReducer";
 import {AlertDanger, AlertSuccess} from "../shared/CustomAlerts/CustomAlerts";
 import s from "./RegistrationPage.module.css";
-import { createTextMask } from 'redux-form-input-masks';
+import {createTextMask} from 'redux-form-input-masks';
 import agreement from "../../documents/agreement.pdf";
 
 const phoneMask = createTextMask({
@@ -125,17 +129,18 @@ const AuthForm = (props) => {
 const AuthReduxForm = reduxForm({form: "auth", validate, warn})(AuthForm);
 
 const RegistrationPage = (props) => {
-    useEffect( () => {
-        if(props.alertErrorShow) {
-            setTimeout(() => props.hideErrorAlert(false), 1500)
-        }
-    }, [props.alertErrorShow])
 
-    useEffect( () => {
-        if(props.alertSuccessShow) {
-            setTimeout(() => props.hideSuccessAlert(false), 1500)
+    useEffect(() => {
+        if (props.isErrorAlertShowing) {
+            setTimeout( () => props.setShowErrorAlert(false), 2500)
         }
-    }, [props.alertSuccessShow])
+    }, [props.isErrorAlertShowing])
+
+    useEffect(() => {
+        if (props.isSuccessAlertShowing) {
+            setTimeout( () => props.setShowSuccessAlert(false), 5000)
+        }
+    }, [props.isErrorAlertShowing])
 
     if (props.isAuth) return <Redirect to={'/profile/'}/>
 
@@ -155,12 +160,12 @@ const RegistrationPage = (props) => {
     };
     return (
         <>
-            <AlertSuccess style={{display: 'flex', justifyContent: 'center', zIndex: 100}}
-                          show={props.alertSuccessShow}
+            <AlertSuccess show={props.isSuccessAlertShowing}
+                          style={{display: 'flex', justifyContent: 'center', zIndex: 100}}
                           text={"Пользователь успешно зарегистрирован!"}/>
-            <AlertDanger show={props.alertErrorShow}
+            <AlertDanger show={props.isErrorAlertShowing}
                          style={{display: 'flex', justifyContent: 'center', zIndex: 100}}
-                         text={"Ошибка при регистрации"}/>
+                         text={"Ошибка. Возможно, введенный телефон или email уже используются кем-то из пользователей"}/>
             <div className={s.cardContainer}>
                 <div className={`card ${s.authCard} col-md-6 p-0`}>
                     <div className="card-header">
@@ -193,9 +198,9 @@ const mapStateToProps = (state) => {
     return {
         isAuth: state.auth.isAuth,
         isFetching: state.auth.isFetching,
-        alertSuccessShow:state.auth.alertSuccessShow,
-        alertErrorShow:state.auth.alertErrorShow,
+        isErrorAlertShowing: state.auth.isErrorAlertShowing,
+        isSuccessAlertShowing: state.auth.isSuccessAlertShowing,
     };
 };
 
-export default connect(mapStateToProps, {hideErrorAlert, hideSuccessAlert, regUser})(RegistrationPage);
+export default connect(mapStateToProps, {regUser, setShowErrorAlert, setShowSuccessAlert})(RegistrationPage);

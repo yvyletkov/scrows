@@ -4,7 +4,7 @@ import {Field, reduxForm} from 'redux-form';
 import {validate, warn} from "../../utils/validators/validators";
 import {renderCheckBox, renderInput} from "../shared/FormContols/FormControls";
 import "./LoginPage.css";
-import {hideErrorAlert, hideSuccessAlert, login} from '../../redux/AuthReducer';
+import {login, setShowErrorAlert, setShowSuccessAlert} from '../../redux/AuthReducer';
 import {connect} from "react-redux";
 import {AlertDanger, AlertSuccess} from '../shared/CustomAlerts/CustomAlerts';
 
@@ -24,73 +24,67 @@ const LoginForm = props => {
             </div>
             <div className="custom-control custom-checkbox mb-3">
                 <Field type="checkbox" name="rememberMe" component={renderCheckBox} label={"Запомнить меня"}/>
-      </div>
-      <div>
-        <button type="submit" className="btn btn-primary btn-block btn-pill" disabled={submitting || pristine || !valid}>Войти</button>
-      </div>
-    </form>
-  )
+            </div>
+            <div>
+                <button type="submit" className="btn btn-primary btn-block btn-pill"
+                        disabled={submitting || pristine || !valid}>Войти
+                </button>
+            </div>
+        </form>
+    )
 }
 
-const LoginReduxForm = reduxForm({form:'login', validate, warn})(LoginForm);
+const LoginReduxForm = reduxForm({form: 'login', validate, warn})(LoginForm);
 
 const LoginPage = (props) => {
     const handleSubmit = (data) => {
         props.login(data.email, data.password)
     }
 
-    const timeoutAlert = (action) => {
-        setTimeout(() => {
-            // props.dispatch(action)
-        }, 1500)
-    }
-
-    if(props.alertSuccessShow) {
-        timeoutAlert(hideSuccessAlert(false))
-    }
-
-    if(props.alertErrorShow) {
-        timeoutAlert(hideErrorAlert(false))
-    }
+    useEffect(() => {
+        if (props.isErrorAlertShowing) {
+            setTimeout( () => props.setShowErrorAlert(false), 2500)
+        }
+    }, [props.isErrorAlertShowing])
 
     useEffect(() => {
-        return clearTimeout(timeoutAlert);
-    }, []);
+        if (props.isSuccessAlertShowing) {
+            setTimeout( () => props.setShowSuccessAlert(false), 2500)
+        }
+    }, [props.isErrorAlertShowing])
 
     if (props.isAuth === true) return <Redirect to={'/profile/personal-info'}/>
 
-    console.log(props)
-
     return (
         <>
-            <AlertSuccess style={{display:'flex', justifyContent: 'center'}}
-                          show={props.alertSuccessShow}
-                          text={"Данные верные выполяется вход"}/>
-            <AlertDanger show={props.alertErrorShow}
+            <AlertSuccess show={props.isSuccessAlertShowing}
+                          style={{display: 'flex', justifyContent: 'center'}}
+                          text={"Данные верные, выполяется вход"}/>
+            <AlertDanger show={props.isErrorAlertShowing}
                          style={{display: 'flex', justifyContent: 'center'}}
-                         text={"Введены не верные данные"}/>
-                <div className="card auth-card" style={{width: "20rem"}}>
-                    <div className="card-header">
-                        <ul className="nav nav-tabs card-header-tabs">
-                            <li className="nav-item">
-                                <NavLink style={{borderRadius: '0.825rem 0.825rem 0 0'}} className="nav-link active"
-                                         to="/login">
-                                    Авторизация
-                                </NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink style={{borderRadius: '0.825rem 0.825rem 0 0'}} className="nav-link"
-                                         to="/registration">
-                                    Регистрация
-                                </NavLink>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="card-body">
-                        <h4 className="card-title text-center">Авторизация</h4>
-                        <LoginReduxForm onSubmit={handleSubmit}/>
-                    </div>
+                         text={"Введены неверные данные"}/>
+            <div className="card auth-card" style={{width: "20rem"}}>
+                <div className="card-header">
+                    <ul className="nav nav-tabs card-header-tabs">
+                        <li className="nav-item">
+                            <NavLink style={{borderRadius: '0.825rem 0.825rem 0 0'}} className="nav-link active"
+                                     to="/login">
+                                Авторизация
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink style={{borderRadius: '0.825rem 0.825rem 0 0'}} className="nav-link"
+                                     to="/registration">
+                                Регистрация
+                            </NavLink>
+                        </li>
+                    </ul>
                 </div>
+                <div className="card-body">
+                    <h4 className="card-title text-center">Авторизация</h4>
+                    <LoginReduxForm onSubmit={handleSubmit}/>
+                </div>
+            </div>
         </>
     );
 };
@@ -99,9 +93,9 @@ const mapStateToProps = (state) => {
     return {
         isAuth: state.auth.isAuth,
         isFetching: state.auth.isFetching,
-        alertSuccessShow:state.auth.alertSuccessShow,
-        alertErrorShow:state.auth.alertErrorShow,
+        isErrorAlertShowing: state.auth.isErrorAlertShowing,
+        isSuccessAlertShowing: state.auth.isSuccessAlertShowing,
     };
 };
 
-export default connect(mapStateToProps, {login})(LoginPage);
+export default connect(mapStateToProps, {login, setShowErrorAlert, setShowSuccessAlert})(LoginPage);

@@ -11,6 +11,18 @@
     transform: translateX(-50%) translateY(-50%) !important;
     width: 350px;
     height: 200px;
+    margin: 0 !important;
+}
+
+.modalWindow > div {
+    border-radius: 12px !important;
+    overflow: hidden;
+}
+
+@media (max-width: 550px) {
+    .modalWindow {
+        width: 95%;
+    }
 }
 
 .verifyIcon {
@@ -36,6 +48,7 @@
     height:50px;
     border-radius: 20px;
     align-items: center;
+    cursor: pointer;
 }
 
 .typeDocuments {

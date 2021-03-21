@@ -28,6 +28,7 @@ const validate = (values) => {
         "price",
         "code",
         'messageText',
+        'cardNumber'
     ];
 
     fields.forEach((field) => {
@@ -49,6 +50,11 @@ const validate = (values) => {
     if (!/[^]{6,}/i.test(values.password)) {
         errors.password = "Пароль слишком короткий";
     }
+
+    if (!/[^]{16,}/i.test(values.cardNumber)) {
+        errors.cardNumber = 'Необходимо ввести 16 цифр';
+    }
+
     if (values.password !== values.passwordSecond) {
         errors.passwordSecond = "Пароли не совпадают";
     }
