@@ -25,6 +25,10 @@ const AddingCardModal = (props) => {
         reset
     } = props;
 
+    const onSubmit = () => {
+        handleSubmit()
+        toggle()
+    }
 
     const toggle = () => {
         reset('addingCard')
@@ -44,7 +48,7 @@ const AddingCardModal = (props) => {
             </ModalHeader>
             <ModalBody>
 
-                <form className={s.formModal} onSubmit={handleSubmit}>
+                <form className={s.formModal} onSubmit={onSubmit}>
                     <Field placeholder="Введите номер карты"
                            name="cardNumber"
                            type="tel"
