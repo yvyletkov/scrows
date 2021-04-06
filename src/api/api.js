@@ -14,6 +14,15 @@ const baseApi = {
 
 const authApi = {
 
+
+    async requestForgotPass(email) {
+        delete this.headers.Authorization;
+        return await this.request(`/users/profile/security/password/reset-by-email/${email}/`, {
+            method: "POST",
+            headers: this.headers,
+        });
+    },
+
     async me() { // same as /user/personal/
         this.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
         return await this.request(`/users/profile/personal/`, {

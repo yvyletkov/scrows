@@ -213,7 +213,7 @@ const Step2 = ({setStep, userRole, dealType, whoPays, price, active}) => {
 
                         <div className="custom-control custom-radio">
                             <Field component='input' type="radio" id="radioWhoPays2" name="whoPays"
-                                   className="custom-control-input" value={'2'}/>
+                                   className="custom-control-input" value={'3'}/>
                             <label className="custom-control-label"
                                    htmlFor="radioWhoPays2">
                                 {dealType === '3' ? 'Покупатель' : 'Заказчик'}

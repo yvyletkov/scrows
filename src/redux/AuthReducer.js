@@ -1,5 +1,6 @@
 import {api} from "../api/api";
 import {reset} from 'redux-form';
+import Swal from "sweetalert2";
 
 let initialState = {
     isAuth: null,
@@ -60,6 +61,26 @@ export const logout = () => dispatch => {
     api.logout()
         .then((response) => {
             dispatch(setIsAuth(false))
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+export const requestForgotPass = (email) => dispatch => {
+    api.requestForgotPass(email)
+        .then((response) => {
+            // if (response.status === 200)
+            Swal.fire({
+                icon: 'success',
+                text: 'На Вашу почту направлены инструкции для восстановления пароля.',
+                confirmButtonText: 'Хорошо',
+            })
+            // else Swal.fire({
+            //         icon: 'error',
+            //         text: 'Произошла ошибка при запросе на восстановление пароля',
+            //         confirmButtonText: 'Хорошо',
+            //     })
         })
         .catch((err) => {
             console.log(err)
