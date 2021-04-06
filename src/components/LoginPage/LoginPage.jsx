@@ -1,19 +1,16 @@
 import React, {useEffect} from "react";
 import {NavLink, Redirect} from "react-router-dom";
-import {Field, reduxForm} from 'redux-form';
+import {Field, formValueSelector, reduxForm} from 'redux-form';
 import {validate, warn} from "../../utils/validators/validators";
 import {renderCheckBox, renderInput} from "../shared/FormContols/FormControls";
 import "./LoginPage.css";
-import {login, setShowErrorAlert, setShowSuccessAlert} from '../../redux/AuthReducer';
+import {login, requestForgotPass, setShowErrorAlert, setShowSuccessAlert} from '../../redux/AuthReducer';
 import {connect} from "react-redux";
 import {AlertDanger, AlertSuccess} from '../shared/CustomAlerts/CustomAlerts';
 
 const LoginForm = props => {
-    const {handleSubmit, pristine, reset, submitting, error, setErrorText, valid} = props;
+    const {handleSubmit, pristine, reset, submitting, error, setErrorText, valid, requestForgotPass, emailInputValue} = props;
 
-    // useEffect(()=> {
-    //     setErrorText(error);
-    // }, [error])
     return (
         <form className="popup__form" onSubmit={handleSubmit}>
             <div className="form-group">
@@ -22,14 +19,19 @@ const LoginForm = props => {
             <div className="form-group">
                 <Field placeholder="Введите пароль" name="password" type="password" component={renderInput}/>
             </div>
-            <div className="custom-control custom-checkbox mb-3">
+            <div className="custom-control custom-checkbox mb-2">
                 <Field type="checkbox" name="rememberMe" component={renderCheckBox} label={"Запомнить меня"}/>
             </div>
             <div>
-                <button type="submit" className="btn btn-primary btn-block btn-pill"
+                <button type="submit" className="btn btn-primary btn-block btn-pill mb-2"
                         disabled={submitting || pristine || !valid}>Войти
                 </button>
             </div>
+            <p style={{fontSize: '12px', color: '#a2a2a2', cursor: "pointer"}} onClick={(() => {
+                requestForgotPass(emailInputValue)
+                console.log(emailInputValue)
+            })}>Восстановить пароль</p>
+
         </form>
     )
 }
@@ -80,9 +82,9 @@ const LoginPage = (props) => {
                         </li>
                     </ul>
                 </div>
-                <div className="card-body">
+                <div className="card-body pb-4">
                     <h4 className="card-title text-center">Авторизация</h4>
-                    <LoginReduxForm onSubmit={handleSubmit}/>
+                    <LoginReduxForm requestForgotPass={props.requestForgotPass} emailInputValue={props.emailInputValue} onSubmit={handleSubmit}/>
                 </div>
             </div>
         </>
@@ -95,7 +97,8 @@ const mapStateToProps = (state) => {
         isFetching: state.auth.isFetching,
         isErrorAlertShowing: state.auth.isErrorAlertShowing,
         isSuccessAlertShowing: state.auth.isSuccessAlertShowing,
+        emailInputValue: formValueSelector('login')(state, 'email')
     };
 };
 
-export default connect(mapStateToProps, {login, setShowErrorAlert, setShowSuccessAlert})(LoginPage);
+export default connect(mapStateToProps, {login, setShowErrorAlert, setShowSuccessAlert, requestForgotPass})(LoginPage);
