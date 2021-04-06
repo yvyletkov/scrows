@@ -144,7 +144,7 @@ const PaymentUserArea = (props) => {
         <div className={`card shadow-none col-lg-8 col-12 ${s.cardMob}`}>
             <MobilePersonalAreaTabs/>
             <div className="card-header">
-                <h5 className="m-0">Платежные данные</h5>
+                <h5 className="m-0">Данные для выплат</h5>
             </div>
             <div className="card-body">
                 <PaymentUserReduxForm

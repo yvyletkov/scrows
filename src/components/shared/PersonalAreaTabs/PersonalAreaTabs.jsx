@@ -88,7 +88,7 @@ const PersonalAreaTabs = (props) => {
                   <img className={s.navIcon}
                        src={extraDataIcon}
                        alt="Платежные данные"/>
-                  Платежные данные
+                  Данные для выплат
                 </NavLink>
               </li>
             {userTypeTabs}

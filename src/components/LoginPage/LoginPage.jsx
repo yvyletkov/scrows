@@ -59,10 +59,10 @@ const LoginPage = (props) => {
         <>
             <AlertSuccess show={props.isSuccessAlertShowing}
                           style={{display: 'flex', justifyContent: 'center'}}
-                          text={"Данные верные, выполяется вход"}/>
+                          text={"Выполняется вход..."}/>
             <AlertDanger show={props.isErrorAlertShowing}
                          style={{display: 'flex', justifyContent: 'center'}}
-                         text={"Введены неверные данные"}/>
+                         text={"Неправильные логин и/или пароль"}/>
             <div className="card auth-card" style={{width: "20rem"}}>
                 <div className="card-header">
                     <ul className="nav nav-tabs card-header-tabs">
